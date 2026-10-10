@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "source": "IMG_3521.MP4",
+  "clips": [
+    {
+      "id": "usagi-01",
+      "url": "/usagi-voices/usagi-01.wav",
+      "duration": 0.87,
+      "source_start": 6.4,
+      "source_end": 7.27,
+      "sha256": "32980332faf5ba33b6d63a61141f17f9fb2cc8590eb40105683a032414a04a76"
+    },
+    {
+      "id": "usagi-02",
+      "url": "/usagi-voices/usagi-02.wav",
+      "duration": 0.48,
+      "source_start": 10.37,
+      "source_end": 10.85,
+      "sha256": "2646826a22079e63db6bb4b6b150eeeff7ec4ddbf4e72276016cd59ed5a30790"
+    },
+    {
+      "id": "usagi-03",
+      "url": "/usagi-voices/usagi-03.wav",
+      "duration": 1.3,
+      "source_start": 12.36,
+      "source_end": 13.66,
+      "sha256": "a3317973244521dacd97869cc7b640b6b1154b82daf9048ae4b2541be8c97310"
+    },
+    {
+      "id": "usagi-04",
+      "url": "/usagi-voices/usagi-04.wav",
+      "duration": 1.06,
+      "source_start": 14.37,
+      "source_end": 15.43,
+      "sha256": "697c42022ec2411e88f2910e2dc522de259c6e1e421f440802cb96263d85df60"
+    },
+    {
+      "id": "usagi-05",
+      "url": "/usagi-voices/usagi-05.wav",
+      "duration": 2.98,
+      "source_start": 15.71,
+      "source_end": 18.69,
+      "sha256": "ef1871233e7bb6db2ac33fe2ddb264d7323f0781faa6e5024a347eac941179d7"
+    },
+    {
+      "id": "usagi-06",
+      "url": "/usagi-voices/usagi-06.wav",
+      "duration": 1.22,
+      "source_start": 18.81,
+      "source_end": 20.03,
+      "sha256": "7a86a61edfb321017d5db81e3593eab99e77caaca143f695285bf68242a7c75b"
+    },
+    {
+      "id": "usagi-07",
+      "url": "/usagi-voices/usagi-07.wav",
+      "duration": 1.22,
+      "source_start": 20.9,
+      "source_end": 22.12,
+      "sha256": "a9c1499115fec415b6c9f77ef58e148ae72282a29b926a9f0840b9d53936419c"
+    },
+    {
+      "id": "usagi-08",
+      "url": "/usagi-voices/usagi-08.wav",
+      "duration": 0.49,
+      "source_start": 22.47,
+      "source_end": 22.96,
+      "sha256": "4b79b4b5559da23ed361ea72210696e8c6af7130915c5ca9c953406598e6a1a0"
+    },
+    {
+      "id": "usagi-09",
+      "url": "/usagi-voices/usagi-09.wav",
+      "duration": 1.45,
+      "source_start": 23.37,
+      "source_end": 24.82,
+      "sha256": "abba80c64bb2b85ddf0802e98d03ee45cee03eae64d685dc0e9fbfc0a0c59d34"
+    },
+    {
+      "id": "usagi-10",
+      "url": "/usagi-voices/usagi-10.wav",
+      "duration": 2.29,
+      "source_start": 25.44,
+      "source_end": 27.73,
+      "sha256": "df4cc8d47fa4e6364cbb62c9aa0dc6f1712d357c4fb7b9b588144d5f5d7aa456"
+    },
+    {
+      "id": "usagi-11",
+      "url": "/usagi-voices/usagi-11.wav",
+      "duration": 1.12,
+      "source_start": 28.01,
+      "source_end": 29.13,
+      "sha256": "f4c29828a93bc1b5be2e3ff0e56fc5387e5388f3002320aa403882adfd56e110"
+    },
+    {
+      "id": "usagi-12",
+      "url": "/usagi-voices/usagi-12.wav",
+      "duration": 1.07,
+      "source_start": 29.99,
+      "source_end": 31.06,
+      "sha256": "b09bfd1c39292dfbecf95a43788375347bdf1ec930bbf3fee1198766a11d04f1"
+    },
+    {
+      "id": "usagi-13",
+      "url": "/usagi-voices/usagi-13.wav",
+      "duration": 1.04,
+      "source_start": 31.7,
+      "source_end": 32.74,
+      "sha256": "62e3a9f160858f25d3f9fbd44b3bacdf34adbb93b074cd5ceb89e177c752c924"
+    },
+    {
+      "id": "usagi-14",
+      "url": "/usagi-voices/usagi-14.wav",
+      "duration": 0.41,
+      "source_start": 33.82,
+      "source_end": 34.23,
+      "sha256": "0cb17b72897c6257944c67394a03c9af7f728d5756d787a32a15a1a590eab7d6"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+'use client';
+import {useEffect,useRef,useState} from 'react';
+import PhotoZoom from './photo-zoom';
+import PhotoNotes from './photo-notes';
+import {Star,Share2,X,ArrowUpRight,ChevronLeft,ChevronRight,Maximize2,Minimize2} from 'lucide-react';
+type Photo={id:string;image_url:string;source:string;source_kind:string;collected_at:string;imported:number;favorite:number};
+type Props={onImageActivate?:()=>void;photo:Photo;number:string;index:number;z:number;saving:boolean;onClose:()=>void;onRaise:()=>void;onFavorite:()=>void;onShare:()=>void;onStep:(direction:number)=>void;canStep:boolean};
+export default function PhotoWindow({onImageActivate,photo,number,index,z,saving,onClose,onRaise,onFavorite,onShare,onStep,canStep}:Props){
+ const [position,setPosition]=useState({x:0,y:0}),[ready,setReady]=useState(false),[maximized,setMaximized]=useState(false);
+ const frame=useRef<HTMLElement>(null),drag=useRef<{x:number;y:number;left:number;top:number}|null>(null);
+ function bounded(x:number,y:number){const width=frame.current?.offsetWidth||600;return {x:Math.max(8,Math.min(x,innerWidth-width-8)),y:Math.max(8,Math.min(y,innerHeight-70))};}
+ useEffect(()=>{const width=Math.min(600,innerWidth-24);setPosition({x:innerWidth<700?12:Math.max(12,Math.min(290+(index%5)*46,innerWidth-width-16)),y:innerWidth<700?72:65+(index%5)*40});setReady(true);const resize=()=>setPosition(p=>bounded(p.x,p.y));window.addEventListener('resize',resize);return()=>window.removeEventListener('resize',resize);},[]);
+ useEffect(()=>{if(ready)frame.current?.querySelector<HTMLElement>('.photo-titlebar')?.focus();},[ready]);
+ const date=new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',year:'numeric',month:'long',day:'numeric'}).format(new Date(photo.collected_at));
+ return <section ref={frame} className={'photo-window '+(maximized?'window-maximized':'')} role="dialog" aria-modal="false" aria-label={'하치왕왕 #'+number+' 사진 창'} style={{left:position.x,top:position.y,zIndex:z,visibility:ready?'visible':'hidden'}} onPointerDownCapture={onRaise} onFocusCapture={onRaise}>
+  <header className="photo-titlebar" tabIndex={0} aria-label={'하치왕왕 #'+number+' 창 제목 표시줄, 방향키로 이동'} onKeyDown={e=>{const dirs:Record<string,number[]>={ArrowLeft:[-20,0],ArrowRight:[20,0],ArrowUp:[0,-20],ArrowDown:[0,20]};if(e.target===e.currentTarget&&dirs[e.key]&&!maximized){e.preventDefault();const [x,y]=dirs[e.key];setPosition(p=>bounded(p.x+x,p.y+y));}}} onPointerDown={e=>{if(maximized||(e.target as HTMLElement).closest('button,a'))return;e.preventDefault();e.currentTarget.focus();drag.current={x:e.clientX,y:e.clientY,left:position.x,top:position.y};e.currentTarget.setPointerCapture(e.pointerId);}} onPointerMove={e=>{if(drag.current){const d=drag.current;setPosition(bounded(d.left+e.clientX-d.x,d.top+e.clientY-d.y));}}} onPointerUp={()=>{drag.current=null;}} onPointerCancel={()=>{drag.current=null;}}>
+   <button className="window-close" onClick={onClose} aria-label={'하치왕왕 #'+number+' 창 닫기'}><X size={15}/></button><span>하치왕왕 #{number}<small>나의 사진 서랍</small></span><div className="window-title-actions"><button onClick={()=>setMaximized(!maximized)} aria-label={maximized?'창 크기 복원':'창 크게 보기'}>{maximized?<Minimize2 size={14}/>:<Maximize2 size={14}/>}</button><a href={photo.source} target="_blank" rel="noreferrer">원본 열기 <ArrowUpRight size={13}/></a></div>
+  </header>
+  <div className="window-caption"><span>{date} · {photo.imported?'메모에서 온 친구':'Pinterest에서 만난 친구'}</span><div><button onClick={()=>onStep(-1)} disabled={!canStep} aria-label="이전 사진"><ChevronLeft size={15}/></button><button onClick={()=>onStep(1)} disabled={!canStep} aria-label="다음 사진"><ChevronRight size={15}/></button></div></div>
+  <div className="window-body"><PhotoNotes key={photo.id} id={photo.id} src={photo.image_url}><PhotoZoom onActivate={onImageActivate} src={photo.image_url} alt={'하치왕왕 #'+number+' 수집 사진'}/></PhotoNotes><div className="window-photo-actions"><button className={photo.favorite?'selected-fav':''} onClick={onFavorite} disabled={saving}><Star size={17} fill={photo.favorite?'currentColor':'none'}/>{photo.favorite?'별표 한 순간':'별표 붙이기'}</button><button onClick={onShare}><Share2 size={16}/>출처와 공유</button><a href={photo.source} target="_blank" rel="noreferrer">{photo.source_kind} <ArrowUpRight size={13}/></a></div><p className="window-source-note">{photo.source_kind==='Pinterest'?'출처: Pinterest 핀 · 원저작자 정보는 핀 페이지에서 확인해 주세요.':'기존 기록의 이미지 파일 주소를 출처로 보존했어요.'}</p></div>
+ </section>;
+}
