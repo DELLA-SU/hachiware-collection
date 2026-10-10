@@ -11,6 +11,21 @@ async function handle(input:string,init?:RequestInit){
  const path=new URL(input,'https://local.invalid'),state=await read(),b=init?.body?JSON.parse(String(init.body)):{};
  const visible=()=>state.photos.filter(p=>!state.hidden.includes(p.id)).sort((a,b)=>b.collected_at.localeCompare(a.collected_at));
  if(path.pathname==='/api/collection'){await write(state);return json({photos:visible(),mode:'browser'});}
+ if(path.pathname==='/api/import'){
+  if(![1,2].includes(b.version)||!Array.isArray(b.photos)||!b.photos.length||b.photos.length>2000)return json({error:'도감 백업 파일을 확인해 주세요.'},400);
+  const incoming:any[]=[];const notes:Record<string,any>={};const seen=new Set<string>();
+  for(const p of b.photos){
+   const original=catalog.find(c=>c.id===p.id);
+   if(!original||seen.has(p.id)||typeof p.collected_at!=='string'||!Number.isFinite(Date.parse(p.collected_at)))return json({error:'사진 기록 형식을 확인해 주세요.'},400);
+   seen.add(p.id);incoming.push({...original,image_url:assetUrl(original.image_url),collected_at:new Date(p.collected_at).toISOString(),favorite:p.favorite?1:0});
+   const a=b.annotations?.[p.id];if(a){let points=0;if(typeof a.note!=='string'||a.note.length>4000||!Array.isArray(a.strokes)||a.strokes.length>300||!a.strokes.every((s:any)=>s&&/^#[a-fA-F0-9]{6}$/.test(s.color)&&[2,4,8,12].includes(s.width)&&Array.isArray(s.points)&&s.points.length>0&&s.points.length<=5000&&(points+=s.points.length)<=20000&&s.points.every((p:any)=>Array.isArray(p)&&p.length===2&&p.every((n:any)=>Number.isFinite(n)&&n>=0&&n<=1000))))return json({error:'메모 또는 드로잉 형식을 확인해 주세요.'},400);notes[p.id]=a;}
+  }
+  let added=0;
+  for(const p of incoming){const old=state.photos.find(x=>x.id===p.id);if(old){p.favorite=Math.max(old.favorite||0,p.favorite);Object.assign(old,p);}else{state.photos.push(p);added++;}state.hidden=state.hidden.filter(id=>id!==p.id);
+   const a=notes[p.id],current=state.annotations[p.id];if(a){const note=!current?.note?a.note:!a.note||current.note===a.note?current.note:current.note+'\n\n'+a.note;const strokes=[...new Map([...(current?.strokes||[]),...a.strokes].map((s:any)=>[JSON.stringify(s),s])).values()] as any[];if(note.length>4000||strokes.length>300||strokes.reduce((n,s)=>n+s.points.length,0)>20000)return json({error:'같은 사진의 기록이 너무 많아요. 먼저 현재 기록을 내보내 주세요.'},400);state.annotations[p.id]={note,strokes,revision:(current?.revision||0)+1};}
+  }
+  await write(state);return json({ok:true,added,total:visible().length});
+ }
  if(path.pathname==='/api/collect'){
   if(!/^[a-zA-Z0-9-]{16,80}$/.test(b.request_id||''))return json({error:'수집 요청 번호를 확인해 주세요.'},400);
   const prior=state.requests[b.request_id];if(prior)return json({photo:state.photos.find(p=>p.id===prior),replayed:true});
