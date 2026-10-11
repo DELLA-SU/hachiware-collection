@@ -1,0 +1,31 @@
+name: Windows desktop validation
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'desktop/windows/**'
+      - '.github/workflows/windows-desktop.yml'
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Publish Windows x64
+        run: dotnet publish desktop/windows/Hachiware.csproj -c Release -r win-x64 --self-contained true -o publish
+      - name: Check Windows app and resources
+        shell: pwsh
+        run: |
+          $app = Start-Process -FilePath "$PWD/publish/Hachiware.exe" -ArgumentList '--self-test', "$PWD/smoke-result.json" -PassThru
+          if (!$app.WaitForExit(60000)) { Stop-Process -Id $app.Id; throw 'App did not exit' }
+          Get-Content smoke-result.json
+          if ($app.ExitCode -ne 0 -or !(Get-Content smoke-result.json | ConvertFrom-Json).passed) { throw 'Windows validation failed' }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-validation
+          path: smoke-result.json
