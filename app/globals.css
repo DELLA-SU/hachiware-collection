@@ -68,3 +68,7 @@
 .card-remove{position:absolute;top:13px;right:13px;z-index:4;display:flex;align-items:center;justify-content:center;width:25px;height:25px;background:#fffefaeb;color:#7a8e91;border-radius:50%;box-shadow:0 1px 5px #324f6120}.card-remove:hover{background:#f8dad4;color:#a85854}.removed-notice{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;margin:0 0 22px;background:#e8f0ec;border-radius:9px;color:#67867c;font-size:11px}.removed-notice button{font-weight:700;text-decoration:underline}
 
 .random-top{display:flex;align-items:center;justify-content:center;gap:9px;flex-shrink:0;border:1px solid #b7c8af;border-radius:999px;padding:12px 19px;color:#809e91;font-size:12px;background:#fbfaf5;transition:background .2s,transform .2s}.random-top:hover{background:#edf3e7;transform:translateY(-2px)}.random-top:disabled{opacity:.45;cursor:default}@media(max-width:650px){.desk-top{flex-wrap:wrap;gap:12px}.random-top{font-size:11px;padding:10px 14px}}
+
+.desktop-download{display:flex;align-items:center;gap:10px;padding:12px 8px;color:inherit;text-decoration:none;border:1px solid #b4c9c6;border-radius:12px;background:#fff9ed;margin-bottom:10px;font-size:13px;font-weight:700}.desktop-download span{flex:1}.desktop-download small{display:block;font-size:10px;font-weight:400;line-height:1.5;margin-top:5px}.desktop-download:hover{background:#f4d5de}
+
+.desktop-note{font-size:10px;line-height:1.6;color:#777565;margin:6px 4px 0}
