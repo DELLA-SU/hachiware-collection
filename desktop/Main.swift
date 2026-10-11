@@ -9,6 +9,8 @@ class PetView: NSView {
  var pendingClick: DispatchWorkItem?
  var menuAction: (() -> Void)?
  var launchAction: (() -> Void)?
+ var throwAction: ((NSPoint)->Void)?
+ var dragSamples: [(point:NSPoint,time:Double)] = []
  var hoverAction: ((Bool)->Void)?
  var flung = false
  var inFlight = false
@@ -31,7 +33,7 @@ class PetView: NSView {
  let dt=min(0.05,max(0,now-lastFrame));lastFrame=now
  bounceSquash *= pow(0.02,dt)
  if inFlight {angle += dt*flightSpin}
- else if hovering {hoverDuration += dt;angle += dt*min(720,240+hoverDuration*100);if hoverDuration>=5 && !flung{flung=true;launchAction?()}}
+ else if hovering && NSEvent.pressedMouseButtons == 0 {hoverDuration += dt;angle += dt*min(720,240+hoverDuration*100);if hoverDuration>=5 && !flung{flung=true;launchAction?()}}
  else if angle>0 {let target=ceil(angle/360)*360;angle=min(target,angle+dt*600);if angle>=target{angle=0}}
  NSGraphicsContext.saveGraphicsState()
  let tr=NSAffineTransform();tr.translateX(by:bounds.midX,yBy:bounds.midY);tr.rotate(byDegrees:CGFloat(angle.truncatingRemainder(dividingBy:360)));tr.scaleX(by:CGFloat(1+0.26*bounceSquash),yBy:CGFloat(1-0.20*bounceSquash));tr.concat()
@@ -41,9 +43,9 @@ class PetView: NSView {
  image.draw(in:NSRect(x:-w/2,y:-h/2,width:w,height:h),from:.zero,operation:.sourceOver,fraction:1)
  NSGraphicsContext.restoreGraphicsState()
  }
- override func mouseDown(with event: NSEvent) { start = NSEvent.mouseLocation; base = window!.frame.origin; moved = false }
- override func mouseDragged(with event: NSEvent) { pendingClick?.cancel(); let p = NSEvent.mouseLocation; moved = moved || hypot(p.x-start.x,p.y-start.y)>5; window?.setFrameOrigin(NSPoint(x:base.x+p.x-start.x,y:base.y+p.y-start.y)) }
- override func mouseUp(with event: NSEvent) { if moved { if let p=window?.frame.origin { UserDefaults.standard.set(p.x,forKey:"x");UserDefaults.standard.set(p.y,forKey:"y") } } else if event.clickCount>=2 { pendingClick?.cancel();pendingClick=nil;doubleAction?() } else { pendingClick?.cancel();let work=DispatchWorkItem{[weak self] in self?.action?()};pendingClick=work;DispatchQueue.main.asyncAfter(deadline:.now()+NSEvent.doubleClickInterval+0.05,execute:work) } }
+ override func mouseDown(with event: NSEvent) { start = NSEvent.mouseLocation; base = window!.frame.origin; moved = false; dragSamples=[(start,Date.timeIntervalSinceReferenceDate)] }
+ override func mouseDragged(with event: NSEvent) { pendingClick?.cancel(); let p = NSEvent.mouseLocation; let now=Date.timeIntervalSinceReferenceDate; dragSamples.append((p,now));dragSamples.removeAll{now-$0.time>0.12}; moved = moved || hypot(p.x-start.x,p.y-start.y)>5; window?.setFrameOrigin(NSPoint(x:base.x+p.x-start.x,y:base.y+p.y-start.y)) }
+ override func mouseUp(with event: NSEvent) { if moved { let now=Date.timeIntervalSinceReferenceDate;let p=NSEvent.mouseLocation;if let sample=dragSamples.first,now-sample.time<0.16{let dt=max(0.016,now-sample.time);let velocity=NSPoint(x:(p.x-sample.point.x)/dt,y:(p.y-sample.point.y)/dt);if hypot(velocity.x,velocity.y)>350{throwAction?(velocity);return}}; if let p=window?.frame.origin { UserDefaults.standard.set(p.x,forKey:"x");UserDefaults.standard.set(p.y,forKey:"y") } } else if event.clickCount>=2 { pendingClick?.cancel();pendingClick=nil;doubleAction?() } else { pendingClick?.cancel();let work=DispatchWorkItem{[weak self] in self?.action?()};pendingClick=work;DispatchQueue.main.asyncAfter(deadline:.now()+NSEvent.doubleClickInterval+0.05,execute:work) } }
  override func rightMouseDown(with event: NSEvent) { menuAction?() }
 }
 class ClickableImageView: NSImageView {
@@ -93,7 +95,7 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
   status=NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength);status.button?.title="🐾";status.menu=menu
   pet=NSPanel(contentRect:NSRect(x:0,y:0,width:160,height:160),styleMask:[.borderless,.nonactivatingPanel],backing:.buffered,defer:false)
   pet.isOpaque=false;pet.backgroundColor = .clear;pet.hasShadow=false;pet.level = .floating;pet.collectionBehavior=[.canJoinAllSpaces,.fullScreenAuxiliary];pet.isReleasedWhenClosed=false
-  let v=PetView(frame:NSRect(x:0,y:0,width:160,height:160));v.image=NSImage(contentsOfFile:Bundle.main.path(forResource:"character",ofType:"png")!);v.action={ [weak self] in self?.collect() };v.doubleAction={ [weak self] in self?.openMusic() };v.menuAction={ [weak self] in self?.status.button?.performClick(nil) };v.launchAction={ [weak self] in self?.launchPet() };v.hoverAction={ [weak self] active in self?.setSpin(active ? 1 : 0) };pet.contentView=v
+  let v=PetView(frame:NSRect(x:0,y:0,width:160,height:160));v.image=NSImage(contentsOfFile:Bundle.main.path(forResource:"character",ofType:"png")!);v.action={ [weak self] in self?.collect() };v.doubleAction={ [weak self] in self?.openMusic() };v.menuAction={ [weak self] in self?.status.button?.performClick(nil) };v.launchAction={ [weak self] in self?.launchPet() };v.throwAction={ [weak self] velocity in self?.throwPet(velocity) };v.hoverAction={ [weak self] active in self?.setSpin(active ? 1 : 0) };pet.contentView=v
   resetPosition()
   if UserDefaults.standard.object(forKey:"x") != nil { base=NSPoint(x:UserDefaults.standard.double(forKey:"x"),y:UserDefaults.standard.double(forKey:"y"));pet.setFrameOrigin(base) }
   pet.orderFrontRegardless()
@@ -107,6 +109,16 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
   flightBounds=pet.screen?.visibleFrame ?? NSScreen.main!.visibleFrame
   flightVelocity=NSPoint(x:flightPoint.x>flightBounds.midX ? -1450 : 1450,y:1050)
   if let v=pet.contentView as? PetView{v.inFlight=true;v.flightSpin=1100;v.bounceSquash=0}
+ }
+ func throwPet(_ velocity:NSPoint){
+  flightTime=nil;base=pet.frame.origin
+  let r=pet.screen?.visibleFrame ?? NSScreen.main!.visibleFrame
+  base.x=min(max(base.x,r.minX+8),max(r.minX+8,r.maxX-pet.frame.width-8));base.y=min(max(base.y,r.minY+8),max(r.minY+8,r.maxY-pet.frame.height-8))
+  UserDefaults.standard.set(base.x,forKey:"x");UserDefaults.standard.set(base.y,forKey:"y")
+  launchPet()
+  let speed=hypot(velocity.x,velocity.y),scale=min(2600,max(1000,speed))/speed
+  flightVelocity=NSPoint(x:velocity.x*scale,y:velocity.y*scale)
+  if let v=pet.contentView as? PetView{v.hovering=false;v.flightSpin=velocity.x<0 ? -1100 : 1100}
  }
  func bouncePet(){
   bounceCount += 1
