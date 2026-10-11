@@ -22,7 +22,7 @@ sealed class Pet:Form {
  readonly Flight flight=new(); readonly Stopwatch elapsed=Stopwatch.StartNew();
  readonly List<(Point p,double time)> samples=new(); readonly List<SoundPlayer> players=new();
  readonly NotifyIcon tray; readonly ContextMenuStrip menu=new(); readonly Random random=new();
- readonly Photo[] photos; Settings settings; Point mouseStart,dragOrigin,home;Rectangle arena;bool dragging,moved,hover;double last,hoverTime,angle,squash,flightStart,returnX,returnY,spin=1100,lastBounce;string? lastPhoto;MusicWindow? music;
+ readonly Photo[] photos; Settings settings; Point mouseStart,dragOrigin,home;Rectangle arena;bool dragging,moved,hover;double last,hoverTime,angle,squash,flightStart,returnX,returnY,spin=1100,lastBounce;int spinLevel;string? lastPhoto;MusicWindow? music;
  protected override bool ShowWithoutActivation=>true;
  protected override CreateParams CreateParams{get{var cp=base.CreateParams;cp.ExStyle|=0x80000|0x80;return cp;}}
  public Pet(){
@@ -36,7 +36,7 @@ sealed class Pet:Form {
   var sound=new ToolStripMenuItem("효과음 켜기"){Checked=settings.Sounds,CheckOnClick=true};sound.CheckedChanged+=(_,_)=>{settings.Sounds=sound.Checked;Save();if(!settings.Sounds)foreach(var p in players)p.Stop();};menu.Items.Add(sound);menu.Items.Add("설치 방법",null,(_,_)=>Open(Website));menu.Items.Add("종료",null,(_,_)=>Close());
   tray=new NotifyIcon{Icon=Icon,Text="하치와레",ContextMenuStrip=menu,Visible=true};tray.DoubleClick+=(_,_)=>OpenMusic();
   singleClick.Interval=SystemInformation.DoubleClickTime+40;singleClick.Tick+=(_,_)=>{singleClick.Stop();ShowPhoto();};
-  MouseEnter+=(_,_)=>{hover=true;hoverTime=0;};MouseLeave+=(_,_)=>{hover=false;hoverTime=0;};
+  MouseEnter+=(_,_)=>{hover=true;hoverTime=0;spinLevel=1;Sound("spin-1");};MouseLeave+=(_,_)=>{hover=false;hoverTime=0;spinLevel=0;};
   MouseDown+=Down;MouseMove+=DragMove;MouseUp+=Up;clock.Tick+=(_,_)=>Tick();Shown+=(_,_)=>{last=elapsed.Elapsed.TotalSeconds;clock.Start();Render();};
   FormClosed+=(_,_)=>{clock.Stop();singleClick.Stop();tray.Visible=false;tray.Dispose();music?.Close();character.Dispose();foreach(var p in players)p.Dispose();clock.Dispose();singleClick.Dispose();menu.Dispose();};
  }
@@ -50,7 +50,7 @@ sealed class Pet:Form {
   if(flight.Active){var t=now-flightStart;angle+=spin*dt;
    if(t<3.8){var n=flight.Step(dt,arena.Left+8,arena.Top+8,Math.Max(arena.Left+8,arena.Right-Width-8),Math.Max(arena.Top+8,arena.Bottom-Height-8));if(n>0){squash=1;spin=(flight.Bounces%2==0?1:-1)*Math.Min(1750,1100+90*flight.Bounces);if(now-lastBounce>.075){Sound("bounce-"+(1+flight.Bounces%3));lastBounce=now;}}returnX=flight.X;returnY=flight.Y;Location=new((int)flight.X,(int)flight.Y);}
    else{var u=Math.Clamp((t-3.8)/.9,0,1);var ease=u*u*(3-2*u);Location=new((int)(returnX+(home.X-returnX)*ease),(int)(returnY+(home.Y-returnY)*ease-Math.Sin(u*Math.PI)*45));if(u>=1){flight.Active=false;angle=0;Sound("return");}}
-  }else if(hover){hoverTime+=dt;angle+=Math.Min(720,240+hoverTime*100)*dt;if(hoverTime>=5)Launch(Left>Screen.FromControl(this).WorkingArea.Left+Screen.FromControl(this).WorkingArea.Width/2?-1450:1450,-1050);}
+  }else if(hover){hoverTime+=dt;var level=hoverTime>4?3:hoverTime>2?2:1;if(level!=spinLevel){spinLevel=level;Sound("spin-"+level);}angle+=Math.Min(720,240+hoverTime*100)*dt;if(hoverTime>=5)Launch(Left>Screen.FromControl(this).WorkingArea.Left+Screen.FromControl(this).WorkingArea.Width/2?-1450:1450,-1050);}
   else{angle*=Math.Pow(.01,dt);Location=new(home.X+(int)(Math.Sin(now*.65)*5),home.Y+(int)(Math.Sin(now*1.15)*9));}
   Render();
  }
