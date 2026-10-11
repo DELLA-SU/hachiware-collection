@@ -28,7 +28,7 @@ sealed class Pet:Form {
  public Pet(){
   Directory.CreateDirectory(DataDir);try{settings=JsonSerializer.Deserialize<Settings>(File.ReadAllText(SettingsFile))??new();}catch{settings=new();}
   photos=JsonSerializer.Deserialize<Photo[]>(File.ReadAllText(Asset("catalog.json")))??[];
-  Text="하치와레";FormBorderStyle=FormBorderStyle.None;ShowInTaskbar=false;TopMost=true;StartPosition=FormStartPosition.Manual;ClientSize=new(160,160);
+  SetStyle(ControlStyles.StandardClick|ControlStyles.StandardDoubleClick,true);Text="하치와레";FormBorderStyle=FormBorderStyle.None;ShowInTaskbar=false;TopMost=true;StartPosition=FormStartPosition.Manual;ClientSize=new(160,160);
   Icon=new Icon(Path.Combine(AppContext.BaseDirectory,"Hachiware.ico"));
   var area=Screen.PrimaryScreen!.WorkingArea;Location=settings.Positioned?new(settings.X,settings.Y):new(area.Right-210,area.Bottom-260);ClampLocation();home=Location;
   menu.Items.Add("오늘의 하치와레 보여줘",null,(_,_)=>ShowPhoto());menu.Items.Add("웹 도감 열기",null,(_,_)=>Open(Website));menu.Items.Add("하치와레 노래 들으러 가기",null,(_,_)=>OpenMusic());
@@ -63,7 +63,7 @@ sealed class Pet:Form {
  }
  void OpenMusic(){if(music is {IsDisposed:false}){music.Activate();return;}music=new MusicWindow(Icon!,DataDir);music.Show();}
  public static void Open(string url){if(Uri.TryCreate(url,UriKind.Absolute,out var uri)&&uri.Scheme=="https")try{Process.Start(new ProcessStartInfo(url){UseShellExecute=true});}catch{MessageBox.Show("브라우저를 열지 못했어요. 웹사이트에서 다시 열어 주세요.","하치와레");}}
- internal void Render(){if(!IsHandleCreated||IsDisposed)return;using var bitmap=new Bitmap(Width,Height,PixelFormat.Format32bppArgb);using(var g=Graphics.FromImage(bitmap)){g.Clear(Color.Transparent);g.SmoothingMode=SmoothingMode.AntiAlias;g.InterpolationMode=InterpolationMode.HighQualityBicubic;g.TranslateTransform(Width/2f,Height/2f);g.RotateTransform((float)(angle%360));g.ScaleTransform((float)(1+.26*squash),(float)(1-.2*squash));var side=Math.Min(Width,Height)-24f;var ratio=(float)character.Width/character.Height;var w=ratio>1?side:side*ratio;var h=ratio>1?side/ratio:side;g.DrawImage(character,-w/2,-h/2,w,h);}Layered.Draw(Handle,bitmap,Location);}
+ internal bool Render(){if(!IsHandleCreated||IsDisposed)return false;using var bitmap=new Bitmap(Width,Height,PixelFormat.Format32bppArgb);using(var g=Graphics.FromImage(bitmap)){g.Clear(Color.Transparent);g.SmoothingMode=SmoothingMode.AntiAlias;g.InterpolationMode=InterpolationMode.HighQualityBicubic;g.TranslateTransform(Width/2f,Height/2f);g.RotateTransform((float)(angle%360));g.ScaleTransform((float)(1+.26*squash),(float)(1-.2*squash));var side=Math.Min(Width,Height)-24f;var ratio=(float)character.Width/character.Height;var w=ratio>1?side:side*ratio;var h=ratio>1?side/ratio:side;g.DrawImage(character,-w/2,-h/2,w,h);}return Layered.Draw(Handle,bitmap,Location);}
 }
 sealed class MusicWindow:Form {
  readonly WebView2 view=new(){Dock=DockStyle.Fill};readonly string data;
@@ -78,5 +78,5 @@ static class Layered {
  [DllImport("user32.dll")]static extern IntPtr GetDC(IntPtr hwnd);[DllImport("user32.dll")]static extern int ReleaseDC(IntPtr hwnd,IntPtr dc);
  [DllImport("gdi32.dll")]static extern IntPtr CreateCompatibleDC(IntPtr dc);[DllImport("gdi32.dll")]static extern IntPtr SelectObject(IntPtr dc,IntPtr obj);[DllImport("gdi32.dll")]static extern bool DeleteObject(IntPtr obj);[DllImport("gdi32.dll")]static extern bool DeleteDC(IntPtr dc);
  [DllImport("user32.dll",SetLastError=true)]static extern bool UpdateLayeredWindow(IntPtr hwnd,IntPtr dst,ref PointI point,ref SizeI size,IntPtr src,ref PointI origin,uint color,ref Blend blend,uint flags);
- public static void Draw(IntPtr hwnd,Bitmap bitmap,Point position){var screen=GetDC(IntPtr.Zero);var dc=CreateCompatibleDC(screen);var hb=bitmap.GetHbitmap(Color.FromArgb(0));var old=SelectObject(dc,hb);try{var p=new PointI(position.X,position.Y);var size=new SizeI(bitmap.Width,bitmap.Height);var origin=new PointI(0,0);var blend=new Blend{Alpha=255,Format=1};UpdateLayeredWindow(hwnd,screen,ref p,ref size,dc,ref origin,0,ref blend,2);}finally{SelectObject(dc,old);DeleteObject(hb);DeleteDC(dc);ReleaseDC(IntPtr.Zero,screen);}}
+ public static bool Draw(IntPtr hwnd,Bitmap bitmap,Point position){var screen=GetDC(IntPtr.Zero);var dc=CreateCompatibleDC(screen);var hb=bitmap.GetHbitmap(Color.FromArgb(0));var old=SelectObject(dc,hb);try{var p=new PointI(position.X,position.Y);var size=new SizeI(bitmap.Width,bitmap.Height);var origin=new PointI(0,0);var blend=new Blend{Alpha=255,Format=1};return UpdateLayeredWindow(hwnd,screen,ref p,ref size,dc,ref origin,0,ref blend,2);}finally{SelectObject(dc,old);DeleteObject(hb);DeleteDC(dc);ReleaseDC(IntPtr.Zero,screen);}}
 }
