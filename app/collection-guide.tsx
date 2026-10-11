@@ -1,8 +1,8 @@
 import type {ReactNode} from 'react';
 import {Sparkles,Shuffle,Star,NotebookPen,Paintbrush,Music2,Search,Share2,MousePointer2,Move,RotateCw,Volume2,Download,Upload,ArrowRight} from 'lucide-react';
 const web=[
- {icon:Sparkles,title:'하치왕왕 보여줘',text:'준비된 사진 중 아직 만나지 않은 친구를 랜덤으로 뽑아요. 사진 창이 열리고 도감에 한 장이 추가돼요. 모두 만나면 기존 친구를 다시 보여줘요.'},
- {icon:Shuffle,title:'아무 하치왕왕 만나기',text:'이미 모은 사진 중 한 장을 랜덤으로 펼쳐요. 아래의 ‘도감 속 랜덤 하치왕왕’도 같은 기능이에요. 검색이나 별표를 선택했다면 그 결과 안에서 골라요.'},
+ {icon:Sparkles,title:'하치와레 보여줘',text:'준비된 사진 중 아직 만나지 않은 친구를 랜덤으로 뽑아요. 사진 창이 열리고 도감에 한 장이 추가돼요. 모두 만나면 기존 친구를 다시 보여줘요.'},
+ {icon:Shuffle,title:'아무 하치와레 만나기',text:'이미 모은 사진 중 한 장을 랜덤으로 펼쳐요. 아래의 ‘도감 속 랜덤 하치와레’도 같은 기능이에요. 검색이나 별표를 선택했다면 그 결과 안에서 골라요.'},
  {icon:Star,title:'별표로 모아 보기',text:'사진 카드의 별표나 사진 창의 ‘별표 붙이기’를 누르면 즐겨찾기에 담겨요. 왼쪽 ‘별표 한 순간’에서 모아 보고, 다시 누르면 별표가 해제돼요.'},
  {icon:NotebookPen,title:'사진마다 메모 남기기',text:'사진을 눌러 펼친 뒤 ‘메모’에 글을 남겨요. 입력을 멈추면 자동으로 저장돼요. ‘저장했어요’ 표시로 확인하거나 ‘저장’ 버튼을 눌러 주세요.'},
  {icon:Paintbrush,title:'사진 위에 드로잉',text:'사진 창에서 ‘드로잉’을 선택하고 펜 색과 굵기를 골라 그려요. 마지막 선을 되돌리거나 모두 지울 수 있어요. 그림도 자동 저장되며 원본 사진은 그대로예요.'},

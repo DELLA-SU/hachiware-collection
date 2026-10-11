@@ -84,7 +84,7 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
   NSApp.applicationIconImage=NSImage(contentsOfFile:Bundle.main.path(forResource:"character",ofType:"png")!)
   soundsEnabled=UserDefaults.standard.object(forKey:"motionSounds") as? Bool ?? true
   let menu=NSMenu()
-  menu.addItem(withTitle:"오늘의 하치왕왕 보여줘",action:#selector(collect),keyEquivalent:"")
+  menu.addItem(withTitle:"오늘의 하치와레 보여줘",action:#selector(collect),keyEquivalent:"")
   menu.addItem(withTitle:"공개 웹 도감 열기",action:#selector(openArchive),keyEquivalent:"")
   menu.addItem(withTitle:"하치와레 노래 들으러 가기",action:#selector(openMusic),keyEquivalent:"")
   menu.addItem(withTitle:"캐릭터 위치 초기화",action:#selector(resetPosition),keyEquivalent:"")
@@ -192,7 +192,7 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
   let screen=pet.screen?.visibleFrame ?? NSScreen.main!.visibleFrame
   let width=min(760,screen.width*0.76),height=min(840,screen.height-70)
   let w=NSWindow(contentRect:NSRect(x:0,y:0,width:width,height:height),styleMask:[.titled,.closable,.resizable],backing:.buffered,defer:false)
-  w.title="오늘의 하치왕왕";w.isReleasedWhenClosed=false;w.contentMinSize=NSSize(width:320,height:360)
+  w.title="오늘의 하치와레";w.isReleasedWhenClosed=false;w.contentMinSize=NSSize(width:320,height:360)
   w.backgroundColor=NSColor(calibratedRed:0.985,green:0.978,blue:0.949,alpha:1)
   let v=ClickableImageView(frame:NSRect(x:20,y:80,width:width-40,height:height-100))
   v.onClick=isUsagi ? { [weak self] in self?.playUna() } : nil
