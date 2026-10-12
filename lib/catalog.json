@@ -988,5 +988,385 @@
     "image_url": "photos/36db64265df831153ec9794f6779d1a1f8f797f5686c6f9ecce2e987917a86cc.jpg",
     "remote_url": "https://i.pinimg.com/736x/43/62/b7/4362b71e54fa53d4700577d7181b633a.jpg",
     "imported": 0
+  },
+  {
+    "id": "50b948cb44af20236f238752704706d3a64a751ec69a56e61a312a62b0d54436",
+    "title": "모몽가 · ちいかわ PUN。マスコット（モモンガ）",
+    "source": "https://chiikawamarket.jp/products/4571609339755",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "momonga",
+    "image_url": "photos/50b948cb44af20236f238752704706d3a64a751ec69a56e61a312a62b0d54436.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609339762_1.jpg",
+    "imported": 0
+  },
+  {
+    "id": "0e669c9913a67fc99ac878c60e49b46badf47527160ad65557b57ce0277b2606",
+    "title": "모몽가 · ちいかわ たおりんマスコット（モモンガ）",
+    "source": "https://chiikawamarket.jp/products/4582662982406",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "momonga",
+    "image_url": "photos/0e669c9913a67fc99ac878c60e49b46badf47527160ad65557b57ce0277b2606.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4582662982406_5.jpg",
+    "imported": 0
+  },
+  {
+    "id": "1afda81209a0bf70717ea014030c4a624e7033ee17393d3b671064544d06ccaa",
+    "title": "아노코 · ちいかわ あのこマスコット",
+    "source": "https://chiikawamarket.jp/products/4582662979222",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "anoko",
+    "image_url": "photos/1afda81209a0bf70717ea014030c4a624e7033ee17393d3b671064544d06ccaa.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4582662979222_1.jpg",
+    "imported": 0
+  },
+  {
+    "id": "20720864ee552ab1768bd76dc5d5b600f0d9ca1c0bdc617ad303a603f789ba65",
+    "title": "아노코 · ちいかわ あのこといっしょ ぬいぐるみショルダーバッグ",
+    "source": "https://chiikawamarket.jp/products/4582662944329",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "anoko",
+    "image_url": "photos/20720864ee552ab1768bd76dc5d5b600f0d9ca1c0bdc617ad303a603f789ba65.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4582662944329_1.jpg",
+    "imported": 0
+  },
+  {
+    "id": "d8a836969c0b4d8484a7a6de267637409521306d90601978a8aec81169f2f88a",
+    "title": "헌책방 · ちいかわ 4個セットアクリルバッジ（ピースな古本屋）",
+    "source": "https://chiikawamarket.jp/products/4571609350767",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "furuhonya",
+    "image_url": "photos/d8a836969c0b4d8484a7a6de267637409521306d90601978a8aec81169f2f88a.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609350767_1.jpg",
+    "imported": 0
+  },
+  {
+    "id": "6f7303a419ef5b91e3eabdc04b0a84ad77359421b487b758edf9c69c8a05363f",
+    "title": "헌책방 · ちいかわ 4枚セットプチステッカー（ピースな古本屋）",
+    "source": "https://chiikawamarket.jp/products/4571609350682",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "furuhonya",
+    "image_url": "photos/6f7303a419ef5b91e3eabdc04b0a84ad77359421b487b758edf9c69c8a05363f.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609350682_2.jpg",
+    "imported": 0
+  },
+  {
+    "id": "ea58b041781ead9721da5608f608d3ef832b9d551968d925ffa1f8a284f8bc9a",
+    "title": "쿠리만쥬 · ちいかわ PUN。マスコット（くりまんじゅう）",
+    "source": "https://chiikawamarket.jp/products/4571609339762",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "kurimanju",
+    "image_url": "photos/ea58b041781ead9721da5608f608d3ef832b9d551968d925ffa1f8a284f8bc9a.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609339755_1.jpg",
+    "imported": 0
+  },
+  {
+    "id": "9526843b9d602e154e531224ed82fed2217a1af3c030ffea6c776ec946fc4a93",
+    "title": "쿠리만쥬 · ちいかわ たおりんマスコット（くりまんじゅう）",
+    "source": "https://chiikawamarket.jp/products/4582662982413",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "kurimanju",
+    "image_url": "photos/9526843b9d602e154e531224ed82fed2217a1af3c030ffea6c776ec946fc4a93.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4582662982413_5.jpg",
+    "imported": 0
+  },
+  {
+    "id": "1ef411108dd771ef56e36617041f45ec0136ab43177863bc9129ff31aba86fca",
+    "title": "시사 · ちいかわ たおりんマスコット（シーサー）",
+    "source": "https://chiikawamarket.jp/products/4582662982390",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "shisa",
+    "image_url": "photos/1ef411108dd771ef56e36617041f45ec0136ab43177863bc9129ff31aba86fca.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4582662982390_5.jpg",
+    "imported": 0
+  },
+  {
+    "id": "0d04ff3c62661f880aa94b1fceebffdfb9058d06b3ed0ca0f8cffcbc8a474c1d",
+    "title": "시사 · ちいかわ 4個セットアクリルバッジ（ピースなシーサー）",
+    "source": "https://chiikawamarket.jp/products/4571609350743",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "shisa",
+    "image_url": "photos/0d04ff3c62661f880aa94b1fceebffdfb9058d06b3ed0ca0f8cffcbc8a474c1d.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609350743_1.jpg",
+    "imported": 0
+  },
+  {
+    "id": "4638e87b1cfff6fbc714d40e3fd5e5d001bfd1865f94f908600cbf2d7b36875a",
+    "title": "랏코 · ちいかわ 4個セットアクリルバッジ（ピースなラッコ）",
+    "source": "https://chiikawamarket.jp/products/4571609350750",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "rakko",
+    "image_url": "photos/4638e87b1cfff6fbc714d40e3fd5e5d001bfd1865f94f908600cbf2d7b36875a.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609350750_1.jpg",
+    "imported": 0
+  },
+  {
+    "id": "0630d1f1294f2c4fabcfabb44bfc1c844e864760170626ad46ec28aff28e100a",
+    "title": "랏코 · ちいかわ 4枚セットプチステッカー（ピースなラッコ）",
+    "source": "https://chiikawamarket.jp/products/4571609350675",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "rakko",
+    "image_url": "photos/0630d1f1294f2c4fabcfabb44bfc1c844e864760170626ad46ec28aff28e100a.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609350675_2.jpg",
+    "imported": 0
+  },
+  {
+    "id": "18d1aac95034706717debf1bcdac55256cd983cc84ee3f884756bba6fa30ae17",
+    "title": "파자마 파티즈 · 【予約】ちいかわ パジャマパーティーズセット（セット購入特典ポストカード付き）【2024年8月下旬より順次発送予定（発送延期の場合もキャンセル不可）】【他の商品と同時購入不可】【キャンペーン対象外】",
+    "source": "https://chiikawamarket.jp/products/4589468446842",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "pajama",
+    "image_url": "photos/18d1aac95034706717debf1bcdac55256cd983cc84ee3f884756bba6fa30ae17.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4589468446842_1.jpg",
+    "imported": 0
+  },
+  {
+    "id": "9e60303b2cef4d379b382c17fdeec9e65c42b5884d53049bb690e05b63fba8e9",
+    "title": "세이렌 · 【予約】ちいかわ 映画ちいかわ セイレーンぬいぐるみL【2026年12月中旬より順次発送予定（発送延期の場合もキャンセル不可）】【通常商品と同時購入・配送希望日指定不可】",
+    "source": "https://chiikawamarket.jp/products/4571609405900",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "seiren",
+    "image_url": "photos/9e60303b2cef4d379b382c17fdeec9e65c42b5884d53049bb690e05b63fba8e9.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/36c93af051bf2c0f34b6cf96c59b5407.jpg",
+    "imported": 0
+  },
+  {
+    "id": "31501ae2f8050d38d5922a66e9ca4f2756f7792c4882c8c7fdaebed95416f721",
+    "title": "세이렌 · 【予約】ちいかわ 映画ちいかわ ちょっと大きなセイレーンぬいぐるみ【2026年11月下旬より順次発送予定（発送延期の場合もキャンセル不可）】【通常商品と同時購入・配送希望日指定不可】",
+    "source": "https://chiikawamarket.jp/products/4571609399193",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "seiren",
+    "image_url": "photos/31501ae2f8050d38d5922a66e9ca4f2756f7792c4882c8c7fdaebed95416f721.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609399193_1_pre.jpg",
+    "imported": 0
+  },
+  {
+    "id": "3c8fc05790a294191fb4686994dca051d24b643ba80a48d661fbc6c336039bd3",
+    "title": "인어 · 【予約】ちいかわ 映画ちいかわ マスコット（人魚）【2026年11月下旬より順次発送予定（発送延期の場合もキャンセル不可）】【通常商品と同時購入・配送希望日指定不可】",
+    "source": "https://chiikawamarket.jp/products/4571609399346",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "ningyo",
+    "image_url": "photos/3c8fc05790a294191fb4686994dca051d24b643ba80a48d661fbc6c336039bd3.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609399346_1_pre.jpg",
+    "imported": 0
+  },
+  {
+    "id": "9badfd682a3d12123a04abc02826885dc9ebaf8d0b56f301927ccfa93bcb9839",
+    "title": "별똥별 · 【予約】ちいかわ 流れ星なぬいぐるみバッジ3個セット【2024年6月上旬より順次発送予定（発送延期の場合もキャンセル不可）】【通常商品と同時購入・配送希望日指定不可】【キャンペーン対象外】",
+    "source": "https://chiikawamarket.jp/products/4582662955301",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "star",
+    "image_url": "photos/9badfd682a3d12123a04abc02826885dc9ebaf8d0b56f301927ccfa93bcb9839.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4582662955301-_pre.jpg",
+    "imported": 0
+  },
+  {
+    "id": "d6692b14d053d45dd2b58d74d52d8f9b188a3035c348b27f7167dc04b346f68d",
+    "title": "오데 · ちいかわ 「オデ」のぬいぐるみ",
+    "source": "https://chiikawamarket.jp/products/4582662913578",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "ode",
+    "image_url": "photos/d6692b14d053d45dd2b58d74d52d8f9b188a3035c348b27f7167dc04b346f68d.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4582662913578_1_19e0c890-b43a-4782-a1b9-cbc5c5fcdaee.jpg",
+    "imported": 0
+  },
+  {
+    "id": "559c409944b081729a5349fbe5709b21b2ce718b345a2fcaf1aead51af1f769e",
+    "title": "오데 · ちいかわ ちいかわパーク うきうきぬいぐるみキャップ（オデ）",
+    "source": "https://chiikawamarket.jp/products/4571609362050",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "ode",
+    "image_url": "photos/559c409944b081729a5349fbe5709b21b2ce718b345a2fcaf1aead51af1f769e.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609362050_1.jpg",
+    "imported": 0
+  },
+  {
+    "id": "e24da692129b8eb142f1a105f68d499aa4131587c6f90ffc27a753d7f03293b3",
+    "title": "카부토무시 · ちいかわ おなまえダイカットアクリルキーホルダー（カブトムシ）",
+    "source": "https://chiikawamarket.jp/products/4582662920163",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "kabutomushi",
+    "image_url": "photos/e24da692129b8eb142f1a105f68d499aa4131587c6f90ffc27a753d7f03293b3.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/products/4582662920163_1.jpg",
+    "imported": 0
+  },
+  {
+    "id": "e01fcc963cdb5489a8c282401c930b61707a8dabc130985b90a8780566412277",
+    "title": "카부토무시 · ちいかわ ちいかわパーク ぬいぐるみカチューシャ（カブトムシ）",
+    "source": "https://chiikawamarket.jp/products/4571609362296",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "kabutomushi",
+    "image_url": "photos/e01fcc963cdb5489a8c282401c930b61707a8dabc130985b90a8780566412277.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609362296_1_14fa9b00-e040-4e69-b563-04f0bf5e14c4.jpg",
+    "imported": 0
+  },
+  {
+    "id": "44a407d7d9e2ae923db831ed13457711ce2c3656fba1dba2eab2662281eab237",
+    "title": "갑옷씨 · ちいかわ 3連アクリルキーホルダー（鎧さんたち）",
+    "source": "https://chiikawamarket.jp/products/4979274677286",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "armor",
+    "image_url": "photos/44a407d7d9e2ae923db831ed13457711ce2c3656fba1dba2eab2662281eab237.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/products/000000000874_1.jpg",
+    "imported": 0
+  },
+  {
+    "id": "6819e3ef2038acc0fbe2fdc8a51f22bc520e5e43f25a86b964cdf4554b553f0f",
+    "title": "고블린 · ちいかわ ちいかわパーク ぬいぐるみカチューシャ（ゴブリン）",
+    "source": "https://chiikawamarket.jp/products/4571609362302",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "goblin",
+    "image_url": "photos/6819e3ef2038acc0fbe2fdc8a51f22bc520e5e43f25a86b964cdf4554b553f0f.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609362302_1_8919ce68-b1d7-4636-91d7-4cad4d60f56e.jpg",
+    "imported": 0
+  },
+  {
+    "id": "5bbf3b7d6e46025cbab3dd48a3a50ba19715157004d640ea44dbfae7d8ae816b",
+    "title": "고블린 · ちいかわ ちいかわパーク うきうきぬいぐるみキャップ（ゴブリン）",
+    "source": "https://chiikawamarket.jp/products/4571609362029",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "goblin",
+    "image_url": "photos/5bbf3b7d6e46025cbab3dd48a3a50ba19715157004d640ea44dbfae7d8ae816b.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609362029_1_a75ed379-9a64-45ae-9fd2-5d26d975b9fb.jpg",
+    "imported": 0
+  },
+  {
+    "id": "139838c09c425ba4618d015f0cb6d010ba17fc98c06e884edb4d71f2bedf824c",
+    "title": "무챠우맨 · ちいかわ ちいかわパーク ミニマスコットキーリング（むちゃうマン）",
+    "source": "https://chiikawamarket.jp/products/4571609362760",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "muchau-man",
+    "image_url": "photos/139838c09c425ba4618d015f0cb6d010ba17fc98c06e884edb4d71f2bedf824c.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609362760_1.jpg",
+    "imported": 0
+  },
+  {
+    "id": "045919f321c1c5423d9fad449fa4a17398052f6d97b0e26663db10d59f6ea5f2",
+    "title": "무챠우맨 · ちいかわ ちいかわパーク ふわふわくったりぬいぐるみ（むちゃうマン）",
+    "source": "https://chiikawamarket.jp/products/4571609351603",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "muchau-man",
+    "image_url": "photos/045919f321c1c5423d9fad449fa4a17398052f6d97b0e26663db10d59f6ea5f2.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609351603_1_cb808b0a-126a-47d8-8dc5-c072d6ddd36e.jpg",
+    "imported": 0
+  },
+  {
+    "id": "33660cabc18153a022014d2b6fe947699e4e5d93ab067da077008d60e10f8cfc",
+    "title": "데카츠요 · ちいかわ ちいかわパーク ぬいぐるみカチューシャ（でかつよ）",
+    "source": "https://chiikawamarket.jp/products/4571609362326",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "dekatsuyo",
+    "image_url": "photos/33660cabc18153a022014d2b6fe947699e4e5d93ab067da077008d60e10f8cfc.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609362326_1_6e89fe44-3d11-4ef1-b282-a112519c5856.jpg",
+    "imported": 0
+  },
+  {
+    "id": "e9c8b759a3d0d7e6ba4835d7745b210ea6bcf1656c2c7b2250af0241e67ab8c2",
+    "title": "데카츠요 · ちいかわ ちいかわパーク うきうきぬいぐるみキャップ（でかつよ）",
+    "source": "https://chiikawamarket.jp/products/4571609362043",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "dekatsuyo",
+    "image_url": "photos/e9c8b759a3d0d7e6ba4835d7745b210ea6bcf1656c2c7b2250af0241e67ab8c2.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609362043_1_a0b65055-cd2a-4dc6-9121-dfae5b959258.jpg",
+    "imported": 0
+  },
+  {
+    "id": "b58ab5dfcd99d327654ae2ece593abd2e95612228e2d51d5993c6c6d154dfb62",
+    "title": "키메라 · ちいかわ ちいかわパーク うきうきぬいぐるみキャップ（キメラ）",
+    "source": "https://chiikawamarket.jp/products/4571609362036",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "chimera",
+    "image_url": "photos/b58ab5dfcd99d327654ae2ece593abd2e95612228e2d51d5993c6c6d154dfb62.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609362036_1_a418067f-8b4a-4133-ad0e-8cbc3229efc7.jpg",
+    "imported": 0
+  },
+  {
+    "id": "ab826b11a85d7156de950f7cd206875435cc610e7c888727c2c2f5e296c7a5ce",
+    "title": "키메라 · ちいかわ ちいかわパーク マスコットサイズなうきうきぬいぐるみキャップ（キメラ）",
+    "source": "https://chiikawamarket.jp/products/4571609367543",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "chimera",
+    "image_url": "photos/ab826b11a85d7156de950f7cd206875435cc610e7c888727c2c2f5e296c7a5ce.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609367543_1.jpg",
+    "imported": 0
+  },
+  {
+    "id": "9b4e1e87795aa240e22dce48e9981f91193e23f395ddd0509f4b78f904de61a9",
+    "title": "복어 · ちいかわ ちいかわパーク マスコット（フグ）",
+    "source": "https://chiikawamarket.jp/products/4571609351641",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "fugu",
+    "image_url": "photos/9b4e1e87795aa240e22dce48e9981f91193e23f395ddd0509f4b78f904de61a9.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609351641_1.jpg",
+    "imported": 0
+  },
+  {
+    "id": "26d161ecc72782510b42ceb5a006638525951b5c19e7db9e5b99170289953801",
+    "title": "복어 · ちいかわ ちいかわパーク ぬいぐるみS（フグ）",
+    "source": "https://chiikawamarket.jp/products/4571609351658",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "fugu",
+    "image_url": "photos/26d161ecc72782510b42ceb5a006638525951b5c19e7db9e5b99170289953801.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609351658_1.jpg",
+    "imported": 0
+  },
+  {
+    "id": "ba52a33dd2fb30e33e71f7cea49f0d925340fd0906a75ac97539d30b39b6b83b",
+    "title": "포셰트 갑옷씨 · ちいかわ ちいかわパーク うきうきぬいぐるみキャップ（ポシェットの鎧さん）",
+    "source": "https://chiikawamarket.jp/products/4571609362012",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "armor-pochette",
+    "image_url": "photos/ba52a33dd2fb30e33e71f7cea49f0d925340fd0906a75ac97539d30b39b6b83b.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609362012_1_1e11f2fa-e35e-4b27-9b61-7d72c85939db.jpg",
+    "imported": 0
+  },
+  {
+    "id": "0a1f6a691bd10746cd33f7599c800aa1aaf3b5e843cbbab9c42e4b856c4c409e",
+    "title": "포셰트 갑옷씨 · ちいかわ ちいかわパーク フィギュアキーホルダー（ポシェットの鎧さん）",
+    "source": "https://chiikawamarket.jp/products/4573256437853",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "armor-pochette",
+    "image_url": "photos/0a1f6a691bd10746cd33f7599c800aa1aaf3b5e843cbbab9c42e4b856c4c409e.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4573256437853_1.jpg",
+    "imported": 0
+  },
+  {
+    "id": "70409581a03ad716e676f2d110b2db67a2439aa4ad449957d810ee8ed498370d",
+    "title": "개복치 · ちいかわ ちいかわパーク ぬいぐるみカチューシャ（うさぎマンボウ）",
+    "source": "https://chiikawamarket.jp/products/4571609362364",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "manbo",
+    "image_url": "photos/70409581a03ad716e676f2d110b2db67a2439aa4ad449957d810ee8ed498370d.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609362364_1_ee7e9446-2aa9-47f7-b93b-c67eab2c62e7.jpg",
+    "imported": 0
+  },
+  {
+    "id": "9a2c0e941d0542c561a1823c545c776f17d684c4eb1086499a0d961059f5b3aa",
+    "title": "가위바위보 의태형 · ちいかわ ちいかわパーク ぬいぐるみカチューシャ（グーチョキパーの擬態型）",
+    "source": "https://chiikawamarket.jp/products/4571609362357",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "rock-paper-scissors",
+    "image_url": "photos/9a2c0e941d0542c561a1823c545c776f17d684c4eb1086499a0d961059f5b3aa.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609362357_1_7b0de99b-c4ab-4801-acf7-959c330b8745.jpg",
+    "imported": 0
+  },
+  {
+    "id": "26d726cc4873047b62f8602a69b2f56694cc734854d32bf84abf26afcbd0c159",
+    "title": "세 별 · ちいかわ ちいかわパーク ぬいぐるみカチューシャ（三ツ星）",
+    "source": "https://chiikawamarket.jp/products/4571609362333",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "three-stars",
+    "image_url": "photos/26d726cc4873047b62f8602a69b2f56694cc734854d32bf84abf26afcbd0c159.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609362333_1_47c379f1-c61c-4227-b904-4b80026bfc13.jpg",
+    "imported": 0
+  },
+  {
+    "id": "1cd53433fc4e50530999a14c886c1a924c3d759adc0dcb5d8fa52de8fb3e0bb8",
+    "title": "벌레들 · ちいかわ ちいかわパーク ぬいぐるみカチューシャ（虫/黄緑）",
+    "source": "https://chiikawamarket.jp/products/4571609362319",
+    "source_kind": "치이카와 공식 마켓",
+    "character": "bugs",
+    "image_url": "photos/1cd53433fc4e50530999a14c886c1a924c3d759adc0dcb5d8fa52de8fb3e0bb8.jpg",
+    "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609362319_1_54a3fa38-6bff-4b75-9cfa-6f7939fa616d.jpg",
+    "imported": 0
   }
 ]

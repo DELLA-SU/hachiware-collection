@@ -1,3 +1,4 @@
+import keywords from '../lib/collection-keywords.json';
 type SearchPhoto={title:string;source_kind:string;character?:string};
 export function photoMatchesSearch(photo:SearchPhoto,photoNumber:string,photoDay:string,input:string){
  const query=input.trim().toLowerCase();
@@ -10,7 +11,8 @@ export function photoMatchesSearch(photo:SearchPhoto,photoNumber:string,photoDay
   const prefix=[date[1],date[2]?.padStart(2,'0'),date[3]?.padStart(2,'0')].filter(Boolean).join('-');
   return photoDay.startsWith(prefix);
  }
- const names=photo.character==='usagi'?'우사기 usagi':photo.character==='hachiware'?'하치와레 hachiware':photo.character==='chiikawa'?'치이카와 chiikawa':'';
+ const entry=keywords.find(k=>k.id===photo.character);
+ const names=entry?[entry.name,entry.japanese,...entry.aliases].join(' '):'';
  const text=[photo.title,photo.source_kind,photoDay,photoDay.replaceAll('-','.'),photoNumber,names].join(' ').toLowerCase();
  return query.split(/\s+/).every(term=>text.includes(term));
 }
