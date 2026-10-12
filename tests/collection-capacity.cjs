@@ -8,7 +8,8 @@ const context={catalog,assetUrl:p=>'/hachiware-collection/'+p,memory:{state:stru
  assert(catalog.length>55,'More than 55 unique source photos are required');assert.equal(new Set(catalog.map(p=>p.id)).size,catalog.length);
  for(const p of catalog)assert(fs.existsSync(path.join(root,'public',p.image_url)),'Missing image '+p.id);
  for(let count=56;count<=catalog.length;count++){
-  const request_id='collection-test-request-'+count,r=await context.collect('/api/collect',{method:'POST',body:JSON.stringify({request_id})}),j=await r.json();assert.equal(r.status,200);assert.equal(j.existing,false);assert.equal(context.memory.state.photos.length,count);
+  const before=context.memory.state;const last=before.photos.find(p=>p.id===before.last)?.character;const unseen=catalog.filter(p=>!before.photos.some(q=>q.id===p.id));
+  const request_id='collection-test-request-'+count,r=await context.collect('/api/collect',{method:'POST',body:JSON.stringify({request_id})}),j=await r.json();assert.equal(r.status,200);assert.equal(j.existing,false);if(last&&unseen.some(p=>p.character!==last))assert.notEqual(j.photo.character,last,'Vary characters when another unseen character is available');assert.equal(context.memory.state.photos.length,count);
   const repeat=await(await context.collect('/api/collect',{method:'POST',body:JSON.stringify({request_id})})).json();assert.equal(repeat.photo.id,j.photo.id);assert.equal(context.memory.state.photos.length,count);
  }
  assert.equal(new Set(context.memory.state.photos.map(p=>p.id)).size,catalog.length);

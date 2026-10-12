@@ -32,7 +32,16 @@ async function handle(input:string,init?:RequestInit){
   const newPhotos=catalog.filter(p=>!state.photos.some(s=>s.id===p.id));let existing=!newPhotos.length;
   let choices:any[]=existing?visible().filter(p=>p.id!==state.last):newPhotos;if(!choices.length&&existing)choices=visible();
   if(!choices.length)return json({error:'남아 있는 사진이 없어요. 삭제한 사진을 복원해 주세요.'},404);
-  let photo=choices[Math.floor(Math.random()*choices.length)];
+  let pool=choices;
+  if(!existing){
+   const groups=new Map<string,any[]>();
+   for(const p of choices){const character=p.character||'friends';const group=groups.get(character)||[];group.push(p);groups.set(character,group);}
+   const previous=state.photos.find(p=>p.id===state.last)?.character||'friends';
+   const kinds=[...groups.keys()],different=kinds.filter(k=>k!==previous),eligible=different.length?different:kinds;
+   // Pick a character first so large photo collections do not dominate small ones.
+   const character=eligible[Math.floor(Math.random()*eligible.length)];pool=groups.get(character)!;
+  }
+  let photo=pool[Math.floor(Math.random()*pool.length)];
   if(!existing){photo={...photo,image_url:assetUrl(photo.image_url),collected_at:new Date().toISOString(),favorite:0};state.photos.push(photo);}
   state.last=photo.id;state.requests[b.request_id]=photo.id;
   const keys=Object.keys(state.requests);keys.slice(0,Math.max(0,keys.length-200)).forEach(k=>delete state.requests[k]);
