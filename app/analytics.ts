@@ -15,7 +15,7 @@ export function analyticsConsent(): 'granted'|'denied'|null {
 }
 function pageFields(){
  let referrer='';try{referrer=new URL(document.referrer).origin;}catch{}
- return {page_location:location.origin+location.pathname,page_referrer:referrer,page_title:'하치와레 도감'};
+ return {page_location:location.origin+location.pathname,page_referrer:referrer,page_title:'치이카와 가챠'};
 }
 export function initAnalytics(){
  if(!live()||analyticsConsent()!=='granted')return;

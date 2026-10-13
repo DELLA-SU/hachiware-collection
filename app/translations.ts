@@ -2094,5 +2094,380 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "Source",
   "zh": "来源",
   "ja": "出典"
+ },
+ "모은 치이들": {
+  "en": "Collected friends",
+  "zh": "收藏的小可爱",
+  "ja": "集めたちいちゃんたち"
+ },
+ "치이 친구": {
+  "en": "Chii friend",
+  "zh": "吉伊卡哇朋友",
+  "ja": "ちいかわフレンド"
+ },
+ "치이카와 노래 TV": {
+  "en": "Chiikawa music TV",
+  "zh": "吉伊卡哇音乐电视",
+  "ja": "ちいかわの歌TV"
+ },
+ "바탕화면 치이 친구 받기": {
+  "en": "Get desktop Chii friend",
+  "zh": "下载桌面吉伊卡哇朋友",
+  "ja": "デスクトップ版ちいかわフレンドを入手"
+ },
+ "치이카와 뽑기": {
+  "en": "Draw Chiikawa",
+  "zh": "抽取吉伊卡哇",
+  "ja": "ちいかわを引く"
+ },
+ "치이카와 노래 유튜브 영상": {
+  "en": "Chiikawa song on YouTube",
+  "zh": "YouTube吉伊卡哇歌曲",
+  "ja": "ちいかわの歌のYouTube動画"
+ },
+ "맥용 치이 친구 받기": {
+  "en": "Download Chii friend for Mac",
+  "zh": "下载Mac版吉伊卡哇朋友",
+  "ja": "Mac版ちいかわフレンドをダウンロード"
+ },
+ "윈도우용 치이 친구 받기": {
+  "en": "Download Chii friend for Windows",
+  "zh": "下载Windows版吉伊卡哇朋友",
+  "ja": "Windows版ちいかわフレンドをダウンロード"
+ },
+ "바탕화면 치이 친구 아이콘": {
+  "en": "Desktop Chii friend icon",
+  "zh": "桌面吉伊卡哇朋友图标",
+  "ja": "デスクトップのちいかわフレンドアイコン"
+ },
+ "치이카와 노래를 들어요.": {
+  "en": "listen to Chiikawa's song.",
+  "zh": "听吉伊卡哇唱歌。",
+  "ja": "ちいかわの歌を聴こう。"
+ },
+ "치이 친구를 한 번 클릭하면 열리는 우사기 사진 창": {
+  "en": "Usagi photo window opened with one click",
+  "zh": "单击后打开的乌萨奇照片窗口",
+  "ja": "1回クリックで開くうさぎの写真ウィンドウ"
+ },
+ "치이 친구를 두 번 클릭하면 열리는 노래 TV 창": {
+  "en": "Music TV opened with a double click",
+  "zh": "双击后打开的音乐电视窗口",
+  "ja": "ダブルクリックで開く歌のTV"
+ },
+ "치이 친구를 끄고 다시 켜려면?": {
+  "en": "How do I quit and reopen Chii friend?",
+  "zh": "如何关闭和重新打开吉伊卡哇朋友？",
+  "ja": "ちいかわフレンドを終了して、また開くには？"
+ },
+ "치이 친구를 오른쪽 클릭하거나 화면 맨 위 메뉴 막대의 🐾를 눌러 ‘종료’를 선택해요. 트랙패드는 두 손가락으로 클릭해요.": {
+  "en": "Right-click Chii friend or click 🐾 in the menu bar, then choose Quit. On a trackpad, click with two fingers.",
+  "zh": "右键点击吉伊卡哇朋友，或点击顶部菜单栏的🐾，然后选择“退出”。触控板请用双指点击。",
+  "ja": "ちいかわフレンドを右クリック、またはメニューバーの🐾を押して「終了」を選びます。トラックパッドは2本指でクリック。"
+ },
+ "치이 친구를 오른쪽 클릭하고 ‘종료’를 선택해요. 작업 표시줄 오른쪽의 치이 친구 아이콘을 오른쪽 클릭해도 돼요.": {
+  "en": "Right-click Chii friend and choose Quit. You can also right-click its taskbar tray icon.",
+  "zh": "右键点击吉伊卡哇朋友并选择“退出”。也可以右键点击任务栏通知区域的吉伊卡哇朋友图标。",
+  "ja": "ちいかわフレンドを右クリックして「終了」を選びます。タスクトレイのアイコンからも終了できます。"
+ },
+ "Finder → 응용 프로그램에서 ‘치이 친구.app’을 더블클릭해요. 옮겨 두지 않았다면 압축을 푼 폴더에서 실행해 주세요.": {
+  "en": "In Finder → Applications, double-click 치이 친구.app. If you haven't moved it, open it from the extracted folder.",
+  "zh": "在Finder→应用程序中双击“하치와레.app”。如果尚未移动，请从解压后的文件夹打开。",
+  "ja": "Finder→アプリケーションで「하치와레.app」をダブルクリック。移動していない場合は解凍したフォルダから開きます。"
+ },
+ "사진 창이나 TV 창의 닫기 버튼은 그 창만 닫아요. 바탕화면 치이 친구를 끄려면 ‘종료’를 선택해 주세요.": {
+  "en": "Closing a photo or TV window closes only that window. Choose Quit to stop the desktop character.",
+  "zh": "关闭照片或电视窗口只会关闭该窗口。要关闭桌面角色，请选择“退出”。",
+  "ja": "写真やTVの閉じるボタンは、そのウィンドウだけを閉じます。キャラクターを終了するには「終了」を選んでください。"
+ },
+ "치이 친구 실행": {
+  "en": "Open Chii friend",
+  "zh": "打开吉伊卡哇朋友",
+  "ja": "ちいかわフレンドを起動"
+ },
+ "‘맥용 치이 친구 받기’를 눌러 ZIP 파일을 받아요.": {
+  "en": "Click “Download Chii friend for Mac” to get the ZIP file.",
+  "zh": "点击“下载Mac版吉伊卡哇朋友”获取ZIP文件。",
+  "ja": "「Mac版ちいかわフレンドをダウンロード」でZIPファイルを取得します。"
+ },
+ "ZIP 파일을 더블클릭한 다음 ‘치이 친구.app’을 응용 프로그램 폴더로 옮겨 주세요.": {
+  "en": "Double-click the ZIP, then move 치이 친구.app into Applications.",
+  "zh": "双击ZIP文件，然后将“하치와레.app”移动到应用程序文件夹。",
+  "ja": "ZIPをダブルクリックして「하치와레.app」をアプリケーションフォルダに移動してください。"
+ },
+ "앱을 더블클릭하면 바탕화면에 치이 친구가 나타나요.": {
+  "en": "Double-click the app to bring Chii friend to your desktop.",
+  "zh": "双击应用，吉伊卡哇朋友就会出现在桌面上。",
+  "ja": "アプリをダブルクリックすると、デスクトップにちいかわフレンドが現れます。"
+ },
+ "Intel·AMD PC에서 ‘윈도우용 치이 친구 받기’를 눌러 ZIP 파일을 받아요.": {
+  "en": "On an Intel or AMD PC, click “Download Chii friend for Windows” to get the ZIP file.",
+  "zh": "在Intel或AMD电脑上，点击“下载Windows版吉伊卡哇朋友”获取ZIP文件。",
+  "ja": "Intel・AMDのPCでは「Windows版ちいかわフレンドをダウンロード」でZIPを取得します。"
+ },
+ "바탕화면 치이 친구": {
+  "en": "Desktop Chii friend",
+  "zh": "桌面吉伊卡哇朋友",
+  "ja": "デスクトップのちいかわフレンド"
+ },
+ "바탕화면 치이 친구 사용 방법": {
+  "en": "Using desktop Chii friend",
+  "zh": "桌面吉伊卡哇朋友使用方法",
+  "ja": "デスクトップ版ちいかわフレンドの使い方"
+ },
+ "왼쪽 ‘바탕화면 치이 친구 받기’를 누르면 팝업에서 맥용·윈도우용을 선택하고 설치 방법도 볼 수 있어요. 맥은 압축을 풀고 응용 프로그램 폴더에 옮겨 실행하고, 윈도우는 ZIP의 압축을 모두 풀고 Hachiware.exe를 실행해요.": {
+  "en": "Choose Get desktop Chii friend to select Mac or Windows and read the installation guide. On Mac, extract and move the app to Applications. On Windows, extract the whole ZIP and run Chii friend.exe.",
+  "zh": "点击“下载桌面吉伊卡哇朋友”选择Mac或Windows，并查看安装指南。Mac请解压并移动至应用程序；Windows请全部解压ZIP并运行Hachiware.exe。",
+  "ja": "左の「デスクトップ版ちいかわフレンドを入手」でMac・Windowsを選び、インストール方法を確認できます。Macは解凍してアプリケーションに移動、WindowsはZIPをすべて展開してHachiware.exeを起動します。"
+ },
+ "바탕화면 치이 친구를 한 번 누르면 랜덤 사진 창이 떠요. ‘웹사이트 바로가기’로 웹 도감을 열 수 있어요.": {
+  "en": "Click desktop Chii friend once for a random photo. Open website opens the web collection.",
+  "zh": "单击桌面吉伊卡哇朋友会打开随机照片窗口。点击“打开网站”可打开网页收藏册。",
+  "ja": "デスクトップのちいかわフレンドを1回押すとランダムな写真が開きます。「ウェブサイトへ」でウェブ図鑑を開けます。"
+ },
+ "캐릭터를 빠르게 두 번 누르면 바탕화면에 치이카와 TV가 열리고 노래가 바로 재생돼요. 창을 닫으면 음악도 멈춰요.": {
+  "en": "Double-click the character to open music TV. Closing the window stops the music.",
+  "zh": "快速双击角色会打开音乐电视并播放歌曲。关闭窗口会停止音乐。",
+  "ja": "キャラクターを素早く2回押すと歌のTVが開きます。ウィンドウを閉じると歌も止まります。"
+ },
+ "오늘의 치이카와": {
+  "en": "Today's Chiikawa",
+  "zh": "今天的吉伊卡哇",
+  "ja": "今日のちいかわ"
+ },
+ "치이카와-도감.json": {
+  "en": "hachiware-collection.json",
+  "zh": "吉伊卡哇-收藏册.json",
+  "ja": "ちいかわ図鑑.json"
+ },
+ "치이카와 가챠": {
+  "en": "Chiikawa Gacha",
+  "zh": "吉伊卡哇扭蛋",
+  "ja": "ちいかわガチャ"
+ },
+ "창 없이 바탕화면에 떠 있는 치이 친구 예시": {
+  "en": "Example of Chii friend floating on the desktop without a window",
+  "zh": "吉伊卡哇朋友不带窗口漂浮在桌面上的示意图",
+  "ja": "ウィンドウなしでデスクトップに浮かぶちいかわフレンドの例"
+ },
+ "떠 있는 치이 친구를 한 번 또는 두 번 눌러 보세요.": {
+  "en": "Click your floating Chii friend once or twice.",
+  "zh": "试着单击或双击漂浮的吉伊卡哇朋友。",
+  "ja": "浮かぶちいかわフレンドを1回、または2回クリックしてみてね。"
+ },
+ "치이 친구를 오른쪽 클릭하거나 메뉴 막대의 🐾 → 캐릭터 크기를 눌러요.": {
+  "en": "Right-click Chii friend, or choose 🐾 in the menu bar → Character size.",
+  "zh": "右键点击吉伊卡哇朋友，或选择菜单栏的 🐾 → 角色大小。",
+  "ja": "ちいかわフレンドを右クリック、またはメニューバーの 🐾 → キャラクターの大きさを選びます。"
+ },
+ "치이 친구를 오른쪽 클릭하거나 작업 표시줄 아이콘 → 캐릭터 크기를 눌러요.": {
+  "en": "Right-click Chii friend or the taskbar icon → Character size.",
+  "zh": "右键点击吉伊卡哇朋友或任务栏图标 → 角色大小。",
+  "ja": "ちいかわフレンドかタスクバーのアイコンを右クリック → キャラクターの大きさを選びます。"
+ },
+ "새로운 치이 한 장을 도감에 담았어요!": {
+  "en": "A new Chii photo joined your collection!",
+  "zh": "一张新的吉伊卡哇照片加入收藏啦！",
+  "ja": "新しいちい写真を図鑑に加えたよ！"
+ },
+ "찾는 치이가 아직 없어요.": {
+  "en": "No matching Chii photos yet.",
+  "zh": "还没有找到对应的吉伊卡哇照片。",
+  "ja": "探しているちい写真はまだないよ。"
+ },
+ "첫 치이를 만나볼까요?": {
+  "en": "Shall we meet your first Chii friend?",
+  "zh": "要不要遇见第一位吉伊卡哇朋友？",
+  "ja": "最初のちい友だちに会ってみよう？"
+ },
+ "검색을 바꾸거나 ‘치이카와 뽑기’로 한 장을 담아보세요.": {
+  "en": "Try another search or draw a Chiikawa photo.",
+  "zh": "换个关键词，或抽一张吉伊卡哇照片吧。",
+  "ja": "検索を変えるか「ちいかわガチャ」で一枚集めてね。"
+ },
+ "오늘의 치이들": {
+  "en": "Today's Chii friends",
+  "zh": "今天的吉伊卡哇朋友",
+  "ja": "今日のちい友だち"
+ },
+ "치이들의 작은 TV": {
+  "en": "Chii friends' little TV",
+  "zh": "吉伊卡哇朋友的小电视",
+  "ja": "ちい友だちの小さなTV"
+ },
+ "치이들과 노래 들으러 왔어요 ♪": {
+  "en": "Time for music with Chii friends ♪",
+  "zh": "和吉伊卡哇朋友一起听歌 ♪",
+  "ja": "ちい友だちと歌を聴こう ♪"
+ },
+ "내 바탕화면에, 작은 치이 친구 하나.": {
+  "en": "A little Chii friend on your desktop.",
+  "zh": "桌面上，多了一位小小的吉伊卡哇朋友。",
+  "ja": "デスクトップに、小さなちい友だち。"
+ },
+ "웹 창 안의 그림이 아니에요. 앱을 켜면 작은 치이 친구가 화면 위에 둥실 떠 있어요.": {
+  "en": "Open the app and a little Chii friend floats above your desktop.",
+  "zh": "打开应用，小小的吉伊卡哇朋友就会漂浮在桌面上。",
+  "ja": "アプリを開くと、小さなちい友だちがデスクトップにふわっと浮かぶよ。"
+ },
+ "실제 장면 속 카드의 주인공이 되어 볼까요?": {
+  "en": "Put yourself in a card from the story.",
+  "zh": "成为作品卡片上的主角吧。",
+  "ja": "作品のカードの主役になってみよう？"
+ },
+ "이 자격증 만들기": {
+  "en": "Make this card",
+  "zh": "制作这张证书",
+  "ja": "このカードを作る"
+ },
+ "자격증 종류": {
+  "en": "Qualification type",
+  "zh": "资格证种类",
+  "ja": "資格の種類"
+ },
+ "원본 장면·출처 보기": {
+  "en": "View the original scene and source",
+  "zh": "查看原始场景与出处",
+  "ja": "元の場面・出典を見る"
+ },
+ "작품과 공식 콜라보 이미지를 활용한 사진 놀이예요. 실제 효력이 있는 자격증은 아니에요.": {
+  "en": "A photo activity using story and official collaboration images. These are playful cards with no real qualification status.",
+  "zh": "使用作品与官方联名图片的照片游戏，不具有真实资格证明效力。",
+  "ja": "作品や公式コラボ画像を使った写真遊びです。実際の資格としての効力はありません。"
+ },
+ "1급": {
+  "en": "Grade 1",
+  "zh": "1级",
+  "ja": "1級"
+ },
+ "3급": {
+  "en": "Grade 3",
+  "zh": "3级",
+  "ja": "3級"
+ },
+ "5급": {
+  "en": "Grade 5",
+  "zh": "5级",
+  "ja": "5級"
+ },
+ "5급 · 3급": {
+  "en": "Grades 5 and 3",
+  "zh": "5级・3级",
+  "ja": "5級・3級"
+ },
+ "급수 없음": {
+  "en": "No grade",
+  "zh": "无等级",
+  "ja": "級なし"
+ },
+ "애니 장면": {
+  "en": "Anime scene",
+  "zh": "动画场景",
+  "ja": "アニメ場面"
+ },
+ "공식 원작": {
+  "en": "Official manga",
+  "zh": "官方原作",
+  "ja": "公式原作"
+ },
+ "공식 콜라보": {
+  "en": "Official collaboration",
+  "zh": "官方联名",
+  "ja": "公式コラボ"
+ },
+ "ABEMA · 애니 124화": {
+  "en": "ABEMA · episode 124",
+  "zh": "ABEMA・动画第124集",
+  "ja": "ABEMA・アニメ第124話"
+ },
+ "TV 애니 124화 · 공식 장면": {
+  "en": "TV episode 124 · official still",
+  "zh": "TV动画第124集・官方剧照",
+  "ja": "TVアニメ第124話・公式場面"
+ },
+ "TV 애니 60화 · 카드 장면": {
+  "en": "TV episode 60 · card scene",
+  "zh": "TV动画第60集・卡片场景",
+  "ja": "TVアニメ第60話・カードの場面"
+ },
+ "나가노 공식 원작": {
+  "en": "Nagano's official manga",
+  "zh": "长野官方原作",
+  "ja": "ナガノ公式原作"
+ },
+ "나가노 공식 원작 · 음주 자격": {
+  "en": "Nagano's manga · drinking license",
+  "zh": "长野官方原作・饮酒资格",
+  "ja": "ナガノ公式原作・お酒の資格"
+ },
+ "나가노 공식 원작 · 풀뽑기 5급": {
+  "en": "Nagano's manga · weeding grade 5",
+  "zh": "长野官方原作・除草5级",
+  "ja": "ナガノ公式原作・草むしり5級"
+ },
+ "쇼핑 검정": {
+  "en": "Shopping test",
+  "zh": "购物检定",
+  "ja": "おかいもの検定"
+ },
+ "쇼핑 검정 1급": {
+  "en": "Shopping test grade 1",
+  "zh": "购物检定1级",
+  "ja": "おかいもの検定1級"
+ },
+ "에포스 공식 · 쇼핑 검정 1급": {
+  "en": "EPOS official · shopping grade 1",
+  "zh": "EPOS官方・购物检定1级",
+  "ja": "エポス公式・おかいもの検定1級"
+ },
+ "에포스 공식 안내": {
+  "en": "EPOS official information",
+  "zh": "EPOS官方介绍",
+  "ja": "エポス公式案内"
+ },
+ "하치와레의 실제 5급 카드예요. 공식 원작에서 카드 부분을 가져와 정면으로 맞췄어요.": {
+  "en": "Hachiware's actual grade 5 card, cropped from the official manga and aligned to face forward.",
+  "zh": "小八的真实5级卡片，从官方原作截取并校正为正面。",
+  "ja": "ハチワレの実際の5級カードです。公式原作からカード部分を切り出し、正面に補正しました。"
+ },
+ "우사기가 보여 준 실제 3급 카드예요. 애니 60화의 참고 장면에서 카드 부분을 가져와 정면으로 맞췄어요.": {
+  "en": "Usagi's actual grade 3 card, cropped from a reference still of episode 60 and aligned to face forward.",
+  "zh": "乌萨奇出示的真实3级卡片，从动画第60集参考场景截取并校正为正面。",
+  "ja": "うさぎが見せた実際の3級カードです。アニメ第60話の参考場面から切り出し、正面に補正しました。"
+ },
+ "시사가 합격 후 보여 준 실제 카드예요. 애니 공식 사이트의 124화 장면에서 가져왔어요.": {
+  "en": "Shisa's actual card after passing, taken from the official anime site's episode 124 still.",
+  "zh": "西萨合格后出示的真实卡片，取自动画官网第124集剧照。",
+  "ja": "シーサーが合格後に見せた実際のカードです。アニメ公式サイトの第124話の場面から切り出しました。"
+ },
+ "시사의 실제 카드가 나오는 공식 원작 장면이에요. 사진도 카드의 기울기에 맞춰 들어가요.": {
+  "en": "An official manga scene featuring Shisa's actual card. Your photo follows the card's angle.",
+  "zh": "西萨真实卡片出现的官方原作场景，照片会按照卡片角度放入。",
+  "ja": "シーサーの実際のカードが登場する公式原作の場面です。写真もカードの傾きに合わせて入ります。"
+ },
+ "TV 애니 자격증이 아닌, 에포스 공식 콜라보의 쇼핑 검정 1급 디자인이에요.": {
+  "en": "The shopping test grade 1 design from the official EPOS collaboration, rather than a TV anime license.",
+  "zh": "EPOS官方联名的购物检定1级设计，并非TV动画中的资格证。",
+  "ja": "TVアニメの資格証ではなく、エポス公式コラボのおかいもの検定1級デザインです。"
+ },
+ "풀뽑기 일을 위한 검정이에요. 하치와레의 5급 카드와 우사기의 3급 카드를 골라요.": {
+  "en": "A qualification for weeding work. Choose Hachiware's grade 5 card or Usagi's grade 3 card.",
+  "zh": "用于除草工作的检定，可以选择小八的5级或乌萨奇的3级卡片。",
+  "ja": "草むしりの仕事のための検定です。ハチワレの5級か、うさぎの3級カードを選べます。"
+ },
+ "라멘 가게에서 일하고 싶었던 시사의 자격이에요. 애니 124화의 실제 카드로 만들어요.": {
+  "en": "Shisa's qualification to work at the ramen shop. Use the actual card from anime episode 124.",
+  "zh": "西萨为在拉面店工作取得的资格，使用动画第124集中的真实卡片。",
+  "ja": "ラーメン屋で働きたかったシーサーの資格です。アニメ第124話の実際のカードで作れます。"
+ },
+ "작품 속에서 술을 마시기 위한 자격이에요. 시사의 카드가 나온 공식 원작 장면을 사용해요.": {
+  "en": "A qualification for drinking in the story. Use an official manga scene showing Shisa's card.",
+  "zh": "作品中饮酒所需的资格，使用西萨卡片出现的官方原作场景。",
+  "ja": "作品内でお酒を飲むための資格です。シーサーのカードが登場する公式原作の場面を使います。"
+ },
+ "에포스 공식 콜라보의 쇼핑 검정 1급이에요. TV 애니 양식과 구분해 표시해요.": {
+  "en": "Shopping test grade 1 from the official EPOS collaboration, labeled separately from anime cards.",
+  "zh": "EPOS官方联名的购物检定1级，与动画卡片分开标注。",
+  "ja": "エポス公式コラボのおかいもの検定1級です。アニメのカードと区別して表示します。"
  }
 };

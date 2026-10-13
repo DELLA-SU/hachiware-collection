@@ -1,0 +1,104 @@
+{
+  "notes": "Card crops and geometric alignment of real source images. Not generated designs. Manga and official collaboration assets are labeled separately from anime. No grade is invented.",
+  "templates": [
+    {
+      "id": "grass-5",
+      "kind": "original",
+      "grade": 5,
+      "holder": "Hachiware",
+      "source": "https://x.com/ngnchiikawa/status/1321103203409145856",
+      "image": "https://pbs.twimg.com/media/ElWAW7MUUAEZeo1?format=webp&name=medium",
+      "cropQuad": [
+        555,
+        1005,
+        580,
+        1161,
+        802,
+        1121,
+        759,
+        958
+      ],
+      "size": [
+        600,
+        380
+      ]
+    },
+    {
+      "id": "grass-3",
+      "kind": "anime",
+      "episode": 60,
+      "grade": 3,
+      "holder": "Usagi",
+      "source": "https://ameblo.jp/kobato00/entry-12800553908.html",
+      "officialEpisodeList": "https://www.anime-chiikawa.jp/episode.html",
+      "image": "https://stat.ameba.jp/user_images/20230428/08/kobato00/13/ce/j/o1080062015276444172.jpg",
+      "cropQuad": [
+        235,
+        247,
+        362,
+        550,
+        820,
+        400,
+        676,
+        73
+      ],
+      "size": [
+        600,
+        380
+      ]
+    },
+    {
+      "id": "super-worker",
+      "kind": "anime",
+      "episode": 124,
+      "grade": null,
+      "holder": "Shisa",
+      "source": "https://www.anime-chiikawa.jp/episode.html",
+      "officialEpisodeData": "https://www.anime-chiikawa.jp/json/episodeHistories.json",
+      "image": "https://www.anime-chiikawa.jp/images/episodes/124.jpg",
+      "cropRect": [
+        174,
+        198,
+        299,
+        285
+      ],
+      "size": [
+        625,
+        435
+      ]
+    },
+    {
+      "id": "drink-license",
+      "kind": "original",
+      "grade": null,
+      "holder": "Shisa",
+      "source": "https://x.com/ngnchiikawa/status/2103515206291013833",
+      "image": "https://pbs.twimg.com/media/HTEv7isaQAARPZt?format=webp&name=medium",
+      "cropRect": [
+        218,
+        472,
+        434,
+        649
+      ],
+      "size": [
+        640,
+        531
+      ],
+      "note": "A scene crop of the visible card, with a slanted photo frame. This is not a TV anime frame.",
+      "trimRight": 8
+    },
+    {
+      "id": "shopping-1",
+      "kind": "collab",
+      "grade": 1,
+      "holder": "Chiikawa",
+      "source": "https://www.eposcard.co.jp/gecard/chiikawa/index.html",
+      "image": "https://www.eposcard.co.jp/gecard/chiikawa/img-files/chkw_card02.png",
+      "size": [
+        500,
+        317
+      ],
+      "note": "Official EPOS collaboration card, not a TV anime qualification."
+    }
+  ]
+}

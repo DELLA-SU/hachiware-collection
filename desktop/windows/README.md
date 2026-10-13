@@ -1,4 +1,4 @@
-# Windows 하치와레
+# Windows 치이 친구
 
 Windows 10/11 x64 및 Windows 11 ARM64용 .NET 10 Windows Forms 앱입니다.
 

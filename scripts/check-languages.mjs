@@ -7,5 +7,7 @@ for(const name of ['page','gacha-hero','photo-window','photo-memo','photo-zoom',
  const path=new URL('../app/'+name+'.tsx',import.meta.url),source=await readFile(path,'utf8'),ast=ts.createSourceFile(path.pathname,source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
  function visit(node){if(ts.isCallExpression(node)&&node.expression.getText(ast)==='t'&&ts.isStringLiteral(node.arguments[0]))assert.ok(rows.has(node.arguments[0].text),name+': '+node.arguments[0].text);ts.forEachChild(node,visit);}visit(ast);
 }
+const certificatePath=new URL('../app/certificate-templates.ts',import.meta.url),certificateSource=await readFile(certificatePath,'utf8'),certificateAst=ts.createSourceFile(certificatePath.pathname,certificateSource,ts.ScriptTarget.Latest,true);
+function checkCertificate(node){if(ts.isStringLiteral(node)&&/[가-힣]/.test(node.text))assert.ok(rows.has(node.text),'Missing certificate translation: '+node.text);ts.forEachChild(node,checkCertificate);}checkCertificate(certificateAst);
 const keywords=JSON.parse(await readFile(new URL('../lib/collection-keywords.json',import.meta.url),'utf8'));for(const item of keywords)assert.ok(rows.has(item.name),'Missing character name: '+item.name);
 console.log('All UI translation keys and character names are covered in three additional languages.');

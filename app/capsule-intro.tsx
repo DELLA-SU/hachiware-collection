@@ -4,11 +4,9 @@ import {t,useLanguage} from './locale';
 import {playMotion} from './motion-sounds';
 import './capsule-intro.css';
 
-const seenKey='hachiware-capsule-intro-v1';
 function shouldShow(){
  if(new URLSearchParams(location.hash.slice(1)).has('desktop_photo'))return false;
- if(new URLSearchParams(location.search).get('welcome')==='1')return true;
- try{return !sessionStorage.getItem(seenKey);}catch{return true;}
+ return true;
 }
 export default function CapsuleIntro(){
  useLanguage();
@@ -16,9 +14,11 @@ export default function CapsuleIntro(){
  const dialog=useRef<HTMLDivElement>(null),skip=useRef<HTMLButtonElement>(null);
  function enter(){if(leaving)return;void playMotion('switch');setLeaving(true);}
  function reveal(){if(open||leaving)return;void playMotion('reveal');setOpen(true);}
+ useEffect(()=>{if(!visible)return;const timer=setTimeout(()=>setOpen(true),matchMedia('(prefers-reduced-motion: reduce)').matches?150:1200);return()=>clearTimeout(timer);},[visible]);
+ useEffect(()=>{if(!open||leaving)return;const timer=setTimeout(()=>setLeaving(true),matchMedia('(prefers-reduced-motion: reduce)').matches?1400:2400);return()=>clearTimeout(timer);},[open,leaving]);
  useEffect(()=>{
   if(!leaving)return;
-  const timer=setTimeout(()=>{try{sessionStorage.setItem(seenKey,'seen');}catch{}
+  const timer=setTimeout(()=>{
    const url=new URL(location.href);if(url.searchParams.get('welcome')==='1'){url.searchParams.delete('welcome');history.replaceState(null,'',url.pathname+url.search+url.hash);}
    setVisible(false);
   },matchMedia('(prefers-reduced-motion: reduce)').matches?150:650);

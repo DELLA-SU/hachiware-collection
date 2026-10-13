@@ -1,13 +1,17 @@
 import {assetUrl} from './asset-url';
-export type CertificateTemplate={id:string;name:string;category:string;image:string;width:number;height:number;photo:{x:number;y:number;width:number;height:number};kind:'reference'|'fan';};
+export type PhotoFrame={x:number;y:number;width:number;height:number;matrix?:[number,number,number,number,number,number];quad?:[[number,number],[number,number],[number,number],[number,number]];clip?:[number,number,number,number]};
+export type CertificateTemplate={id:string;name:string;category:string;grade:string;image:string;width:number;height:number;photo:PhotoFrame;kind:'anime'|'original'|'collab';source:string;sourceLabel:string;sourceNote:string;scene?:string};
 export const certificateTemplates:CertificateTemplate[]=[
- {id:'grass-5',name:'풀뽑기 검정 5급',category:'풀뽑기 검정',image:assetUrl('certificates/grass-5.webp'),width:455,height:374,photo:{x:288,y:108,width:98,height:114},kind:'reference'},
- {id:'grass-3',name:'풀뽑기 검정 3급',category:'풀뽑기 검정',image:assetUrl('certificates/grass-3.webp'),width:455,height:374,photo:{x:293,y:108,width:95,height:114},kind:'reference'},
- {id:'super-worker',name:'슈퍼 아르바이터',category:'슈퍼 아르바이터',image:assetUrl('certificates/super-worker.svg'),width:900,height:570,photo:{x:632,y:155,width:174,height:220},kind:'fan'},
- {id:'drink-license',name:'음주 자격',category:'음주 자격',image:assetUrl('certificates/drink-license.svg'),width:900,height:570,photo:{x:632,y:155,width:174,height:220},kind:'fan'},
+ {id:'grass-5',name:'풀뽑기 검정 5급',category:'풀뽑기 검정',grade:'5급',image:assetUrl('certificates/grass-5-original.webp'),width:600,height:380,photo:{x:382,y:73,width:155,height:134},kind:'original',source:'https://x.com/ngnchiikawa/status/1321103203409145856',sourceLabel:'나가노 공식 원작 · 풀뽑기 5급',sourceNote:'하치와레의 실제 5급 카드예요. 공식 원작에서 카드 부분을 가져와 정면으로 맞췄어요.',scene:assetUrl('certificates/grass-5-scene.webp')},
+ {id:'grass-3',name:'풀뽑기 검정 3급',category:'풀뽑기 검정',grade:'3급',image:assetUrl('certificates/grass-3-anime.webp'),width:600,height:380,photo:{x:0,y:0,width:148,height:148,matrix:[1.027,.027,-.034,.986,399,75]},kind:'anime',source:'https://ameblo.jp/kobato00/entry-12800553908.html',sourceLabel:'TV 애니 60화 · 카드 장면',sourceNote:'우사기가 보여 준 실제 3급 카드예요. 애니 60화의 참고 장면에서 카드 부분을 가져와 정면으로 맞췄어요.',scene:assetUrl('certificates/grass-3-scene.webp')},
+ {id:'super-worker',name:'슈퍼 아르바이터',category:'슈퍼 아르바이터',grade:'급수 없음',image:assetUrl('certificates/super-worker-anime.webp'),width:625,height:435,photo:{x:388,y:99,width:165,height:137},kind:'anime',source:'https://www.anime-chiikawa.jp/episode.html',sourceLabel:'TV 애니 124화 · 공식 장면',sourceNote:'시사가 합격 후 보여 준 실제 카드예요. 애니 공식 사이트의 124화 장면에서 가져왔어요.',scene:assetUrl('certificates/super-worker-scene.webp')},
+ {id:'drink-license',name:'음주 자격',category:'음주 자격',grade:'급수 없음',image:assetUrl('certificates/drink-original-scene.webp'),width:640,height:531,photo:{x:0,y:0,width:246,height:244,quad:[[327,199],[568,111],[692,354],[445,456]],clip:[0,0,640,531]},kind:'original',source:'https://x.com/ngnchiikawa/status/2103515206291013833',sourceLabel:'나가노 공식 원작 · 음주 자격',sourceNote:'시사의 실제 카드가 나오는 공식 원작 장면이에요. 사진도 카드의 기울기에 맞춰 들어가요.',scene:assetUrl('certificates/drink-source-scene.webp')},
+ {id:'shopping-1',name:'쇼핑 검정 1급',category:'쇼핑 검정',grade:'1급',image:assetUrl('certificates/shopping-1.webp'),width:500,height:317,photo:{x:348,y:45,width:116,height:123},kind:'collab',source:'https://www.eposcard.co.jp/gecard/chiikawa/index.html',sourceLabel:'에포스 공식 · 쇼핑 검정 1급',sourceNote:'TV 애니 자격증이 아닌, 에포스 공식 콜라보의 쇼핑 검정 1급 디자인이에요.'},
 ];
+export const sourceKindLabel={anime:'애니 장면',original:'공식 원작',collab:'공식 콜라보'};
 export const qualifications=[
- {name:'풀뽑기 검정',original:'草むしり検定',text:'풀뽑기 일을 위한 검정. 치이카와가 친구들에게 선물을 주기 위해 공부하는 이야기와 이어져요.',source:'https://cstation.kodansha.co.jp/mangaip/database/0000354016',sourceLabel:'코단샤 작품 소개'},
- {name:'슈퍼 아르바이터',original:'スーパーアルバイター',text:'시사가 가진 자격. 라멘 가게에서 일하는 시사의 이야기와 연결돼요.',source:'https://dengekionline.com/article/202610/90586',sourceLabel:'시사의 자격 이야기'},
- {name:'음주 자격',original:'お酒の資格',text:'작품 속에서 술을 마시는 것과 관련된 자격. 시사와 쿠리만쥬의 이야기에도 등장해요.',source:'https://dengekionline.com/article/202610/90586',sourceLabel:'음주 자격 이야기'},
+ {name:'풀뽑기 검정',original:'草むしり検定',grades:'5급 · 3급',text:'풀뽑기 일을 위한 검정이에요. 하치와레의 5급 카드와 우사기의 3급 카드를 골라요.',source:'https://cstation.kodansha.co.jp/mangaip/database/0000354016',sourceLabel:'코단샤 작품 소개'},
+ {name:'슈퍼 아르바이터',original:'スーパーアルバイター',grades:'급수 없음',text:'라멘 가게에서 일하고 싶었던 시사의 자격이에요. 애니 124화의 실제 카드로 만들어요.',source:'https://times.abema.tv/articles/-/10194369?page=1',sourceLabel:'ABEMA · 애니 124화'},
+ {name:'음주 자격',original:'お酒の資格',grades:'급수 없음',text:'작품 속에서 술을 마시기 위한 자격이에요. 시사의 카드가 나온 공식 원작 장면을 사용해요.',source:'https://x.com/ngnchiikawa/status/2103515206291013833',sourceLabel:'나가노 공식 원작'},
+ {name:'쇼핑 검정',original:'おかいもの検定',grades:'1급',text:'에포스 공식 콜라보의 쇼핑 검정 1급이에요. TV 애니 양식과 구분해 표시해요.',source:'https://www.eposcard.co.jp/gecard/chiikawa/index.html',sourceLabel:'에포스 공식 안내'},
 ];
