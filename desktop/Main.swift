@@ -172,7 +172,7 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
    if image==nil{let (bytes,_)=try await URLSession.shared.data(from:URL(string:publicSite+"photos/"+id+".jpg")!);image=NSImage(data:bytes)}
    guard let image=image else{throw NSError(domain:"하치와레",code:2,userInfo:[NSLocalizedDescriptionKey:"사진을 표시하지 못했어요."])}
    UserDefaults.standard.set(UserDefaults.standard.integer(forKey:"desktopDrawCount")+1,forKey:"desktopDrawCount");seen.insert(id);UserDefaults.standard.set(Array(seen),forKey:"seenDesktopPhotoIDs")
-   await MainActor.run{self.lastDesktopPhoto=id;let usagi=photo["character"] as? String=="usagi";self.show(image,isUsagi:usagi);self.openArchive();if usagi{self.playUna()}else{self.playEffect("reveal")}}
+   await MainActor.run{self.lastDesktopPhoto=id;let usagi=photo["character"] as? String=="usagi";self.show(image,isUsagi:usagi);if usagi{self.playUna()}else{self.playEffect("reveal")}}
   }catch{await MainActor.run{let a=NSAlert();a.messageText="사진을 불러오지 못했어요";a.informativeText=error.localizedDescription;a.runModal()}}
   await MainActor.run{self.busy=false;self.status.button?.title="🐾"}
   }

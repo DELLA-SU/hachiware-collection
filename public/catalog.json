@@ -1152,7 +1152,7 @@
     "image_url": "photos/6f7303a419ef5b91e3eabdc04b0a84ad77359421b487b758edf9c69c8a05363f.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609350682_2.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "ea58b041781ead9721da5608f608d3ef832b9d551968d925ffa1f8a284f8bc9a",
@@ -1218,7 +1218,7 @@
     "image_url": "photos/0630d1f1294f2c4fabcfabb44bfc1c844e864760170626ad46ec28aff28e100a.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609350675_2.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "18d1aac95034706717debf1bcdac55256cd983cc84ee3f884756bba6fa30ae17",
@@ -1559,7 +1559,7 @@
     "image_url": "photos/38d2de42dbcfe453f662189c8d75be63de9397949aba0cad4a1d53d207d628e3.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609350668_2.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "15394c0f0e18761e6fc4efa6702d64083798b20bb7564afda98f7cd4ae4e284f",
@@ -1669,7 +1669,7 @@
     "image_url": "photos/33bd98dc1ce65d5a6d816c7c62d92505b62e706585967aca24cb4f6710b17e76.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4550432275423_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "f24ed8b331f03b4c3ab54402c666b534c46e2ee8a877d38a69121d448298cfd9",
@@ -1735,7 +1735,7 @@
     "image_url": "photos/adf0a26521d66d8f50a4eedd29a23e80439893fc8485cc5bd8b27e8f16babac3.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609417484.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "bdc51b66d0bb54cfd33b6d380f141054aba3d35c4e2dc39e0583b733fa23fa67",
@@ -1790,7 +1790,7 @@
     "image_url": "photos/758a24808e01e5b240a282430400ccd2828c159e5b4410df249e308f56693adb.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609389293_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "a58bcdb95f910830cb122ce234752c9b28ee881891926dc3baa6be9c432c190d",
@@ -1801,7 +1801,7 @@
     "image_url": "photos/a58bcdb95f910830cb122ce234752c9b28ee881891926dc3baa6be9c432c190d.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609370536_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "7def5b5877f0ea1d6e9d6e13d42689ac1f5286ef97c765e8ed5ded4f0b4250f3",
@@ -1867,7 +1867,7 @@
     "image_url": "photos/e2e189561f3f56d1f2557e9a9f917557d8ced60f463f6607f798170737a7d49b.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4550432275430_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "9532e73abbdb506f33482c2d88245a29442cd9b9306cab48e843bb185029b7dc",
@@ -1878,7 +1878,7 @@
     "image_url": "photos/9532e73abbdb506f33482c2d88245a29442cd9b9306cab48e843bb185029b7dc.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609350644_2.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "a61ce3bb57515b0fc3da1f406f50b5eca6b2dc8bd6e750a72486626a43c1995e",
@@ -1889,7 +1889,7 @@
     "image_url": "photos/a61ce3bb57515b0fc3da1f406f50b5eca6b2dc8bd6e750a72486626a43c1995e.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609387541_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "87840a6a85ebf22318f38e69b4dc98f4762b96aba81abca570eaa5edbe29ffd7",
@@ -1977,7 +1977,7 @@
     "image_url": "photos/64b0e462dfb278cfd348c61c688d81ce69d747403f701ad64c8598ea942c430e.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609375128_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "0f1a3ff9a95a5a2c5c8d681fd2a7625e869735043c8c983e2f72ec286632cba0",
@@ -2065,7 +2065,7 @@
     "image_url": "photos/6a5a8853a3bc6b4f1a0f764d4ddfdfe2f676355f1c07f765b65cb5019a387f3b.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609350651_2.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "200adfb5d4da2cdd8d5645aff293fd2cb0ded28e9546e60744e5586f09422043",
@@ -2098,7 +2098,7 @@
     "image_url": "photos/251ee0d60d5093f7e17a3df231e7410eaa99040ea43387c41f0514838a4b66d3.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609389286_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "9118a496b9ebfa5fee893212ca797c62560c6732e4148a61f48179edc50ecd22",
@@ -2120,7 +2120,7 @@
     "image_url": "photos/32c9058869c94996fd747997f9504c91aa6a3af5d4601b90203bb8af540e33da.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609389309_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "427a96ac72ba3327f224adbe9073ba98d8b50b9f9d2216124fbae1e3ed4f1913",
@@ -2175,7 +2175,7 @@
     "image_url": "photos/8377f23ecd05f104016705d342c0ce8aded7caee623cfc5ee042d419c549a3f4.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4550213575148_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "53aa8aec2b5b8a33d9dc7e24b43f00ccb154fcdff40a09b9af9303f1b846ae4e",
@@ -2296,7 +2296,7 @@
     "image_url": "photos/60dee7553ed191065b8c9d76dff2e4250e5f206183d26a02d46a4c2de8370df0.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4550432275416_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "a624bde71443e946dc7656e4b7772f19e62bd50477305eaebe3130a8e84c1d1d",
@@ -2428,7 +2428,7 @@
     "image_url": "photos/773dd227dd07dc0e064ec71479c8e885b63c46b426865dba8983483d9191a8a4.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4550432275447_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "e075816f9f46d073b9c5cd0cbaf692aedb8aa02c72a7cb8080c84ce561c07556",
@@ -2604,7 +2604,7 @@
     "image_url": "photos/4d3f738998f515e36be52fa7d04918b787f9ffed77ccfd54995ee0d8ab725282.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609387534_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "b150fe9c3975a6ca3857be681691fb9780995aa4760bd984b38eb64dc87eea95",
@@ -2758,7 +2758,7 @@
     "image_url": "photos/ba89f2352307b4739ef910703c6c28113c540ad02a4438e8c082a2eaac99144e.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4582662978201.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "8a1f3b3f9f91b78427e95d593ccf9e503a753f82c8cc33e9224eb65211328332",
@@ -2791,7 +2791,7 @@
     "image_url": "photos/80e5fbce1d30ab3bd7fb3c277c30eeca6fad578a6e2febb623a97ff1a2aaece4.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609350620_2.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "bd3c3b71f326eb99f8590b9e82dd4265cc262525f63a88bf1f213edfe6ef8a1b",
@@ -2846,7 +2846,7 @@
     "image_url": "photos/fbe5adabc8a2f8ff37e53156b71516fe039df5cc1996dfd56d8363c939c0722d.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609370376_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "52047de9ac73d431d2d319ec7672af68b194dcc8e275cd548bfbb24e9864e888",
@@ -2868,7 +2868,7 @@
     "image_url": "photos/33f139029bedb5b0088b7a5ca06a05631c355b2797c7661b2d7dadb9ba4a5d21.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4582662978256.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "1a369d4858aa82ebd4797712b0d0e4b59c362f0b9b7454e559793d4424f3b857",
@@ -2879,7 +2879,7 @@
     "image_url": "photos/1a369d4858aa82ebd4797712b0d0e4b59c362f0b9b7454e559793d4424f3b857.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609387527_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "8a27cfcf8c7d22cc70fc3129a75a5d2e6be5a02a61c654e719f8f9d198ba1abe",
@@ -2923,7 +2923,7 @@
     "image_url": "photos/46d22c600a3be343f9ef8d15bc8172a56eabfc711de581b18c26e7d5a94a7adf.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609350637_2.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "006d688a6ed252be753a0fa2dd720b6d31039a934894ce5589af907ce08c8ac0",
@@ -2978,7 +2978,7 @@
     "image_url": "photos/4ed45100e1623da73a6b6fe3568bb3d504c3f8fe731ee4a664ae2c6a04a7f7c2.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609387510_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "b0f74d5a2f9dfab50e3385b4bf1decaffcde5b03ab36fae4f25e0ffdb1f4f2b1",
@@ -3011,7 +3011,7 @@
     "image_url": "photos/ad9318f5d2625eb33ecfa639dba85c5bc5bdb336b80c086ba82c880888feea6b.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4550213575124_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "bdb8f3a8c45af001c08ea53ded56e2ef681c7c905f8cfe3232f8907c09312ea6",
@@ -3066,7 +3066,7 @@
     "image_url": "photos/d8a93be59fd8644c7c87d54c28818fdd5d300e39a5c480356d6f4cd7767d432f.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609375098_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "7c8f8fa2c32e5efdbc75748da8cefaa88a4958c752e726e1bb5c7e1417954afb",
@@ -3099,7 +3099,7 @@
     "image_url": "photos/8d4f93c96b72e961d38d07061cc8fde405a9bc07b4d19e4f421b9045a0226dd7.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609370369_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "df626180867e7201516c99b4d4eece1c549d7409ee561e858ba828eb86c1f5e2",
@@ -3132,7 +3132,7 @@
     "image_url": "photos/658637e1ce52e62d478abdf5728a37ef9b3504247b7ab497cd18fb9a72f4615c.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4550213575131_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "62d6c82d56897f5922703ba082fbbd502bd4c8e7bfa404fe87939599cd793dc2",
@@ -3165,7 +3165,7 @@
     "image_url": "photos/0443b3c13791e5045c396cf94522132fe0f961ddab027325252a9d658b44c376.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609389279_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "0aa583772f41d00556c3d1509e316f8cfa6deb3d884cceafae5fa0fd528220e6",
@@ -3187,7 +3187,7 @@
     "image_url": "photos/00ab53e237f4c5e99b014a3be2c6f24c45fe284a21bbbeb59ced975d84aaa705.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609370352_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "7da77ec1b4ef06c1d82a78e9aed3b59839e80af1ec7eb10252d0fddcbc4463ba",
@@ -3297,7 +3297,7 @@
     "image_url": "photos/c3e08ab77625a5123ba381842cd814f9ac1b518f1a783d0acbeb300a980d3fe5.jpg",
     "remote_url": "https://cdn.shopify.com/s/files/1/0626/7142/1681/files/4571609375081_1.jpg",
     "imported": 0,
-    "draw_enabled": true
+    "draw_enabled": false
   },
   {
     "id": "ad77fa9586277d8a6a6887cfe006a33a52d4cd251eb1382a72f3c2e4c86be955",
