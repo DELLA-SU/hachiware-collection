@@ -1,11 +1,9 @@
 import type {ReactNode} from 'react';
 import {Sparkles,Shuffle,Star,NotebookPen,Paintbrush,Music2,Search,Share2,MousePointer2,Move,RotateCw,Volume2,Download,Upload,ArrowRight} from 'lucide-react';
 const web=[
- {icon:Sparkles,title:'하치와레 뽑기',text:'준비된 사진 중 아직 만나지 않은 친구를 랜덤으로 뽑아요. 사진 창이 열리고 도감에 한 장이 추가돼요. 모두 만나면 기존 친구를 다시 보여줘요.'},
+ {icon:Sparkles,title:'하치와레 뽑기',text:'집게가 둥근 캡슐을 집어 올리고 출구에서 꺼내면 큰 사진 창이 열려요. 아직 만나지 않은 친구가 도감에 추가되고, 모두 만나면 기존 친구를 다시 보여줘요.'},
  {icon:Shuffle,title:'아무 하치와레 만나기',text:'이미 모은 사진 중 한 장을 랜덤으로 펼쳐요. 배너의 초록색 ‘도감 속 랜덤 하치와레’ 게임 버튼도 같은 기능이에요. 검색이나 별표를 선택했다면 그 결과 안에서 골라요.'},
  {icon:Star,title:'별표로 모아 보기',text:'사진 카드의 별표나 사진 창의 ‘별표 붙이기’를 누르면 즐겨찾기에 담겨요. 왼쪽 ‘별표 한 순간’에서 모아 보고, 다시 누르면 별표가 해제돼요.'},
- {icon:NotebookPen,title:'사진마다 메모 남기기',text:'사진을 눌러 펼친 뒤 ‘메모’에 글을 남겨요. 입력을 멈추면 자동으로 저장돼요. ‘저장했어요’ 표시로 확인하거나 ‘저장’ 버튼을 눌러 주세요.'},
- {icon:Paintbrush,title:'사진 위에 드로잉',text:'사진 창에서 ‘드로잉’을 선택하고 펜 색과 굵기를 골라 그려요. 마지막 선을 되돌리거나 모두 지울 수 있어요. 그림도 자동 저장되며 원본 사진은 그대로예요.'},
  {icon:Music2,title:'하치와레 노래 들으러 가기',text:'TV 창이 열리면서 노래가 재생돼요. 영상 안에서 일시정지·볼륨·전체 화면을 조절할 수 있어요. TV 창을 닫으면 재생도 멈춰요.'},
  {icon:Search,title:'사진 찾고 정리하기',text:'검색창에서 사진 번호·날짜·출처를 찾아요. ‘만난 날들’로 날짜를 고르고, 정렬과 배치 버튼으로 보기 방식을 바꿔요. 카드의 ×로 지운 사진은 ‘실행 취소’로 되돌릴 수 있어요.'},
  {icon:Share2,title:'크게 보고 출처 공유하기',text:'사진 창에서 확대하거나 창 크기를 키워 보세요. ‘원본 열기’로 출처를 방문하고, ‘출처와 공유’로 원본 링크를 공유할 수 있어요.'},

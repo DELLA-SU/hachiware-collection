@@ -112,3 +112,10 @@ body{background:#bddfe3;color:var(--ink)}
 .archive-tools .hachi-music-link{display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:8px;text-decoration:none;color:inherit;font-size:13px;line-height:1.5}.archive-tools .hachi-music-link svg:last-child{margin-left:auto}.archive-tools .hachi-music-link:hover{background:#d7eef0}.archive-tools .hachi-music-link:focus-visible{outline:2px solid #809f97;outline-offset:2px}
 
 .quick-meet-links{padding:13px 0;border-top:1px solid #c8d6cc;border-bottom:1px solid #c8d6cc;margin-bottom:20px}.quick-meet-links .hachi-music-link{font-size:13px}.quick-meet-links button svg:last-child{margin-left:auto}
+.photo-window .window-body{display:flex;flex-direction:column;flex:1;min-height:0}
+.photo-window .photo-zoom{display:flex;flex-direction:column;flex:1;min-height:0}
+.photo-window .zoom-viewport{flex:1;height:auto;min-height:160px;padding:0;background:#fffaf2}
+.photo-window .zoom-controls,.photo-window .window-photo-actions,.photo-window .window-source-note{flex-shrink:0}
+.photo-window .window-photo-actions{margin:0;padding-top:10px;padding-bottom:8px}
+.photo-window .window-source-note{margin:0;padding-bottom:8px}
+.photo-window:not(.window-maximized){height:min(680px,calc(100dvh - 32px))}
