@@ -1,5 +1,5 @@
 import {cranePalettes} from './gacha-colors';
-const revision='strawberry-yellow-20261013';
+const revision='strawberry-yellow-restored-20261013';
 const finalBanner={variant:1,color:12};
 export function applyBannerPreference(variant:number,color:number){
  try{localStorage.setItem('hachiware-crane-color',String(color));localStorage.setItem('hachiware-gacha-variant',String(variant));localStorage.setItem('hachiware-banner-revision',revision);}catch{}
