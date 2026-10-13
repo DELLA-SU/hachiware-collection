@@ -1,1 +1,0 @@
-import{a as e,i as t,o as n}from"./theme-VgohKNUH.js";import{t as r}from"./entrance-preview-CcsC28Ut.js";n();var i=t(),a=e();(0,i.createRoot)(document.getElementById(`root`)).render((0,a.jsx)(r,{}));

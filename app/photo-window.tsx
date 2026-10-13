@@ -4,6 +4,7 @@ import {t,useLanguage,languageLocale} from './locale';
 import {characterName} from './characters';
 import {useEffect,useLayoutEffect,useRef,useState} from 'react';
 import PhotoZoom from './photo-zoom';
+import PhotoMemo from './photo-memo';
 import {Star,Share2,X,ArrowUpRight,ChevronLeft,ChevronRight,Maximize2,Minimize2} from 'lucide-react';
 type Photo={character?:string;id:string;image_url:string;source:string;source_kind:string;collected_at:string;imported:number;favorite:number};
 type Props={onImageActivate?:()=>void;photo:Photo;number:string;index:number;z:number;saving:boolean;onClose:()=>void;onRaise:()=>void;onFavorite:()=>void;onShare:()=>void;onStep:(direction:number)=>void;canStep:boolean};
@@ -22,13 +23,13 @@ export default function PhotoWindow({onImageActivate,photo,number,index,z,saving
  },[photo.image_url]);
  useLayoutEffect(()=>{
   if(!frame.current||natural?.src!==photo.image_url)return;
-  const chrome=Array.from(frame.current.querySelectorAll<HTMLElement>('.photo-titlebar,.window-caption,.zoom-controls,.window-photo-actions,.window-source-note'));
+  const chrome=Array.from(frame.current.querySelectorAll<HTMLElement>('.photo-titlebar,.window-caption,.zoom-controls,.window-photo-actions,.window-source-note,.photo-memo'));
   function fit(){
    if(maximized){setReady(true);return;}
    const viewportWidth=Math.max(160,innerWidth-24),minWidth=Math.min(420,viewportWidth);
    const maxWidth=manual.current||index===0?viewportWidth:Math.max(minWidth,Math.min(viewportWidth,innerWidth*.7));
    const maxHeight=Math.max(240,manual.current||index===0?innerHeight-32:Math.min(innerHeight-32,innerHeight*.76));
-   const chromeHeight=chrome.reduce((sum,el)=>sum+el.offsetHeight,0)+3;
+   const chromeHeight=chrome.reduce((sum,el)=>{const style=getComputedStyle(el);return sum+el.offsetHeight+(el.classList.contains('photo-memo')?(parseFloat(style.marginTop)||0)+(parseFloat(style.marginBottom)||0):0);},0)+3;
    const availableHeight=Math.max(80,maxHeight-chromeHeight);
    const width=Math.ceil(Math.min(maxWidth,Math.max(minWidth,manual.current?.width??(availableHeight*natural!.ratio+3))));
    const height=Math.ceil(Math.min(maxHeight,manual.current?.height??(chromeHeight+Math.min(availableHeight,(width-3)/natural!.ratio))));
@@ -62,6 +63,6 @@ export default function PhotoWindow({onImageActivate,photo,number,index,z,saving
    onPointerUp={e=>{resizing.current=null;if(e.currentTarget.hasPointerCapture(e.pointerId))e.currentTarget.releasePointerCapture(e.pointerId);}}
    onPointerCancel={()=>{resizing.current=null;}}
    onKeyDown={e=>{if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;e.preventDefault();resizeWidth(side,(e.key==='ArrowRight'?1:-1)*(e.shiftKey?60:20),currentBox());}}/>)}
-  <div className="window-body"><PhotoZoom onActivate={onImageActivate} src={photo.image_url} alt={characterName(photo.character)+' #'+number+t(" 수집 사진")}/><div className="window-photo-actions"><button className={photo.favorite?'selected-fav':''} onClick={onFavorite} disabled={saving}><Star size={17} fill={photo.favorite?'currentColor':'none'}/>{photo.favorite?t("별표 한 순간"):t("별표 붙이기")}</button><button onClick={onShare}><Share2 size={16}/>{t("출처와 공유")}</button><a href={photo.source} target="_blank" rel="noreferrer">{t(photo.source_kind)} <ArrowUpRight size={13}/></a></div><p className="window-source-note">{photo.source_kind==='Pinterest'?t("출처: Pinterest 핀 · 원저작자 정보는 핀 페이지에서 확인해 주세요."):photo.source_kind==='치이카와 공식 애니메이션'?t("출처: 치이카와 공식 애니메이션 캐릭터 일러스트."):photo.source_kind==='치이카와 공식 마켓'?t("출처: 치이카와 공식 마켓 · 원본 상품 페이지에서 확인해 주세요."):t("기존 기록의 이미지 파일 주소를 출처로 보존했어요.")}</p></div>
+  <div className="window-body"><PhotoZoom onActivate={onImageActivate} src={photo.image_url} alt={characterName(photo.character)+' #'+number+t(" 수집 사진")}/><div className="window-photo-actions"><button className={photo.favorite?'selected-fav':''} onClick={onFavorite} disabled={saving}><Star size={17} fill={photo.favorite?'currentColor':'none'}/>{photo.favorite?t("별표 한 순간"):t("별표 붙이기")}</button><button onClick={onShare}><Share2 size={16}/>{t("출처와 공유")}</button><a href={photo.source} target="_blank" rel="noreferrer">{t(photo.source_kind)} <ArrowUpRight size={13}/></a></div><PhotoMemo key={photo.id} id={photo.id}/><p className="window-source-note">{photo.source_kind==='Pinterest'?t("출처: Pinterest 핀 · 원저작자 정보는 핀 페이지에서 확인해 주세요."):photo.source_kind==='치이카와 공식 애니메이션'?t("출처: 치이카와 공식 애니메이션 캐릭터 일러스트."):photo.source_kind==='치이카와 공식 마켓'?t("출처: 치이카와 공식 마켓 · 원본 상품 페이지에서 확인해 주세요."):t("기존 기록의 이미지 파일 주소를 출처로 보존했어요.")}</p></div>
  </section>;
 }

@@ -1,8 +1,8 @@
 import {assetUrl} from './asset-url';
 export type CertificateTemplate={id:string;name:string;category:string;image:string;width:number;height:number;photo:{x:number;y:number;width:number;height:number};kind:'reference'|'fan';};
 export const certificateTemplates:CertificateTemplate[]=[
- {id:'grass-5',name:'풀뽑기 검정 5급',category:'풀뽑기 검정',image:assetUrl('certificates/grass-5.webp'),width:455,height:374,photo:{x:288,y:108,width:98,height:111},kind:'reference'},
- {id:'grass-3',name:'풀뽑기 검정 3급',category:'풀뽑기 검정',image:assetUrl('certificates/grass-3.webp'),width:455,height:374,photo:{x:293,y:108,width:95,height:112},kind:'reference'},
+ {id:'grass-5',name:'풀뽑기 검정 5급',category:'풀뽑기 검정',image:assetUrl('certificates/grass-5.webp'),width:455,height:374,photo:{x:288,y:108,width:98,height:114},kind:'reference'},
+ {id:'grass-3',name:'풀뽑기 검정 3급',category:'풀뽑기 검정',image:assetUrl('certificates/grass-3.webp'),width:455,height:374,photo:{x:293,y:108,width:95,height:114},kind:'reference'},
  {id:'super-worker',name:'슈퍼 아르바이터',category:'슈퍼 아르바이터',image:assetUrl('certificates/super-worker.svg'),width:900,height:570,photo:{x:632,y:155,width:174,height:220},kind:'fan'},
  {id:'drink-license',name:'음주 자격',category:'음주 자격',image:assetUrl('certificates/drink-license.svg'),width:900,height:570,photo:{x:632,y:155,width:174,height:220},kind:'fan'},
 ];

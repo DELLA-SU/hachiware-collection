@@ -1834,5 +1834,265 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "Chiikawa's friends",
   "zh": "吉伊卡哇的朋友们",
   "ja": "ちいかわの友達"
+ },
+ "하치와레 가챠": {
+  "en": "Hachiware Gacha",
+  "zh": "小八扭蛋",
+  "ja": "ハチワレガチャ"
+ },
+ "오늘도 애썼어,": {
+  "en": "You've done enough today.",
+  "zh": "今天也辛苦啦，",
+  "ja": "今日もおつかれさま。"
+ },
+ "귀여움 하나 뽑아갈래?": {
+  "en": "Pick a little cuteness?",
+  "zh": "要抽一份可爱吗？",
+  "ja": "かわいさをひとつ、引いてみる？"
+ },
+ "작은 친구가 건네는, 오늘의 작은 행복.": {
+  "en": "A little friend, a little joy for your day.",
+  "zh": "小小的朋友，送来今天的小幸福。",
+  "ja": "小さな友達がくれる、今日の小さな幸せ。"
+ },
+ "오늘의 작은 행복": {
+  "en": "A little joy today",
+  "zh": "今天的小小幸福",
+  "ja": "今日の小さな幸せ"
+ },
+ "모은 사진 다시 만나기": {
+  "en": "Revisit collected photos",
+  "zh": "重逢收藏的照片",
+  "ja": "集めた写真にもう一度会う"
+ },
+ "모은 사진": {
+  "en": "Collected photos",
+  "zh": "收藏的照片",
+  "ja": "集めた写真"
+ },
+ "다시 만나기": {
+  "en": "Meet again",
+  "zh": "再次相遇",
+  "ja": "もう一度会う"
+ },
+ "캡슐 열기": {
+  "en": "Open the capsule",
+  "zh": "打开胶囊",
+  "ja": "カプセルを開ける"
+ },
+ "오늘의 귀여움을 열어봐요": {
+  "en": "Open today's little joy",
+  "zh": "打开今天的可爱",
+  "ja": "今日のかわいさを開けよう"
+ },
+ "열기 전 모습": {
+  "en": "Before opening",
+  "zh": "打开前",
+  "ja": "開ける前"
+ },
+ "열린 후 모습": {
+  "en": "After opening",
+  "zh": "打开后",
+  "ja": "開けたあと"
+ },
+ "하치와레와 친구들 사진": {
+  "en": "Hachiware and friends photo",
+  "zh": "小八和朋友们的照片",
+  "ja": "ハチワレと友達の写真"
+ },
+ "귀여운 치이카와 사진": {
+  "en": "A cute Chiikawa photo",
+  "zh": "可爱的吉伊照片",
+  "ja": "かわいいちいかわの写真"
+ },
+ "함께 있는 친구들 사진": {
+  "en": "Friends together photo",
+  "zh": "朋友们在一起的照片",
+  "ja": "一緒にいる友達の写真"
+ },
+ "오늘의 친구": {
+  "en": "Today's friend",
+  "zh": "今天的朋友",
+  "ja": "今日の友達"
+ },
+ "작은 행복": {
+  "en": "A little joy",
+  "zh": "小小的幸福",
+  "ja": "小さな幸せ"
+ },
+ "뽀로록 열어볼까?": {
+  "en": "Shall we pop it open?",
+  "zh": "一起啵地打开吧？",
+  "ja": "ぽろっと開けてみる？"
+ },
+ "한 캡슐에 담긴 작은 행복": {
+  "en": "A little joy in one capsule",
+  "zh": "一颗胶囊里的小小幸福",
+  "ja": "ひとつのカプセルに、小さな幸せ"
+ },
+ "짜잔, 오늘의 친구들이에요!": {
+  "en": "Ta-da! Meet today's friends!",
+  "zh": "锵锵，今天的朋友们来啦！",
+  "ja": "じゃーん、今日の友達だよ！"
+ },
+ "귀여움 보관함으로": {
+  "en": "Enter your collection",
+  "zh": "进入可爱收藏夹",
+  "ja": "かわいさのコレクションへ"
+ },
+ "사진 메모": {
+  "en": "Photo note",
+  "zh": "照片笔记",
+  "ja": "写真のメモ"
+ },
+ "메모": {
+  "en": "Note",
+  "zh": "笔记",
+  "ja": "メモ"
+ },
+ "이 사진의 메모": {
+  "en": "Note for this photo",
+  "zh": "这张照片的笔记",
+  "ja": "この写真のメモ"
+ },
+ "이 순간에 남기고 싶은 말…": {
+  "en": "A few words for this moment…",
+  "zh": "想为这一刻留下的话…",
+  "ja": "この瞬間に残したい言葉…"
+ },
+ "불러오는 중…": {
+  "en": "Loading…",
+  "zh": "正在加载…",
+  "ja": "読み込み中…"
+ },
+ "저장 중…": {
+  "en": "Saving…",
+  "zh": "正在保存…",
+  "ja": "保存中…"
+ },
+ "저장했어요": {
+  "en": "Saved",
+  "zh": "已保存",
+  "ja": "保存しました"
+ },
+ "저장 대기": {
+  "en": "Waiting to save",
+  "zh": "等待保存",
+  "ja": "保存待ち"
+ },
+ "저장 필요": {
+  "en": "Save needed",
+  "zh": "需要保存",
+  "ja": "保存が必要です"
+ },
+ "이전 편집 복원 · 저장 대기": {
+  "en": "Draft restored · waiting to save",
+  "zh": "已恢复草稿 · 等待保存",
+  "ja": "下書きを復元 · 保存待ち"
+ },
+ "불러오기 실패": {
+  "en": "Couldn't load",
+  "zh": "加载失败",
+  "ja": "読み込めませんでした"
+ },
+ "다른 창에서 저장된 최신 기록을 불러왔어요.": {
+  "en": "Loaded the latest version saved in another window.",
+  "zh": "已加载另一个窗口保存的最新记录。",
+  "ja": "別のウィンドウで保存された最新の記録を読み込みました。"
+ },
+ "저장하지 못했어요.": {
+  "en": "Couldn't save.",
+  "zh": "无法保存。",
+  "ja": "保存できませんでした。"
+ },
+ "창 없이 바탕화면에 떠 있는 하치와레 예시": {
+  "en": "Example of Hachiware floating on the desktop without a window",
+  "zh": "小八不带窗口漂浮在桌面上的示意图",
+  "ja": "ウィンドウなしでデスクトップに浮かぶハチワレの例"
+ },
+ "바탕화면 예시": {
+  "en": "Desktop example",
+  "zh": "桌面示意图",
+  "ja": "デスクトップの例"
+ },
+ "내 바탕화면에, 작은 친구 하나.": {
+  "en": "A little friend on your desktop.",
+  "zh": "桌面上，多了一位小小的朋友。",
+  "ja": "デスクトップに、小さな友達。"
+ },
+ "웹 창 안의 그림이 아니에요. 앱을 켜면 하치와레만 화면 위에 둥실 떠 있어요.": {
+  "en": "Hachiware lives outside the browser. Open the app and your little friend floats over your desktop.",
+  "zh": "小八不在网页窗口里。打开应用，它就会轻轻漂浮在桌面上。",
+  "ja": "ブラウザの中の絵ではありません。アプリを開くと、ハチワレだけがデスクトップにふわりと浮かびます。"
+ },
+ "창 없이 둥실둥실": {
+  "en": "Floating without a window",
+  "zh": "不带窗口，轻轻漂浮",
+  "ja": "ウィンドウなしでふわふわ"
+ },
+ "드래그로 자리 이동": {
+  "en": "Drag to move",
+  "zh": "拖动换个位置",
+  "ja": "ドラッグでお引っ越し"
+ },
+ "크기도 마음대로": {
+  "en": "Choose your size",
+  "zh": "大小随心调",
+  "ja": "大きさも自由に"
+ },
+ "떠 있는 하치와레를 한 번 또는 두 번 눌러 보세요.": {
+  "en": "Click your floating Hachiware once or twice.",
+  "zh": "试着单击或双击漂浮的小八。",
+  "ja": "浮かぶハチワレを1回、または2回クリックしてみてね。"
+ },
+ "캐릭터 크기도 내 마음대로": {
+  "en": "A size that feels right for you",
+  "zh": "角色大小也随心调",
+  "ja": "キャラクターの大きさもお好みに"
+ },
+ "하치와레를 오른쪽 클릭하거나 메뉴 막대의 🐾 → 캐릭터 크기를 눌러요.": {
+  "en": "Right-click Hachiware, or choose 🐾 in the menu bar → Character size.",
+  "zh": "右键点击小八，或选择菜单栏的 🐾 → 角色大小。",
+  "ja": "ハチワレを右クリック、またはメニューバーの 🐾 → キャラクターの大きさを選びます。"
+ },
+ "하치와레를 오른쪽 클릭하거나 작업 표시줄 아이콘 → 캐릭터 크기를 눌러요.": {
+  "en": "Right-click Hachiware or the taskbar icon → Character size.",
+  "zh": "右键点击小八或任务栏图标 → 角色大小。",
+  "ja": "ハチワレかタスクバーのアイコンを右クリック → キャラクターの大きさを選びます。"
+ },
+ "작게": {
+  "en": "Small",
+  "zh": "小",
+  "ja": "小さめ"
+ },
+ "기본": {
+  "en": "Default",
+  "zh": "默认",
+  "ja": "標準"
+ },
+ "크게": {
+  "en": "Large",
+  "zh": "大",
+  "ja": "大きめ"
+ },
+ "아주 크게": {
+  "en": "Extra large",
+  "zh": "特大",
+  "ja": "とても大きく"
+ },
+ "다시 켜도 선택한 크기가 유지돼요. 이전 버전이라면 새 앱을 받아 교체해 주세요.": {
+  "en": "Your size is remembered when you reopen the app. Replace older versions with the new download.",
+  "zh": "重新打开应用后会保留所选大小。旧版本请下载新应用并替换。",
+  "ja": "次に開いたときも選んだ大きさを覚えています。以前のバージョンは新しいアプリに入れ替えてください。"
+ },
+ "저장": {
+  "en": "Save",
+  "zh": "保存",
+  "ja": "保存"
+ },
+ "출처": {
+  "en": "Source",
+  "zh": "来源",
+  "ja": "出典"
  }
 };
