@@ -80,3 +80,7 @@
 .index-section .desktop-download-trigger{width:100%;padding:12px 8px;gap:8px;background:#fff9ed;border:1px solid #b4c9c6;border-radius:12px;text-align:left;font-size:13px;font-weight:700;margin-bottom:10px}.index-section .desktop-download-trigger:hover{background:#f4d5de}.desktop-download-trigger span{flex:1}.desktop-download-trigger svg{flex:none}.install-download-options{margin:0 0 23px}.install-download-options .desktop-download{padding:14px 16px;font-size:14px;margin-bottom:7px;background:#f4d5de;border-color:#c6a6ad}.install-download-options .desktop-download:hover{background:#ebc4d0}.install-steps-title{font-size:17px;margin:0 0 17px}
 
 .community-link{display:flex;align-items:center;gap:9px;border:1px solid #d0adb5;background:#f8e0e6;border-radius:12px;padding:13px 10px;color:#605448;font-size:13px;font-weight:700}.community-link span{flex:1}.community-link:hover{background:#f3d2dd}.community-link:focus-visible{outline:3px solid #84b9ca;outline-offset:3px}
+
+.letter-stats>div,.letter-stats>div:nth-child(n){transform:none}.letter-stats>div::before{transform:none}
+
+.banner-choice-link{display:flex;align-items:center;gap:8px;padding:12px 7px;font-size:13px;color:#786959}.banner-choice-link svg:last-child{margin-left:auto}

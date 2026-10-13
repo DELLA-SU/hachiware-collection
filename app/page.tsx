@@ -4,7 +4,9 @@ import {useEffect,useState,useRef} from 'react';
 import PhotoWindow from './photo-window';
 import BookIntro from './book-intro';
 import MusicTV from './music-tv';
-import LetterHero from './letter-hero';
+import GachaHero from './gacha-hero';
+import './letter-hero.css';
+import catalog from '../lib/catalog.json';
 import CollectionGuide from './collection-guide';
 import InstallGuide from './install-guide';
 import {photoMatchesSearch} from './collection-search';
@@ -13,13 +15,14 @@ import {assetUrl} from './asset-url';
 import {apiFetch} from '../lib/browser-api';
 import {playMotion,setMotionSound,motionSoundEnabled} from './motion-sounds';
 import {Star,ArrowUpRight,BookOpen,Sparkles,Upload,Download,Share2,X,ChevronDown,Heart,Search,RefreshCw,Check,ArrowRight,Menu,LayoutGrid,Shuffle,ChevronLeft,ChevronRight,CalendarDays,Music2,Volume2,VolumeX} from 'lucide-react';
-type Photo={character?:string;id:string;image_url:string;remote_url:string;source:string;source_kind:string;title:string;collected_at:string;imported:number;favorite:number};
+type Photo={character?:string;id:string;image_url:string;remote_url:string;source:string;source_kind:string;title:string;collected_at:string;met_at?:string;imported:number;favorite:number};
 const day=(d:string)=>new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(d));
 const label=(d:string)=>new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',year:'numeric',month:'long',day:'numeric',weekday:'short'}).format(new Date(d));
 function BrandCharacter(){return <span className="brand-face brand-photo"><svg viewBox="45 25 680 555" aria-hidden="true"><image href={assetUrl('/brand-hachiware.png')} width="836" height="612"/></svg></span>}
 export default function Home(){
  const [photos,setPhotos]=useState<Photo[]>([]),[loading,setLoading]=useState(true),[busy,setBusy]=useState(false),[view,setView]=useState('all'),[sort,setSort]=useState('new'),[filter,setFilter]=useState(''),[windows,setWindows]=useState<{key:string;id:string;z:number}[]>([]),[notice,setNotice]=useState(''),[error,setError]=useState(''),[newId,setNewId]=useState(''),[about,setAbout]=useState(false),[saving,setSaving]=useState(''),[query,setQuery]=useState(''),[arrangement,setArrangement]=useState('desk'),[menuOpen,setMenuOpen]=useState(false),[removed,setRemoved]=useState<Photo|null>(null),[musicOpen,setMusicOpen]=useState(false);
  const [installOpen,setInstallOpen]=useState(false);
+ const [bannerVariant]=useState(()=>{try{const n=Number(localStorage.getItem('hachiware-gacha-variant'));return n>=1&&n<=5?n:1;}catch{return 1;}});
  const [importOpen,setImportOpen]=useState(false),[importText,setImportText]=useState('');
  const importRef=useRef<HTMLInputElement>(null);
  const [soundsOn,setSoundsOn]=useState(true);
@@ -46,7 +49,25 @@ export default function Home(){
  function closeWindow(key:string){void playMotion('paper');setWindows(a=>a.filter(w=>w.key!==key));}
  useEffect(()=>{if(about||musicOpen)return;const esc=(e:KeyboardEvent)=>{if(e.key==='Escape')setWindows(a=>{const top=[...a].sort((x,y)=>y.z-x.z)[0];return top?a.filter(w=>w.key!==top.key):a;});};window.addEventListener('keydown',esc);return()=>window.removeEventListener('keydown',esc);},[about,musicOpen]);
  async function load(){setLoading(true);try{const r=await apiFetch('/api/collection',{cache:'no-store'}),j:any=await r.json();if(!r.ok)throw new Error(j.error);setPhotos(j.photos);setError('');}catch(e:any){setError(e.message||'도감을 불러오지 못했어요.');}finally{setLoading(false);}}
- useEffect(()=>{load();},[]);
+ useEffect(()=>{load();const changed=(e:StorageEvent)=>{if(e.key==='hachiware-records-updated')void load();};window.addEventListener('storage',changed);return()=>window.removeEventListener('storage',changed);},[]);
+ const desktopRequest=useRef('');
+ useEffect(()=>{
+  if(loading)return;
+  const receive=async()=>{
+   const params=new URLSearchParams(location.hash.slice(1)),id=params.get('desktop_photo'),request=params.get('request');
+   if(!id||!request||desktopRequest.current===request)return;
+   desktopRequest.current=request;
+   try{
+    const r=await apiFetch('/api/desktop-photo',{method:'POST',body:JSON.stringify({id,request_id:request})}),j:any=await r.json();
+    if(!r.ok)throw new Error(j.error);
+    history.replaceState(null,'',location.pathname+location.search);
+    await load();setNewId(j.photo.id);setView('all');setFilter('');setQuery('');setSort('new');
+    setNotice(j.existing?'바탕화면에서 다시 만난 사진을 최근 목록에 올렸어요.':'바탕화면에서 만난 사진을 도감에 담았어요.');
+   }catch(e:any){desktopRequest.current='';setError(e.message||'바탕화면 사진을 저장하지 못했어요.');}
+  };
+  void receive();window.addEventListener('hashchange',receive);return()=>window.removeEventListener('hashchange',receive);
+ },[loading]);
+
  useEffect(()=>{if(!notice)return;const t=setTimeout(()=>setNotice(''),5000);return()=>clearTimeout(t);},[notice]);
  useEffect(()=>{if(!about)return;closeRef.current?.focus();const onKey=(e:KeyboardEvent)=>{if(e.key==='Escape'){setAbout(false);}if(e.key==='Tab'){const dialog=document.querySelector('.about-modal');const els=Array.from(dialog?.querySelectorAll<HTMLElement>('button,a,input,select')||[]);if(els.length){const first=els[0],last=els[els.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}}};document.addEventListener('keydown',onKey);const old=document.body.style.overflow;document.body.style.overflow='hidden';return()=>{document.removeEventListener('keydown',onKey);document.body.style.overflow=old;};},[about]);
  async function collect(){if(busy)return;void playMotion('paper');try{soundContext.current ||= new AudioContext();void soundContext.current.resume();}catch{}setBusy(true);setError('');pending.current ||= crypto.randomUUID();try{const r=await apiFetch('/api/collect',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({request_id:pending.current})}),j:any=await r.json();if(!r.ok){pending.current=null;throw new Error(j.error);}pending.current=null;setPhotos(p=>[j.photo,...p.filter(x=>x.id!==j.photo.id)]);setNewId(j.photo.id);setView('all');setFilter('');setQuery('');setSort('new');openPhoto(j.photo);setNotice(j.existing?'도감에 있는 친구를 다시 만났어요.':j.replayed?'저장된 사진을 다시 확인했어요.':'새로운 하치와레 한 장을 도감에 담았어요!');}catch(e:any){setError(e.message||'연결이 끊겼어요. 다시 누르면 같은 요청을 확인해요.');}finally{setBusy(false);}}
@@ -60,13 +81,13 @@ export default function Home(){
  const memory=photos.filter(p=>p.imported).length;
  const ordered=[...photos].sort((a,b)=>new Date(a.collected_at).getTime()-new Date(b.collected_at).getTime());
  const number=(p:Photo)=>String(ordered.findIndex(x=>x.id===p.id)+1).padStart(3,'0');
- const shown=photos.filter(p=>(view!=='favorites'||p.favorite)&&(view!=='memory'||p.imported)&&(view!=='new'||!p.imported)&&(!filter||day(p.collected_at)===filter)&&photoMatchesSearch(p,number(p),day(p.collected_at),query)).sort((a,b)=>sort==='new'?new Date(b.collected_at).getTime()-new Date(a.collected_at).getTime():new Date(a.collected_at).getTime()-new Date(b.collected_at).getTime());
+ const shown=photos.filter(p=>(view!=='favorites'||p.favorite)&&(view!=='memory'||p.imported)&&(view!=='new'||!p.imported)&&(!filter||day(p.collected_at)===filter)&&photoMatchesSearch(p,number(p),day(p.collected_at),query)).sort((a,b)=>sort==='new'?new Date(b.met_at||b.collected_at).getTime()-new Date(a.met_at||a.collected_at).getTime():new Date(a.collected_at).getTime()-new Date(b.collected_at).getTime());
  const dateIndex=photos.reduce((a,p)=>{const k=day(p.collected_at);a[k]=(a[k]||0)+1;return a;},{} as Record<string,number>);
  const dateKeys=Object.keys(dateIndex).sort().reverse();
  const viewTitle=view==='favorites'?'별표 한 순간':view==='memory'?'메모에서 온 친구들':view==='new'?'웹에서 만난 친구들':'귀여움 보관함';
  function chooseView(v:string){setView(v);setFilter('');setQuery('');setMenuOpen(false);}
  function surprise(){if(!shown.length)return;openPhoto(shown[Math.floor(Math.random()*shown.length)]);}
- const hero=[...photos].sort((a,b)=>new Date(b.collected_at).getTime()-new Date(a.collected_at).getTime()).slice(0,3);
+ const hero=[...photos].sort((a,b)=>new Date(b.met_at||b.collected_at).getTime()-new Date(a.met_at||a.collected_at).getTime()).slice(0,3);
  function stepWindow(key:string,direction:number){setWindows(a=>a.map(w=>{if(w.key!==key||shown.length<2)return w;const i=shown.findIndex(p=>p.id===w.id);if(i<0)return w;return {...w,id:shown[(i+direction+shown.length)%shown.length].id};}));}
  return <div className="archive-shell"><BookIntro latestImage={photos[0]?.image_url}/><aside className={'index-panel '+(menuOpen?'index-open':'')}><header className="index-brand"><a href={assetUrl('/')} className="brand"><BrandCharacter/><span>하치와레 도감</span></a><button className="mobile-menu" onClick={()=>setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="도감 색인 열기">{menuOpen?<X size={20}/>:<Menu size={20}/>}</button></header>
  <div className="index-content"><label className="index-search"><Search size={16}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="날짜, 출처, 사진 번호, 캐릭터 찾기" aria-label="도감 검색"/>{query&&<button onClick={()=>setQuery('')} aria-label="검색 지우기"><X size={13}/></button>}</label>
@@ -75,9 +96,9 @@ export default function Home(){
  <div className="index-section quick-meet-links"><button className="hachi-music-link" onClick={()=>{void playMotion('switch');setMusicOpen(true);setMenuOpen(false);}}><Music2 size={15}/>하치와레 노래 들으러 가기<ArrowUpRight size={13}/></button><button onClick={surprise} disabled={!shown.length}><Shuffle size={15}/>아무 하치와레 만나기<ArrowUpRight size={13}/></button></div>
  <div className="index-section"><button className="desktop-download desktop-download-trigger" onClick={()=>setInstallOpen(true)} aria-haspopup="dialog"><Download size={15}/><span>바탕화면에 하치와레 다운받기</span><ArrowUpRight size={13}/></button></div>
  <nav className="index-section dates-index" aria-label="날짜별 색인"><div className="index-section-title">만난 날들<span>({days})</span></div>{dateKeys.map(d=><button key={d} className={filter===d?'selected':''} onClick={()=>{setFilter(filter===d?'':d);setMenuOpen(false);}}><CalendarDays size={14}/>{d.replaceAll('-','.')}<span>{dateIndex[d]}</span></button>)}</nav>
- <input ref={importRef} type="file" accept="application/json,.json" aria-label="도감 백업 파일" hidden onChange={e=>{const file=e.target.files?.[0];if(file)void restoreFile(file);}}/><div className="index-section archive-tools"><div className="index-section-title">도감의 작은 도구</div><button onClick={()=>setImportOpen(true)}><Upload size={15}/>기록 불러오기<ArrowUpRight size={13}/></button><button onClick={backup} disabled={!photos.length}><Download size={15}/>기록 내보내기<ArrowUpRight size={13}/></button><button onClick={()=>{const enabled=!soundsOn;setSoundsOn(enabled);setMotionSound(enabled);if(enabled)void playMotion('star');else{++voiceRequest.current;try{unaSource.current?.stop();}catch{}}}} aria-label={soundsOn?'효과음 끄기':'효과음 켜기'}>{soundsOn?<Volume2 size={15}/>:<VolumeX size={15}/>}효과음 {soundsOn?'켜짐':'꺼짐'}</button><button onClick={()=>{setAbout(true);setMenuOpen(false);}}><BookOpen size={15}/>도감 이야기<ArrowUpRight size={13}/></button></div>
+ <input ref={importRef} type="file" accept="application/json,.json" aria-label="도감 백업 파일" hidden onChange={e=>{const file=e.target.files?.[0];if(file)void restoreFile(file);}}/><div className="index-section archive-tools"><a className="banner-choice-link" href={assetUrl('gacha-preview.html')}><Sparkles size={15}/>뽑기 배너 고르기<ArrowUpRight size={13}/></a><div className="index-section-title">도감의 작은 도구</div><button onClick={()=>setImportOpen(true)}><Upload size={15}/>기록 불러오기<ArrowUpRight size={13}/></button><button onClick={backup} disabled={!photos.length}><Download size={15}/>기록 내보내기<ArrowUpRight size={13}/></button><button onClick={()=>{const enabled=!soundsOn;setSoundsOn(enabled);setMotionSound(enabled);if(enabled)void playMotion('star');else{++voiceRequest.current;try{unaSource.current?.stop();}catch{}}}} aria-label={soundsOn?'효과음 끄기':'효과음 켜기'}>{soundsOn?<Volume2 size={15}/>:<VolumeX size={15}/>}효과음 {soundsOn?'켜짐':'꺼짐'}</button><button onClick={()=>{setAbout(true);setMenuOpen(false);}}><BookOpen size={15}/>도감 이야기<ArrowUpRight size={13}/></button></div>
 </div></aside>
- <main className="scrap-desk"><LetterHero onCollect={collect} busy={busy} loading={loading} photos={hero}/>
+ <main className="scrap-desk"><GachaHero variant={bannerVariant} onCollect={collect} busy={busy} loading={loading} result={newId&&catalog.find(p=>p.id===newId)?.draw_enabled!==false?photos.find(p=>p.id===newId)?.image_url:undefined}/>
  <section className="stats letter-stats" aria-label="수집 현황"><div><BookOpen size={28}/><span>모은 하치와레</span><strong>{loading?'—':photos.length}<small>장</small></strong></div><div><Star size={28}/><span>별표 한 순간</span><strong>{loading?'—':favorites}<small>장</small></strong></div><div><Heart size={28}/><span>함께한 날짜</span><strong>{loading?'—':days}<small>일</small></strong></div></section>
 {removed&&<div className="removed-notice" role="status"><span>사진을 컬렉션에서 지웠어요.</span><button onClick={()=>removePhoto(removed,true)} disabled={!!saving}>실행 취소</button></div>}<header className="desk-top"><div><h2>{viewTitle}<span>({shown.length})</span></h2></div><button className="random-top" onClick={surprise} disabled={!shown.length}><Shuffle size={16}/>도감 속 랜덤 하치와레</button></header>
  <div className="desk-toolbar"><div className="desk-controls"><label><span className="sr-only">정렬</span><select value={sort} onChange={e=>setSort(e.target.value)}><option value="new">최근 만난 순</option><option value="old">처음 만난 순</option></select><ChevronDown size={13}/></label><div className="arrangement" aria-label="도감 배치"><button className={arrangement==='desk'?'active':''} onClick={()=>setArrangement('desk')} aria-label="책상처럼 펼치기" aria-pressed={arrangement==='desk'}><Sparkles size={15}/></button><button className={arrangement==='tidy'?'active':''} onClick={()=>setArrangement('tidy')} aria-label="가지런히 정돈하기" aria-pressed={arrangement==='tidy'}><LayoutGrid size={15}/></button></div></div></div>

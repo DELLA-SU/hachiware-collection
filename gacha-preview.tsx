@@ -1,0 +1,1 @@
+import React from 'react';import {createRoot} from 'react-dom/client';import GachaPreview from './app/gacha-preview';import './app/globals.css';import './app/theme.css';createRoot(document.getElementById('root')!).render(<GachaPreview/>);

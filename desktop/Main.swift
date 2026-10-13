@@ -149,11 +149,35 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
  }
  @objc func resetPosition(){let r=NSScreen.main?.visibleFrame ?? NSRect(x:0,y:0,width:1200,height:800);base=NSPoint(x:r.maxX-210,y:r.minY+100);pet?.setFrameOrigin(base);UserDefaults.standard.removeObject(forKey:"x");UserDefaults.standard.removeObject(forKey:"y")}
  @objc func collect(){
-  guard let url=Bundle.main.url(forResource:"catalog",withExtension:"json"),let data=try? Data(contentsOf:url),let photos=try? JSONSerialization.jsonObject(with:data) as? [[String:Any]] else{return}
-  let choices=photos.filter{$0["id"] as? String != lastDesktopPhoto};guard let photo=choices.randomElement(),let id=photo["id"] as? String,let image=NSImage(contentsOfFile:Bundle.main.resourcePath!+"/photos/"+id+".jpg") else{return}
-  lastDesktopPhoto=id;setSpin(0);let isUsagi=photo["character"] as? String == "usagi";show(image,isUsagi:isUsagi);if isUsagi{playUna()}else{playEffect("reveal")}
+  guard !busy else{return};busy=true;setSpin(0);status.button?.title="⏳"
+  Task {do{
+   var photos:[[String:Any]]=[]
+   var request=URLRequest(url:URL(string:publicSite+"catalog.json")!);request.timeoutInterval=15;request.cachePolicy = .reloadIgnoringLocalCacheData
+   if let (data,response)=try? await URLSession.shared.data(for:request),(response as? HTTPURLResponse)?.statusCode==200,data.count<6_000_000,let list=try? JSONSerialization.jsonObject(with:data) as? [[String:Any]]{photos=list}
+   if photos.isEmpty,let url=Bundle.main.url(forResource:"catalog",withExtension:"json"),let data=try? Data(contentsOf:url),let list=try? JSONSerialization.jsonObject(with:data) as? [[String:Any]]{photos=list}
+   photos=photos.filter{p in guard let id=p["id"] as? String else{return false};return p["draw_enabled"] as? Bool != false && id.range(of:"^[a-f0-9]{64}$",options:.regularExpression) != nil && p["image_url"] as? String == "photos/"+id+".jpg"}
+   var seen=Set(UserDefaults.standard.stringArray(forKey:"seenDesktopPhotoIDs") ?? [])
+#if PERSONAL_BUILD
+   if !UserDefaults.standard.bool(forKey:"desktopPhotosInitialized"),let url=Bundle.main.url(forResource:"legacy-collected-ids",withExtension:"json"),let data=try? Data(contentsOf:url),let ids=try? JSONSerialization.jsonObject(with:data) as? [String]{seen.formUnion(ids);UserDefaults.standard.set(true,forKey:"desktopPhotosInitialized")}
+#endif
+   let mainTurn=UserDefaults.standard.integer(forKey:"desktopDrawCount")%6<5
+   let primary:Set<String>=["hachiware","chiikawa","usagi","friends"]
+   let category=photos.filter{primary.contains($0["character"] as? String ?? "friends")==mainTurn}
+   let candidates=category.isEmpty ? photos:category
+   let fresh=candidates.filter{!seen.contains($0["id"] as? String ?? "")};let repeatPool=candidates.filter{$0["id"] as? String != lastDesktopPhoto};let pool=fresh.isEmpty ? (repeatPool.isEmpty ? candidates:repeatPool):fresh
+   let previous=photos.first{$0["id"] as? String==lastDesktopPhoto}?["character"] as? String
+   let groups=Dictionary(grouping:pool){$0["character"] as? String ?? "friends"};let different=groups.keys.filter{$0 != previous};let types=different.isEmpty ? Array(groups.keys):different
+   guard let type=types.randomElement(),let photo=groups[type]?.randomElement(),let id=photo["id"] as? String else{throw NSError(domain:"하치와레",code:1,userInfo:[NSLocalizedDescriptionKey:"사진 목록을 불러오지 못했어요."])}
+   var image=NSImage(contentsOfFile:Bundle.main.resourcePath!+"/photos/"+id+".jpg")
+   if image==nil{let (bytes,_)=try await URLSession.shared.data(from:URL(string:publicSite+"photos/"+id+".jpg")!);image=NSImage(data:bytes)}
+   guard let image=image else{throw NSError(domain:"하치와레",code:2,userInfo:[NSLocalizedDescriptionKey:"사진을 표시하지 못했어요."])}
+   UserDefaults.standard.set(UserDefaults.standard.integer(forKey:"desktopDrawCount")+1,forKey:"desktopDrawCount");seen.insert(id);UserDefaults.standard.set(Array(seen),forKey:"seenDesktopPhotoIDs")
+   await MainActor.run{self.lastDesktopPhoto=id;let usagi=photo["character"] as? String=="usagi";self.show(image,isUsagi:usagi);self.openArchive();if usagi{self.playUna()}else{self.playEffect("reveal")}}
+  }catch{await MainActor.run{let a=NSAlert();a.messageText="사진을 불러오지 못했어요";a.informativeText=error.localizedDescription;a.runModal()}}
+  await MainActor.run{self.busy=false;self.status.button?.title="🐾"}
+  }
  }
- @objc func openArchive(){_ = NSWorkspace.shared.open(URL(string:publicSite)!)}
+ @objc func openArchive(){let suffix=lastDesktopPhoto.map{"#desktop_photo="+$0+"&request="+UUID().uuidString} ?? "";_ = NSWorkspace.shared.open(URL(string:publicSite+suffix)!)}
  @objc func openMusic(){
   setSpin(0);playEffect("switch");if let v=pet.contentView as? PetView{v.hovering=false}
   if let window=musicWindow{window.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true);return}

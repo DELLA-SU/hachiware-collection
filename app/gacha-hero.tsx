@@ -1,0 +1,20 @@
+import {useState} from 'react';
+import {Sparkles,ArrowUpRight,Heart,Star} from 'lucide-react';
+import {assetUrl} from './asset-url';
+import './gacha-hero.css';
+const characters=['gacha-hachiware.png','gacha-chiikawa.png','gacha-usagi.png'];
+export const gachaNames=['핑크 크레인','세 친구 캡슐','레트로 슬롯','러브레터 자판기','구름 속 뽑기'];
+function Faces({capsules=false}:{capsules?:boolean}){return <div className={'gacha-faces '+(capsules?'capsules':'')}>{characters.map((s,i)=><span key={s}><img src={assetUrl(s)} alt={['하치와레','치이카와','우사기'][i]}/></span>)}</div>}
+function Claw(){return <div className="gacha-claw" aria-hidden="true"><i/><svg viewBox="0 0 90 85"><path d="M45 4v18M26 26h38v19H26zM28 43L14 59l9 20M62 43l14 16-9 20M45 43v26" fill="#f8d6de" stroke="currentColor" strokeWidth="5" strokeLinejoin="round" strokeLinecap="round"/></svg></div>}
+export default function GachaHero({variant=1,onCollect,busy=false,loading=false,result}:{variant?:number;onCollect:()=>void;busy?:boolean;loading?:boolean;result?:string}){
+ const [pressed,setPressed]=useState(false);const action=()=>{setPressed(true);onCollect();setTimeout(()=>setPressed(false),1300)};
+ const button=<button className="gacha-button" onClick={action} disabled={busy||loading}><Sparkles size={18}/>{busy?'뽑는 중…':'하치와레 뽑기'}<ArrowUpRight size={18}/></button>;
+ return <section className={'gacha-hero gacha-v'+variant+' '+(pressed||busy?'gacha-active':'')} aria-label={gachaNames[variant-1]+' 배너'}>
+ <div className="gacha-doodles" aria-hidden="true"><Star/><Heart/><Star/></div>
+ {variant===1&&<><div className="gacha-copy"><small>HACHIWARE CLUB</small><h1>오늘의 귀여움,<br/>한 번 뽑아볼까?</h1>{button}</div><div className="gacha-machine"><div className="gacha-marquee">LUCKY LITTLE FRIENDS <Star size={16}/></div><div className="gacha-glass"><Claw/><Faces capsules/>{result&&<img className="gacha-result" src={result} alt="방금 만난 친구"/>}</div><div className="gacha-deck"><span className="gacha-joystick"/><span className="gacha-lamp"/><span className="gacha-prize-slot"/></div></div></>}
+ {variant===2&&<><div className="gacha-copy"><small>A LITTLE LUCK FOR YOU</small><h1>Dear,<br/><em>lucky friends.</em></h1>{button}</div><div className="capsule-machine"><div className="capsule-sign">오늘의 하치와레</div><div className="capsule-globe"><Faces capsules/>{result&&<img className="gacha-result" src={result} alt="방금 만난 친구"/>}</div><div className="capsule-bottom"><span className="capsule-knob">♡</span><span className="gacha-prize-slot"/></div></div></>}
+ {variant===3&&<div className="retro-window"><div className="retro-title"><span>● ● ●</span> HACHIWARE.EXE <Heart size={15}/></div><div className="retro-inside"><div className="gacha-copy"><small>PRESS TO MEET A FRIEND</small><h1>귀여움<br/>잭팟!</h1>{button}</div><div className="retro-slots">{characters.map((s,i)=><div key={s}><small>{['BLUE','WHITE','YELLOW'][i]}</small><img src={result&&i===1?result:assetUrl(s)} alt={result&&i===1?'방금 만난 친구':['하치와레','치이카와','우사기'][i]}/><span>♡</span></div>)}<i className="slot-lever"/></div></div><div className="retro-footer">✦ 오늘도 만나서 반가워! <span>READY ♡</span></div></div>}
+ {variant===4&&<><div className="gacha-copy"><small>ONE LITTLE LOVE LETTER</small><h1>너에게 온<br/>귀여운 한 장.</h1>{button}<div className="ticket-stamp">♡ HACHIWARE POST ♡</div></div><div className="ticket-machine"><div className="ticket-sign"><Heart size={18}/>귀여움 우편함</div><div className="ticket-screen"><Faces/>{result&&<img className="gacha-result" src={result} alt="방금 만난 친구"/>}</div><div className="ticket-feed"/><div className="ticket-paper"><img src={result||assetUrl(characters[0])} alt="뽑기 카드"/><span>오늘의 작은 행복 ♡</span></div><span className="ticket-dial"/></div></>}
+ {variant===5&&<><div className="cloud-title"><small>SOFT DAYS, LITTLE FRIENDS</small><h1>구름 속에서 만나요.</h1></div><div className="cloud-machine"><Claw/><div className="cloud-floor"/><Faces/>{result&&<img className="gacha-result" src={result} alt="방금 만난 친구"/>}</div><div className="cloud-controls">{button}</div></>}
+ </section>
+}

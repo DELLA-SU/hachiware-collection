@@ -1,6 +1,6 @@
 import catalog from './catalog.json';
 import {assetUrl} from '../app/asset-url';
-type State={photos:any[];hidden:string[];requests:Record<string,string>;annotations:Record<string,any>;last?:string};
+type State={photos:any[];hidden:string[];requests:Record<string,string>;annotations:Record<string,any>;last?:string;draw_count?:number};
 const database=new Promise<IDBDatabase>((resolve,reject)=>{const r=indexedDB.open('hachiware-public',1);r.onupgradeneeded=()=>r.result.createObjectStore('records');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});
 async function read(){const db=await database;return new Promise<State>((resolve,reject)=>{const r=db.transaction('records').objectStore('records').get('collection');r.onsuccess=()=>resolve(r.result||{photos:catalog.slice(0,3).map((p,i)=>({...p,image_url:assetUrl(p.image_url),collected_at:new Date(Date.now()-i*1000).toISOString(),favorite:0})),hidden:[],requests:{},annotations:{}});r.onerror=()=>reject(r.error);});}
 async function write(state:State){const db=await database;return new Promise<void>((resolve,reject)=>{const tx=db.transaction('records','readwrite');tx.objectStore('records').put(state,'collection');tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error);});}
@@ -9,19 +9,30 @@ function serial<T>(work:()=>Promise<T>):Promise<T>{const result=pending.then(wor
 const json=(value:unknown,status=200)=>Response.json(value,{status});
 async function handle(input:string,init?:RequestInit){
  const path=new URL(input,'https://local.invalid'),state=await read(),b=init?.body?JSON.parse(String(init.body)):{};
- const visible=()=>state.photos.filter(p=>!state.hidden.includes(p.id)).sort((a,b)=>b.collected_at.localeCompare(a.collected_at));
+ const visible=()=>state.photos.filter(p=>!state.hidden.includes(p.id)).sort((a,b)=>(b.met_at||b.collected_at).localeCompare(a.met_at||a.collected_at));
  if(path.pathname==='/api/collection'){await write(state);return json({photos:visible(),mode:'browser'});}
+ if(path.pathname==='/api/desktop-photo'){
+  const original=catalog.find(p=>p.id===b.id);
+  if(!original||!/^[a-zA-Z0-9-]{16,80}$/.test(b.request_id||''))return json({error:'바탕화면 사진 정보를 확인해 주세요.'},400);
+  const prior=state.requests[b.request_id];if(prior)return json({photo:state.photos.find(p=>p.id===prior),replayed:true});
+  let photo=state.photos.find(p=>p.id===original.id),existing=!!photo;
+  const now=new Date().toISOString();
+  if(!photo){photo={...original,image_url:assetUrl(original.image_url),collected_at:now,favorite:0};state.photos.push(photo);}
+  photo.met_at=now;state.last=photo.id;state.hidden=state.hidden.filter(id=>id!==photo.id);state.requests[b.request_id]=photo.id;
+  const keys=Object.keys(state.requests);keys.slice(0,Math.max(0,keys.length-200)).forEach(k=>delete state.requests[k]);
+  await write(state);return json({photo,existing});
+ }
  if(path.pathname==='/api/import'){
   if(![1,2].includes(b.version)||!Array.isArray(b.photos)||!b.photos.length||b.photos.length>2000)return json({error:'도감 백업 파일을 확인해 주세요.'},400);
   const incoming:any[]=[];const notes:Record<string,any>={};const seen=new Set<string>();
   for(const p of b.photos){
    const original=catalog.find(c=>c.id===p.id);
    if(!original||seen.has(p.id)||typeof p.collected_at!=='string'||!Number.isFinite(Date.parse(p.collected_at)))return json({error:'사진 기록 형식을 확인해 주세요.'},400);
-   seen.add(p.id);incoming.push({...original,image_url:assetUrl(original.image_url),collected_at:new Date(p.collected_at).toISOString(),favorite:p.favorite?1:0});
+   seen.add(p.id);incoming.push({...original,image_url:assetUrl(original.image_url),collected_at:new Date(p.collected_at).toISOString(),favorite:p.favorite?1:0,...(typeof p.met_at==='string'&&Number.isFinite(Date.parse(p.met_at))?{met_at:new Date(p.met_at).toISOString()}: {})});
    const a=b.annotations?.[p.id];if(a){let points=0;if(typeof a.note!=='string'||a.note.length>4000||!Array.isArray(a.strokes)||a.strokes.length>300||!a.strokes.every((s:any)=>s&&/^#[a-fA-F0-9]{6}$/.test(s.color)&&[2,4,8,12].includes(s.width)&&Array.isArray(s.points)&&s.points.length>0&&s.points.length<=5000&&(points+=s.points.length)<=20000&&s.points.every((p:any)=>Array.isArray(p)&&p.length===2&&p.every((n:any)=>Number.isFinite(n)&&n>=0&&n<=1000))))return json({error:'메모 또는 드로잉 형식을 확인해 주세요.'},400);notes[p.id]=a;}
   }
   let added=0;
-  for(const p of incoming){const old=state.photos.find(x=>x.id===p.id);if(old){p.favorite=Math.max(old.favorite||0,p.favorite);Object.assign(old,p);}else{state.photos.push(p);added++;}state.hidden=state.hidden.filter(id=>id!==p.id);
+  for(const p of incoming){const old=state.photos.find(x=>x.id===p.id);if(old){p.favorite=Math.max(old.favorite||0,p.favorite);if(old.met_at&&(!p.met_at||old.met_at>p.met_at))p.met_at=old.met_at;Object.assign(old,p);}else{state.photos.push(p);added++;}state.hidden=state.hidden.filter(id=>id!==p.id);
    const a=notes[p.id],current=state.annotations[p.id];if(a){const note=!current?.note?a.note:!a.note||current.note===a.note?current.note:current.note+'\n\n'+a.note;const strokes=[...new Map([...(current?.strokes||[]),...a.strokes].map((s:any)=>[JSON.stringify(s),s])).values()] as any[];if(note.length>4000||strokes.length>300||strokes.reduce((n,s)=>n+s.points.length,0)>20000)return json({error:'같은 사진의 기록이 너무 많아요. 먼저 현재 기록을 내보내 주세요.'},400);state.annotations[p.id]={note,strokes,revision:(current?.revision||0)+1};}
   }
   await write(state);return json({ok:true,added,total:visible().length});
@@ -29,21 +40,21 @@ async function handle(input:string,init?:RequestInit){
  if(path.pathname==='/api/collect'){
   if(!/^[a-zA-Z0-9-]{16,80}$/.test(b.request_id||''))return json({error:'수집 요청 번호를 확인해 주세요.'},400);
   const prior=state.requests[b.request_id];if(prior)return json({photo:state.photos.find(p=>p.id===prior),replayed:true});
-  const newPhotos=catalog.filter(p=>!state.photos.some(s=>s.id===p.id));let existing=!newPhotos.length;
-  let choices:any[]=existing?visible().filter(p=>p.id!==state.last):newPhotos;if(!choices.length&&existing)choices=visible();
-  if(!choices.length)return json({error:'남아 있는 사진이 없어요. 삭제한 사진을 복원해 주세요.'},404);
-  let pool=choices;
-  if(!existing){
-   const groups=new Map<string,any[]>();
-   for(const p of choices){const character=p.character||'friends';const group=groups.get(character)||[];group.push(p);groups.set(character,group);}
-   const previous=state.photos.find(p=>p.id===state.last)?.character||'friends';
-   const kinds=[...groups.keys()],different=kinds.filter(k=>k!==previous),eligible=different.length?different:kinds;
-   // Pick a character first so large photo collections do not dominate small ones.
-   const character=eligible[Math.floor(Math.random()*eligible.length)];pool=groups.get(character)!;
-  }
+  const primary=(p:any)=>['hachiware','chiikawa','usagi','friends'].includes(p.character);
+  const available=catalog.filter(p=>p.draw_enabled!==false),mainTurn=(state.draw_count||0)%6<5;
+  let candidates=available.filter(p=>primary(p)===mainTurn);
+  if(!candidates.length)candidates=available;
+  const newPhotos=candidates.filter(p=>!state.photos.some(s=>s.id===p.id));const existing=!newPhotos.length;
+  let pool:any[]=existing?visible().filter(p=>available.some(a=>a.id===p.id)&&primary(p)===mainTurn&&p.id!==state.last):newPhotos;
+  if(!pool.length)pool=existing?visible().filter(p=>available.some(a=>a.id===p.id)&&primary(p)===mainTurn):newPhotos;
+  if(!pool.length)pool=available;
+  if(!pool.length)return json({error:'준비된 캐릭터 그림이 없어요.'},404);
+  const groups=new Map<string,any[]>();for(const p of pool){const k=p.character||'friends',group=groups.get(k)||[];group.push(p);groups.set(k,group);}
+  const previous=state.photos.find(p=>p.id===state.last)?.character,kinds=[...groups.keys()],different=kinds.filter(k=>k!==previous),eligible=different.length?different:kinds;
+  const character=eligible[Math.floor(Math.random()*eligible.length)];pool=groups.get(character)!;
   let photo=pool[Math.floor(Math.random()*pool.length)];
   if(!existing){photo={...photo,image_url:assetUrl(photo.image_url),collected_at:new Date().toISOString(),favorite:0};state.photos.push(photo);}
-  state.last=photo.id;state.requests[b.request_id]=photo.id;
+  state.draw_count=(state.draw_count||0)+1;photo.met_at=new Date().toISOString();state.last=photo.id;state.requests[b.request_id]=photo.id;
   const keys=Object.keys(state.requests);keys.slice(0,Math.max(0,keys.length-200)).forEach(k=>delete state.requests[k]);
   await write(state);return json({photo,existing,replayed:false});
  }
@@ -61,4 +72,4 @@ async function handle(input:string,init?:RequestInit){
  }
  return json({error:'지원하지 않는 요청입니다.'},404);
 }
-export async function apiFetch(input:string,init?:RequestInit){try{return await serial(()=>navigator.locks?navigator.locks.request('hachiware-collection',()=>handle(input,init)):handle(input,init));}catch{return json({error:'브라우저에 저장하지 못했어요. 저장 공간과 브라우저 설정을 확인해 주세요.'},503);}}
+export async function apiFetch(input:string,init?:RequestInit){try{const response=await serial(()=>navigator.locks?navigator.locks.request('hachiware-collection',()=>handle(input,init)):handle(input,init));if(response.ok&&init?.method&&init.method!=='GET'){try{localStorage.setItem('hachiware-records-updated',Date.now()+'-'+Math.random());}catch{}}return response;}catch{return json({error:'브라우저에 저장하지 못했어요. 저장 공간과 브라우저 설정을 확인해 주세요.'},503);}}
