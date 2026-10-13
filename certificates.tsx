@@ -1,0 +1,1 @@
+import React from 'react';import {createRoot} from 'react-dom/client';import CertificateStudio from './app/certificate-studio';import './app/globals.css';import './app/theme.css';createRoot(document.getElementById('root')!).render(<CertificateStudio/>);

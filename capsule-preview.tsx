@@ -1,0 +1,1 @@
+import React from 'react';import {createRoot} from 'react-dom/client';import CapsulePreview from './app/capsule-preview';import './app/globals.css';import './app/theme.css';createRoot(document.getElementById('root')!).render(<CapsulePreview/>);

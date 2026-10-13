@@ -1,4 +1,6 @@
 'use client';
+import {t,useLanguage,languageLocale} from './locale';
+
 import {useEffect,useRef,useState} from 'react';
 import './book-intro.css';
 import {assetUrl} from './asset-url';
@@ -6,6 +8,7 @@ import {playMotion} from './motion-sounds';
 
 const seenKey='hachiware-book-intro-v1';
 export default function BookIntro({latestImage}:{latestImage?:string}){
+ useLanguage();
  const [visible,setVisible]=useState(true),[phase,setPhase]=useState('closed');
  const skip=useRef<HTMLButtonElement>(null);
  function finish(){void playMotion('paper');try{sessionStorage.setItem(seenKey,'seen');}catch{}setVisible(false);}
@@ -35,16 +38,16 @@ export default function BookIntro({latestImage}:{latestImage?:string}){
   return()=>{document.body.style.overflow=oldOverflow;siblings.forEach((el,i)=>{el.inert=inert[i];});document.removeEventListener('keydown',key);if(previous&&previous!==document.body)previous.focus({preventScroll:true});};
  },[visible]);
  if(!visible)return null;
- return <div className={'book-intro '+phase} role="dialog" aria-modal="true" aria-label="하치와레 도감이 펼쳐져요">
+ return <div className={'book-intro '+phase} role="dialog" aria-modal="true" aria-label={t("하치와레 도감이 펼쳐져요")}>
   <div className="intro-halo" aria-hidden="true"/>
   <div className="intro-book-scene">
    <div className="intro-book" aria-hidden="true">
     <div className="intro-page-stack"/>
-    <div className="intro-page"><div className="intro-page-heading">귀여움 보관함</div><div className="intro-page-photo"><img src={latestImage||assetUrl('/hachiware-favicon.png')} onError={e=>{e.currentTarget.onerror=null;e.currentTarget.src=assetUrl('/hachiware-favicon.png');}} alt="최근에 만난 친구"/></div><div className="intro-page-rule"/><div className="intro-index"><span>01</span> 오늘 만난 친구들<span>02</span> 별표 한 순간<span>03</span> 나만의 작은 기록</div><div className="intro-page-number">01</div></div>
-    <div className="intro-cover"><div className="intro-cover-front"><span className="intro-edition">나의 작은 백과사전</span><h2>하치와레<br/><span>도감</span></h2><div className="intro-portrait"><img src={assetUrl('/hachiware-favicon.png')} alt=""/></div><div className="intro-cover-label">좋아하는 마음을 한 장씩</div><div className="intro-spine-line"/></div><div className="intro-cover-back"><div className="intro-inside-frame"><img src={assetUrl('/hachiware-favicon.png')} alt=""/><span>오늘도 만나서 반가워!</span><div className="intro-inside-heart">♡</div></div></div></div>
+    <div className="intro-page"><div className="intro-page-heading">{t("귀여움 보관함")}</div><div className="intro-page-photo"><img src={latestImage||assetUrl('/hachiware-favicon.png')} onError={e=>{e.currentTarget.onerror=null;e.currentTarget.src=assetUrl('/hachiware-favicon.png');}} alt={t("최근에 만난 친구")}/></div><div className="intro-page-rule"/><div className="intro-index"><span>01</span> {t("오늘 만난 친구들")}<span>02</span> {t("별표 한 순간")}<span>03</span> {t("나만의 작은 기록")}</div><div className="intro-page-number">01</div></div>
+    <div className="intro-cover"><div className="intro-cover-front"><span className="intro-edition">{t("나의 작은 백과사전")}</span><h2>{t("하치와레")}<br/><span>{t("도감")}</span></h2><div className="intro-portrait"><img src={assetUrl('/hachiware-favicon.png')} alt=""/></div><div className="intro-cover-label">{t("좋아하는 마음을 한 장씩")}</div><div className="intro-spine-line"/></div><div className="intro-cover-back"><div className="intro-inside-frame"><img src={assetUrl('/hachiware-favicon.png')} alt=""/><span>{t("오늘도 만나서 반가워!")}</span><div className="intro-inside-heart">♡</div></div></div></div>
    </div>
   </div>
-  <p className="intro-caption" aria-live="polite">{phase==='closed'?'오늘의 귀여움을 펼쳐볼까요?':'한 장 한 장, 좋아하는 마음.'}</p>
-  <button ref={skip} className="intro-skip" onClick={finish}>바로 들어가기 <span aria-hidden="true">↗</span></button>
+  <p className="intro-caption" aria-live="polite">{phase==='closed'?t("오늘의 귀여움을 펼쳐볼까요?"):t("한 장 한 장, 좋아하는 마음.")}</p>
+  <button ref={skip} className="intro-skip" onClick={finish}>{t("바로 들어가기")}<span aria-hidden="true">↗</span></button>
  </div>;
 }

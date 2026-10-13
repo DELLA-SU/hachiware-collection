@@ -15,3 +15,5 @@
 @media(prefers-reduced-motion:reduce){.entrance-preview *{transition:none!important}}
 
 @media(max-width:430px){.entrance-album{scale:.82;transform-origin:50% 50%}.entrance-4.is-open .entrance-album{transform:translateX(91px)}}
+
+.entrance-refine-link{display:inline-flex;margin-top:9px;padding:6px 10px;border:1px solid #d5b8c5;border-radius:99px;background:#f6e4eb;color:#987984;font:10px 'Noto Sans KR',sans-serif}.entrance-refine-link:hover{background:#edcfdb}
