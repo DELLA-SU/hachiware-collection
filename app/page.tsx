@@ -6,6 +6,7 @@ import BookIntro from './book-intro';
 import MusicTV from './music-tv';
 import GachaHero from './gacha-hero';
 import {cranePalettes} from './gacha-colors';
+import {readBannerPreference} from './banner-preferences';
 import './letter-hero.css';
 import catalog from '../lib/catalog.json';
 import CollectionGuide from './collection-guide';
@@ -23,8 +24,8 @@ function BrandCharacter(){return <span className="brand-face brand-photo"><svg v
 export default function Home(){
  const [photos,setPhotos]=useState<Photo[]>([]),[loading,setLoading]=useState(true),[busy,setBusy]=useState(false),[view,setView]=useState('all'),[sort,setSort]=useState('new'),[filter,setFilter]=useState(''),[windows,setWindows]=useState<{key:string;id:string;z:number}[]>([]),[notice,setNotice]=useState(''),[error,setError]=useState(''),[newId,setNewId]=useState(''),[about,setAbout]=useState(false),[saving,setSaving]=useState(''),[query,setQuery]=useState(''),[arrangement,setArrangement]=useState('desk'),[menuOpen,setMenuOpen]=useState(false),[removed,setRemoved]=useState<Photo|null>(null),[musicOpen,setMusicOpen]=useState(false);
  const [installOpen,setInstallOpen]=useState(false);
- const [bannerVariant,setBannerVariant]=useState(()=>{try{const n=Number(localStorage.getItem('hachiware-gacha-variant'));return n>=1&&n<=5?n:1;}catch{return 1;}});
- const [craneColor,setCraneColor]=useState(()=>{try{const n=Number(localStorage.getItem('hachiware-crane-color'));return n>=1&&n<=cranePalettes.length?n:0;}catch{return 0;}});
+ const [banner,setBanner]=useState(readBannerPreference);
+ const bannerVariant=banner.variant,craneColor=banner.color;
  const [importOpen,setImportOpen]=useState(false),[importText,setImportText]=useState('');
  const importRef=useRef<HTMLInputElement>(null);
  const [soundsOn,setSoundsOn]=useState(true);
@@ -51,7 +52,7 @@ export default function Home(){
  function closeWindow(key:string){void playMotion('paper');setWindows(a=>a.filter(w=>w.key!==key));}
  useEffect(()=>{if(about||musicOpen)return;const esc=(e:KeyboardEvent)=>{if(e.key==='Escape')setWindows(a=>{const top=[...a].sort((x,y)=>y.z-x.z)[0];return top?a.filter(w=>w.key!==top.key):a;});};window.addEventListener('keydown',esc);return()=>window.removeEventListener('keydown',esc);},[about,musicOpen]);
  async function load(){setLoading(true);try{const r=await apiFetch('/api/collection',{cache:'no-store'}),j:any=await r.json();if(!r.ok)throw new Error(j.error);setPhotos(j.photos);setError('');}catch(e:any){setError(e.message||'도감을 불러오지 못했어요.');}finally{setLoading(false);}}
- useEffect(()=>{load();const changed=(e:StorageEvent)=>{if(e.key==='hachiware-records-updated')void load();if(e.key==='hachiware-gacha-variant'){const n=Number(e.newValue);setBannerVariant(n>=1&&n<=5?n:1);}if(e.key==='hachiware-crane-color'){const n=Number(e.newValue);setCraneColor(n>=1&&n<=cranePalettes.length?n:0);}};window.addEventListener('storage',changed);return()=>window.removeEventListener('storage',changed);},[]);
+ useEffect(()=>{load();const changed=(e:StorageEvent)=>{if(e.key==='hachiware-records-updated')void load();if(e.key==='hachiware-gacha-variant'){const n=Number(e.newValue);setBanner(b=>({...b,variant:n>=1&&n<=5?n:1}));}if(e.key==='hachiware-crane-color'){const n=Number(e.newValue);setBanner(b=>({...b,color:n>=0&&n<=cranePalettes.length?n:12}));}};window.addEventListener('storage',changed);return()=>window.removeEventListener('storage',changed);},[]);
  const desktopRequest=useRef('');
  useEffect(()=>{
   if(loading)return;
