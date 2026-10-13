@@ -88,9 +88,9 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
   let savedSize=UserDefaults.standard.integer(forKey:"petSize")
   petSize=CGFloat([120,160,200,240].contains(savedSize) ? savedSize : 160)
   let menu=NSMenu()
-  menu.addItem(withTitle:"오늘의 하치와레 보여줘",action:#selector(collect),keyEquivalent:"")
-  menu.addItem(withTitle:"공개 웹 도감 열기",action:#selector(openArchive),keyEquivalent:"")
-  menu.addItem(withTitle:"하치와레 노래 들으러 가기",action:#selector(openMusic),keyEquivalent:"")
+  menu.addItem(withTitle:"오늘의 치이 친구 보여줘",action:#selector(collect),keyEquivalent:"")
+  menu.addItem(withTitle:"치이카와 가챠 열기",action:#selector(openArchive),keyEquivalent:"")
+  menu.addItem(withTitle:"치이카와 노래 TV",action:#selector(openMusic),keyEquivalent:"")
   menu.addItem(withTitle:"캐릭터 위치 초기화",action:#selector(resetPosition),keyEquivalent:"")
   let sizeMenu=NSMenu(title:"캐릭터 크기")
   for (title,size) in [("작게 · 75%",120),("기본 · 100%",160),("크게 · 125%",200),("아주 크게 · 150%",240)]{let item=NSMenuItem(title:title,action:#selector(changeSize(_:)),keyEquivalent:"");item.tag=size;item.target=self;item.state=CGFloat(size)==petSize ? .on : .off;sizeMenu.addItem(item);sizeItems.append(item)}
@@ -194,7 +194,7 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
   let screen=pet.screen?.visibleFrame ?? NSScreen.main!.visibleFrame
   let width=min(900,screen.width-60),height=min(630,screen.height-70)
   let window=NSWindow(contentRect:NSRect(x:0,y:0,width:width,height:height),styleMask:[.titled,.closable,.resizable,.miniaturizable],backing:.buffered,defer:false)
-  window.title="하치와레 노래 들으러 가기 ♪";window.isReleasedWhenClosed=false;window.contentMinSize=NSSize(width:420,height:340);window.delegate=self
+  window.title="치이카와 노래 TV ♪";window.isReleasedWhenClosed=false;window.contentMinSize=NSSize(width:420,height:340);window.delegate=self
   let configuration=WKWebViewConfiguration();configuration.mediaTypesRequiringUserActionForPlayback=[]
   let web=WKWebView(frame:NSRect(x:0,y:0,width:width,height:height),configuration:configuration);web.autoresizingMask=[.width,.height];window.contentView=web;web.load(URLRequest(url:URL(string:publicSite+"desktop-tv.html")!));musicView=web;musicWindow=window
   window.center();window.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true)
@@ -226,7 +226,7 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
   let screen=pet.screen?.visibleFrame ?? NSScreen.main!.visibleFrame
   let width=min(760,screen.width*0.76),height=min(840,screen.height-70)
   let w=NSWindow(contentRect:NSRect(x:0,y:0,width:width,height:height),styleMask:[.titled,.closable,.resizable],backing:.buffered,defer:false)
-  w.title="오늘의 하치와레";w.isReleasedWhenClosed=false;w.contentMinSize=NSSize(width:320,height:360)
+  w.title="오늘의 치이 친구";w.isReleasedWhenClosed=false;w.contentMinSize=NSSize(width:320,height:360)
   w.backgroundColor=NSColor(calibratedRed:0.985,green:0.978,blue:0.949,alpha:1)
   let v=ClickableImageView(frame:NSRect(x:20,y:80,width:width-40,height:height-100))
   v.onClick=isUsagi ? { [weak self] in self?.playUna() } : nil
