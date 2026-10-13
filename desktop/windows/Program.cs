@@ -11,7 +11,7 @@ static class Program {
  [STAThread] static void Main(string[] args){if(args.FirstOrDefault()=="--self-test"){Smoke.Run(args.ElementAtOrDefault(1)??"smoke-result.json");return;}using var mutex=new Mutex(true,"Local\\HachiwareDesktop",out var fresh);if(!fresh)return;ApplicationConfiguration.Initialize();Application.Run(new Pet());}
 }
 record Photo(string id,string image_url,string? character,string source,bool? draw_enabled=null);
-sealed class Settings { public int X{get;set;} public int Y{get;set;} public bool Positioned{get;set;} public bool Sounds{get;set;}=true;public int DrawCount{get;set;}public List<string> Seen{get;set;}=new(); }
+sealed class Settings { public int X{get;set;} public int Y{get;set;} public bool Positioned{get;set;} public bool Sounds{get;set;}=true;public int CharacterSize{get;set;}=160;public int DrawCount{get;set;}public List<string> Seen{get;set;}=new(); }
 sealed class Pet:Form {
  public const string Website="https://della-su.github.io/hachiware-collection/";
  static readonly string DataDir=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"Hachiware");
@@ -22,17 +22,21 @@ sealed class Pet:Form {
  readonly Flight flight=new(); readonly Stopwatch elapsed=Stopwatch.StartNew();
  readonly List<(Point p,double time)> samples=new(); readonly List<SoundPlayer> players=new();
  readonly NotifyIcon tray; readonly ContextMenuStrip menu=new(); readonly Random random=new();
+ readonly ToolStripMenuItem sizeMenu=new("캐릭터 크기");
+ internal static readonly int[] CharacterSizes=[120,160,200,240];
  readonly Photo[] photos; Settings settings; Point mouseStart,dragOrigin,home;Rectangle arena;bool dragging,moved,hover;double last,hoverTime,angle,squash,flightStart,returnX,returnY,spin=1100,lastBounce;int spinLevel;string? lastPhoto;MusicWindow? music;
  protected override bool ShowWithoutActivation=>true;
  protected override CreateParams CreateParams{get{var cp=base.CreateParams;cp.ExStyle|=0x80000|0x80;return cp;}}
  public Pet(){
   Directory.CreateDirectory(DataDir);try{settings=JsonSerializer.Deserialize<Settings>(File.ReadAllText(SettingsFile))??new();}catch{settings=new();}
   photos=JsonSerializer.Deserialize<Photo[]>(File.ReadAllText(Asset("catalog.json")))??[];
-  SetStyle(ControlStyles.StandardClick|ControlStyles.StandardDoubleClick,true);Text="하치와레";FormBorderStyle=FormBorderStyle.None;ShowInTaskbar=false;TopMost=true;StartPosition=FormStartPosition.Manual;ClientSize=new(160,160);
+  if(!CharacterSizes.Contains(settings.CharacterSize))settings.CharacterSize=160;
+  SetStyle(ControlStyles.StandardClick|ControlStyles.StandardDoubleClick,true);Text="하치와레";FormBorderStyle=FormBorderStyle.None;ShowInTaskbar=false;TopMost=true;StartPosition=FormStartPosition.Manual;ClientSize=new(settings.CharacterSize,settings.CharacterSize);
   Icon=new Icon(Path.Combine(AppContext.BaseDirectory,"Hachiware.ico"));
-  var area=Screen.PrimaryScreen!.WorkingArea;Location=settings.Positioned?new(settings.X,settings.Y):new(area.Right-210,area.Bottom-260);ClampLocation();home=Location;
+  var area=Screen.PrimaryScreen!.WorkingArea;Location=settings.Positioned?new(settings.X,settings.Y):new(area.Right-Width-50,area.Bottom-Height-100);ClampLocation();home=Location;
   menu.Items.Add("오늘의 하치와레 보여줘",null,(_,_)=>ShowPhoto());menu.Items.Add("웹 도감 열기",null,(_,_)=>Open(Website));menu.Items.Add("하치와레 노래 들으러 가기",null,(_,_)=>OpenMusic());
-  menu.Items.Add("캐릭터 위치 초기화",null,(_,_)=>{flight.Active=false;Location=new(Screen.PrimaryScreen!.WorkingArea.Right-210,Screen.PrimaryScreen.WorkingArea.Bottom-260);home=Location;Save();});
+  menu.Items.Add("캐릭터 위치 초기화",null,(_,_)=>{flight.Active=false;Location=new(Screen.PrimaryScreen!.WorkingArea.Right-Width-50,Screen.PrimaryScreen.WorkingArea.Bottom-Height-100);ClampLocation();home=Location;Save();});
+  foreach(var (title,size) in new[]{("작게 · 75%",120),("기본 · 100%",160),("크게 · 125%",200),("아주 크게 · 150%",240)}){var item=new ToolStripMenuItem(title){Tag=size,Checked=size==settings.CharacterSize};item.Click+=(_,_)=>ApplyCharacterSize(size);sizeMenu.DropDownItems.Add(item);}menu.Items.Add(sizeMenu);
   var sound=new ToolStripMenuItem("효과음 켜기"){Checked=settings.Sounds,CheckOnClick=true};sound.CheckedChanged+=(_,_)=>{settings.Sounds=sound.Checked;Save();if(!settings.Sounds)foreach(var p in players)p.Stop();};menu.Items.Add(sound);menu.Items.Add("설치 방법",null,(_,_)=>Open(Website));menu.Items.Add("종료",null,(_,_)=>Close());
   tray=new NotifyIcon{Icon=Icon,Text="하치와레",ContextMenuStrip=menu,Visible=true};tray.DoubleClick+=(_,_)=>OpenMusic();
   singleClick.Interval=SystemInformation.DoubleClickTime+40;singleClick.Tick+=(_,_)=>{singleClick.Stop();ShowPhoto();};
@@ -41,6 +45,7 @@ sealed class Pet:Form {
   FormClosed+=(_,_)=>{clock.Stop();singleClick.Stop();tray.Visible=false;tray.Dispose();music?.Close();character.Dispose();foreach(var p in players)p.Dispose();clock.Dispose();singleClick.Dispose();menu.Dispose();};
  }
  void ClampLocation(){var r=Screen.FromPoint(Location).WorkingArea;Location=new(Math.Clamp(Left,r.Left,Math.Max(r.Left,r.Right-Width)),Math.Clamp(Top,r.Top,Math.Max(r.Top,r.Bottom-Height)));}
+ internal void ApplyCharacterSize(int size){if(!CharacterSizes.Contains(size))return;var center=new Point(Left+Width/2,Top+Height/2);flight.Active=false;hover=false;angle=0;squash=0;ClientSize=new(size,size);Location=new(center.X-size/2,center.Y-size/2);ClampLocation();home=Location;settings.CharacterSize=size;foreach(var item in sizeMenu.DropDownItems.OfType<ToolStripMenuItem>())item.Checked=(int)item.Tag! ==size;Save();if(IsHandleCreated)Render();}
  void Save(){settings.X=home.X;settings.Y=home.Y;settings.Positioned=true;try{File.WriteAllText(SettingsFile,JsonSerializer.Serialize(settings));}catch{}}
  void Down(object? s,MouseEventArgs e){if(e.Button==MouseButtons.Right){menu.Show(Cursor.Position);return;}if(e.Button!=MouseButtons.Left)return;singleClick.Stop();flight.Active=false;angle=0;dragging=true;moved=false;Capture=true;mouseStart=Cursor.Position;dragOrigin=Location;samples.Clear();samples.Add((Cursor.Position,elapsed.Elapsed.TotalSeconds));if(e.Clicks>=2){dragging=false;Capture=false;OpenMusic();}}
  void DragMove(object? s,MouseEventArgs e){if(!dragging)return;var p=Cursor.Position;var now=elapsed.Elapsed.TotalSeconds;samples.Add((p,now));samples.RemoveAll(v=>now-v.time>.12);moved|=Math.Abs(p.X-mouseStart.X)+Math.Abs(p.Y-mouseStart.Y)>5;Location=new(dragOrigin.X+p.X-mouseStart.X,dragOrigin.Y+p.Y-mouseStart.Y);}

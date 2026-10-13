@@ -72,6 +72,8 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
  var spinSound: NSSound?
  var spinLevel = 0
  var soundsEnabled = true
+ var petSize:CGFloat = 160
+ var sizeItems:[NSMenuItem] = []
  var lastBounceSound = 0.0
  var flightTime: Double?
  var flightPoint = NSPoint.zero
@@ -83,21 +85,27 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
   NSApp.setActivationPolicy(.accessory)
   NSApp.applicationIconImage=NSImage(contentsOfFile:Bundle.main.path(forResource:"character",ofType:"png")!)
   soundsEnabled=UserDefaults.standard.object(forKey:"motionSounds") as? Bool ?? true
+  let savedSize=UserDefaults.standard.integer(forKey:"petSize")
+  petSize=CGFloat([120,160,200,240].contains(savedSize) ? savedSize : 160)
   let menu=NSMenu()
   menu.addItem(withTitle:"오늘의 하치와레 보여줘",action:#selector(collect),keyEquivalent:"")
   menu.addItem(withTitle:"공개 웹 도감 열기",action:#selector(openArchive),keyEquivalent:"")
   menu.addItem(withTitle:"하치와레 노래 들으러 가기",action:#selector(openMusic),keyEquivalent:"")
   menu.addItem(withTitle:"캐릭터 위치 초기화",action:#selector(resetPosition),keyEquivalent:"")
+  let sizeMenu=NSMenu(title:"캐릭터 크기")
+  for (title,size) in [("작게 · 75%",120),("기본 · 100%",160),("크게 · 125%",200),("아주 크게 · 150%",240)]{let item=NSMenuItem(title:title,action:#selector(changeSize(_:)),keyEquivalent:"");item.tag=size;item.target=self;item.state=CGFloat(size)==petSize ? .on : .off;sizeMenu.addItem(item);sizeItems.append(item)}
+  let sizeItem=menu.addItem(withTitle:"캐릭터 크기",action:nil,keyEquivalent:"");sizeItem.submenu=sizeMenu
   let soundItem=menu.addItem(withTitle:"효과음 켜기",action:#selector(toggleSounds),keyEquivalent:"");soundItem.state=soundsEnabled ? .on : .off
   menu.addItem(.separator())
   menu.addItem(withTitle:"종료",action:#selector(quit),keyEquivalent:"q")
   for item in menu.items { item.target=self }
   status=NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength);status.button?.title="🐾";status.menu=menu
-  pet=NSPanel(contentRect:NSRect(x:0,y:0,width:160,height:160),styleMask:[.borderless,.nonactivatingPanel],backing:.buffered,defer:false)
+  pet=NSPanel(contentRect:NSRect(x:0,y:0,width:petSize,height:petSize),styleMask:[.borderless,.nonactivatingPanel],backing:.buffered,defer:false)
   pet.isOpaque=false;pet.backgroundColor = .clear;pet.hasShadow=false;pet.level = .floating;pet.collectionBehavior=[.canJoinAllSpaces,.fullScreenAuxiliary];pet.isReleasedWhenClosed=false
-  let v=PetView(frame:NSRect(x:0,y:0,width:160,height:160));v.image=NSImage(contentsOfFile:Bundle.main.path(forResource:"character",ofType:"png")!);v.action={ [weak self] in self?.collect() };v.doubleAction={ [weak self] in self?.openMusic() };v.menuAction={ [weak self] in self?.status.button?.performClick(nil) };v.launchAction={ [weak self] in self?.launchPet() };v.throwAction={ [weak self] velocity in self?.throwPet(velocity) };v.hoverAction={ [weak self] active in self?.setSpin(active ? 1 : 0) };pet.contentView=v
-  resetPosition()
+  let v=PetView(frame:NSRect(x:0,y:0,width:petSize,height:petSize));v.autoresizingMask=[.width,.height];v.image=NSImage(contentsOfFile:Bundle.main.path(forResource:"character",ofType:"png")!);v.action={ [weak self] in self?.collect() };v.doubleAction={ [weak self] in self?.openMusic() };v.menuAction={ [weak self,weak v] in if let menu=self?.status.menu,let view=v,let event=NSApp.currentEvent{NSMenu.popUpContextMenu(menu,with:event,for:view)} };v.launchAction={ [weak self] in self?.launchPet() };v.throwAction={ [weak self] velocity in self?.throwPet(velocity) };v.hoverAction={ [weak self] active in self?.setSpin(active ? 1 : 0) };pet.contentView=v
+  let screen=NSScreen.main?.visibleFrame ?? NSRect(x:0,y:0,width:1200,height:800);base=NSPoint(x:screen.maxX-petSize-50,y:screen.minY+100)
   if UserDefaults.standard.object(forKey:"x") != nil { base=NSPoint(x:UserDefaults.standard.double(forKey:"x"),y:UserDefaults.standard.double(forKey:"y"));pet.setFrameOrigin(base) }
+  clampPetPosition();pet.setFrameOrigin(base)
   pet.orderFrontRegardless()
   if CommandLine.arguments.contains("--music-preview"){openMusic()}
   timer=Timer.scheduledTimer(withTimeInterval:1.0/30.0,repeats:true){ [weak self] _ in guard let s=self else{return}; if NSEvent.pressedMouseButtons != 0 { s.base=s.pet.frame.origin;s.flightTime=nil;(s.pet.contentView as? PetView)?.inFlight=false;return };if let v=s.pet.contentView as? PetView,v.hovering && !v.inFlight{s.setSpin(v.hoverDuration>4 ? 3 : v.hoverDuration>2 ? 2 : 1)};s.pet.contentView?.needsDisplay=true;s.tick += 1.0/30.0;if s.flightTime != nil{s.advanceFlight()}else{s.pet.setFrameOrigin(NSPoint(x:s.base.x+sin(s.tick*0.65)*5,y:s.base.y+sin(s.tick*1.15)*9))} }
@@ -147,7 +155,9 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
    if u>=1{playEffect("return");flightTime=nil;pet.setFrameOrigin(base);if let v=pet.contentView as? PetView{v.inFlight=false;v.hovering=false;v.angle=0;v.bounceSquash=0;v.flung=true}}
   }
  }
- @objc func resetPosition(){let r=NSScreen.main?.visibleFrame ?? NSRect(x:0,y:0,width:1200,height:800);base=NSPoint(x:r.maxX-210,y:r.minY+100);pet?.setFrameOrigin(base);UserDefaults.standard.removeObject(forKey:"x");UserDefaults.standard.removeObject(forKey:"y")}
+ func clampPetPosition(){let r=(NSScreen.screens.first{NSIntersectsRect($0.visibleFrame,pet.frame)} ?? NSScreen.main)?.visibleFrame ?? NSRect(x:0,y:0,width:1200,height:800);base.x=min(max(base.x,r.minX+8),max(r.minX+8,r.maxX-petSize-8));base.y=min(max(base.y,r.minY+8),max(r.minY+8,r.maxY-petSize-8))}
+ @objc func changeSize(_ sender:NSMenuItem){guard [120,160,200,240].contains(sender.tag) else{return};let center=NSPoint(x:pet.frame.midX,y:pet.frame.midY);flightTime=nil;spinSound?.stop();spinLevel=0;petSize=CGFloat(sender.tag);pet.setContentSize(NSSize(width:petSize,height:petSize));base=NSPoint(x:center.x-petSize/2,y:center.y-petSize/2);clampPetPosition();pet.setFrameOrigin(base);if let v=pet.contentView as? PetView{v.inFlight=false;v.hovering=false;v.angle=0;v.bounceSquash=0;v.needsDisplay=true};UserDefaults.standard.set(sender.tag,forKey:"petSize");UserDefaults.standard.set(base.x,forKey:"x");UserDefaults.standard.set(base.y,forKey:"y");for item in sizeItems{item.state=item.tag==sender.tag ? .on : .off}}
+ @objc func resetPosition(){flightTime=nil;let r=NSScreen.main?.visibleFrame ?? NSRect(x:0,y:0,width:1200,height:800);base=NSPoint(x:r.maxX-petSize-50,y:r.minY+100);clampPetPosition();pet?.setFrameOrigin(base);UserDefaults.standard.removeObject(forKey:"x");UserDefaults.standard.removeObject(forKey:"y")}
  @objc func collect(){
   guard !busy else{return};busy=true;setSpin(0);status.button?.title="⏳"
   Task {do{
