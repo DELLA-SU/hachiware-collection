@@ -8,5 +8,7 @@ export const cranePalettes=[
  {name:'딸기 도트 파티',swatches:['#f5dee6','#d7eef0','#edbcd0']},
  {name:'민트 피크닉',swatches:['#f4f4e9','#efcfd9','#e9dfb2']},
  {name:'레몬 리본',swatches:['#fbf3dc','#c5d5ee','#e5c4d8']},
- {name:'꿈꾸는 별밤',swatches:['#536287','#cfbfe1','#eddbb6']}
+ {name:'꿈꾸는 별밤',swatches:['#536287','#cfbfe1','#eddbb6']},
+ {name:'딸기 도트 · 초록',swatches:['#f5dee6','#e2ecc7','#edbcd0']},
+ {name:'딸기 도트 · 노랑',swatches:['#f5dee6','#f6edc2','#edbcd0']}
 ];
