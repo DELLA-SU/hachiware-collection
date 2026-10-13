@@ -118,4 +118,27 @@ body{background:#bddfe3;color:var(--ink)}
 .photo-window .zoom-controls,.photo-window .window-photo-actions,.photo-window .window-source-note{flex-shrink:0}
 .photo-window .window-photo-actions{margin:0;padding-top:10px;padding-bottom:8px}
 .photo-window .window-source-note{margin:0;padding-bottom:8px}
-.photo-window:not(.window-maximized){height:min(680px,calc(100dvh - 32px))}
+
+
+/* Keep the window close to the image's own aspect ratio. */
+.photo-window{container-type:inline-size;container-name:photo-view}
+.photo-window .photo-titlebar>span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.photo-window .window-caption>span{min-width:0;flex:1;line-height:1.6;margin-right:8px}
+.photo-window .window-caption>div{flex-shrink:0}
+.photo-window .window-photo-actions{flex-wrap:wrap}
+@container photo-view (max-width:420px){
+ .photo-titlebar{padding:8px;gap:6px}
+ .photo-titlebar>span{font-size:12px;flex:1}
+ .photo-titlebar small{display:none}
+ .window-title-actions{gap:4px}
+ .window-title-actions>a{font-size:8px;padding:5px 6px;white-space:nowrap}
+ .window-caption{font-size:8px;padding:8px 10px}
+ .zoom-controls{gap:5px;padding:7px}
+ .zoom-controls>span{display:none}
+ .window-photo-actions{padding:9px 10px;gap:6px}
+ .window-photo-actions button{padding:8px;gap:5px;font-size:9px}
+ .window-photo-actions>a{font-size:8px}
+ .window-source-note{padding:0 10px 8px;font-size:8px}
+}
+
+@container photo-view (max-width:280px){.window-title-actions>a{font-size:0;gap:0;padding:5px}.window-title-actions>a svg{width:14px;height:14px}}

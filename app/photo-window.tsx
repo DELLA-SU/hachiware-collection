@@ -1,20 +1,44 @@
 'use client';
 import {characterName} from './characters';
-import {useEffect,useRef,useState} from 'react';
+import {useEffect,useLayoutEffect,useRef,useState} from 'react';
 import PhotoZoom from './photo-zoom';
 import {Star,Share2,X,ArrowUpRight,ChevronLeft,ChevronRight,Maximize2,Minimize2} from 'lucide-react';
 type Photo={character?:string;id:string;image_url:string;source:string;source_kind:string;collected_at:string;imported:number;favorite:number};
 type Props={onImageActivate?:()=>void;photo:Photo;number:string;index:number;z:number;saving:boolean;onClose:()=>void;onRaise:()=>void;onFavorite:()=>void;onShare:()=>void;onStep:(direction:number)=>void;canStep:boolean};
 export default function PhotoWindow({onImageActivate,photo,number,index,z,saving,onClose,onRaise,onFavorite,onShare,onStep,canStep}:Props){
- const [position,setPosition]=useState({x:0,y:0}),[ready,setReady]=useState(false),[maximized,setMaximized]=useState(true);
- const frame=useRef<HTMLElement>(null),drag=useRef<{x:number;y:number;left:number;top:number}|null>(null);
- function bounded(x:number,y:number){const width=frame.current?.offsetWidth||600;return {x:Math.max(8,Math.min(x,innerWidth-width-8)),y:Math.max(8,Math.min(y,innerHeight-70))};}
- useEffect(()=>{const width=Math.min(600,innerWidth-24);setPosition({x:innerWidth<700?12:Math.max(12,Math.min(290+(index%5)*46,innerWidth-width-16)),y:innerWidth<700?72:65+(index%5)*40});setReady(true);const resize=()=>setPosition(p=>bounded(p.x,p.y));window.addEventListener('resize',resize);return()=>window.removeEventListener('resize',resize);},[]);
+ const [position,setPosition]=useState({x:0,y:0}),[ready,setReady]=useState(false),[maximized,setMaximized]=useState(false),[natural,setNatural]=useState<{src:string;ratio:number}|null>(null),[size,setSize]=useState({width:500,height:600});
+ const moved=useRef(false),frame=useRef<HTMLElement>(null),drag=useRef<{x:number;y:number;left:number;top:number}|null>(null);
+ function bounded(x:number,y:number,width=frame.current?.offsetWidth||size.width,height=frame.current?.offsetHeight||size.height){return {x:Math.max(12,Math.min(x,innerWidth-width-12)),y:Math.max(12,Math.min(y,innerHeight-height-12))};}
+ useEffect(()=>{
+  let active=true;setReady(false);moved.current=false;
+  const image=new Image();
+  image.onload=()=>{if(active)setNatural({src:photo.image_url,ratio:image.naturalWidth/image.naturalHeight||1});};
+  image.onerror=()=>{if(active)setNatural({src:photo.image_url,ratio:1});};
+  image.src=photo.image_url;
+  return()=>{active=false;};
+ },[photo.image_url]);
+ useLayoutEffect(()=>{
+  if(!frame.current||natural?.src!==photo.image_url)return;
+  const chrome=Array.from(frame.current.querySelectorAll<HTMLElement>('.photo-titlebar,.window-caption,.zoom-controls,.window-photo-actions,.window-source-note'));
+  function fit(){
+   if(maximized){setReady(true);return;}
+   const maxWidth=Math.max(160,innerWidth-24),maxHeight=Math.max(240,innerHeight-32);
+   const chromeHeight=chrome.reduce((sum,el)=>sum+el.offsetHeight,0)+3;
+   const availableHeight=Math.max(80,maxHeight-chromeHeight);
+   const width=Math.ceil(Math.min(maxWidth,Math.max(Math.min(220,maxWidth),availableHeight*natural!.ratio+3)));
+   const height=Math.ceil(Math.min(maxHeight,chromeHeight+Math.min(availableHeight,(width-3)/natural!.ratio)));
+   setSize(old=>old.width===width&&old.height===height?old:{width,height});
+   setPosition(old=>moved.current?bounded(old.x,old.y,width,height):bounded((innerWidth-width)/2+(index%4)*18,(innerHeight-height)/2+(index%4)*12,width,height));
+   setReady(true);
+  }
+  fit();const observer=new ResizeObserver(fit);chrome.forEach(el=>observer.observe(el));window.addEventListener('resize',fit);
+  return()=>{observer.disconnect();window.removeEventListener('resize',fit);};
+ },[natural,photo.image_url,maximized,index]);
  useEffect(()=>{if(ready)frame.current?.querySelector<HTMLElement>('.photo-titlebar')?.focus();},[ready]);
  const date=new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',year:'numeric',month:'long',day:'numeric'}).format(new Date(photo.collected_at));
- return <section ref={frame} className={'photo-window '+(maximized?'window-maximized':'')} role="dialog" aria-modal="false" aria-label={characterName(photo.character)+' #'+number+' 사진 창'} style={{left:position.x,top:position.y,zIndex:z,visibility:ready?'visible':'hidden'}} onPointerDownCapture={onRaise} onFocusCapture={onRaise}>
-  <header className="photo-titlebar" tabIndex={0} aria-label={characterName(photo.character)+' #'+number+' 창 제목 표시줄, 방향키로 이동'} onKeyDown={e=>{const dirs:Record<string,number[]>={ArrowLeft:[-20,0],ArrowRight:[20,0],ArrowUp:[0,-20],ArrowDown:[0,20]};if(e.target===e.currentTarget&&dirs[e.key]&&!maximized){e.preventDefault();const [x,y]=dirs[e.key];setPosition(p=>bounded(p.x+x,p.y+y));}}} onPointerDown={e=>{if(maximized||(e.target as HTMLElement).closest('button,a'))return;e.preventDefault();e.currentTarget.focus();drag.current={x:e.clientX,y:e.clientY,left:position.x,top:position.y};e.currentTarget.setPointerCapture(e.pointerId);}} onPointerMove={e=>{if(drag.current){const d=drag.current;setPosition(bounded(d.left+e.clientX-d.x,d.top+e.clientY-d.y));}}} onPointerUp={()=>{drag.current=null;}} onPointerCancel={()=>{drag.current=null;}}>
-   <button className="window-close" onClick={onClose} aria-label={characterName(photo.character)+' #'+number+' 창 닫기'}><X size={15}/></button><span>{characterName(photo.character)} #{number}<small>나의 사진 서랍</small></span><div className="window-title-actions"><button onClick={()=>setMaximized(!maximized)} aria-label={maximized?'창 크기 복원':'창 크게 보기'}>{maximized?<Minimize2 size={14}/>:<Maximize2 size={14}/>}</button><a href={photo.source} target="_blank" rel="noreferrer">원본 열기 <ArrowUpRight size={13}/></a></div>
+ return <section ref={frame} className={'photo-window '+(maximized?'window-maximized':'')} role="dialog" aria-modal="false" aria-label={characterName(photo.character)+' #'+number+' 사진 창'} style={{left:position.x,top:position.y,width:maximized?undefined:size.width,height:maximized?undefined:size.height,zIndex:z,visibility:ready&&natural?.src===photo.image_url?'visible':'hidden'}} onPointerDownCapture={onRaise} onFocusCapture={onRaise}>
+  <header className="photo-titlebar" tabIndex={0} aria-label={characterName(photo.character)+' #'+number+' 창 제목 표시줄, 방향키로 이동'} onKeyDown={e=>{const dirs:Record<string,number[]>={ArrowLeft:[-20,0],ArrowRight:[20,0],ArrowUp:[0,-20],ArrowDown:[0,20]};if(e.target===e.currentTarget&&dirs[e.key]&&!maximized){e.preventDefault();const [x,y]=dirs[e.key];moved.current=true;setPosition(p=>bounded(p.x+x,p.y+y));}}} onPointerDown={e=>{if(maximized||(e.target as HTMLElement).closest('button,a'))return;e.preventDefault();e.currentTarget.focus();moved.current=true;drag.current={x:e.clientX,y:e.clientY,left:position.x,top:position.y};e.currentTarget.setPointerCapture(e.pointerId);}} onPointerMove={e=>{if(drag.current){const d=drag.current;setPosition(bounded(d.left+e.clientX-d.x,d.top+e.clientY-d.y));}}} onPointerUp={()=>{drag.current=null;}} onPointerCancel={()=>{drag.current=null;}}>
+   <button className="window-close" onClick={onClose} aria-label={characterName(photo.character)+' #'+number+' 창 닫기'}><X size={15}/></button><span>{characterName(photo.character)} #{number}<small>나의 사진 서랍</small></span><div className="window-title-actions"><button onClick={()=>setMaximized(!maximized)} aria-label={maximized?'창 크기 복원':'창 크게 보기'}>{maximized?<Minimize2 size={14}/>:<Maximize2 size={14}/>}</button><a href={photo.source} target="_blank" rel="noreferrer" title="원본 열기">원본 열기 <ArrowUpRight size={13}/></a></div>
   </header>
   <div className="window-caption"><span>{date} · {photo.imported?'메모에서 온 친구':photo.source_kind+'에서 만난 친구'}</span><div><button onClick={()=>onStep(-1)} disabled={!canStep} aria-label="이전 사진"><ChevronLeft size={15}/></button><button onClick={()=>onStep(1)} disabled={!canStep} aria-label="다음 사진"><ChevronRight size={15}/></button></div></div>
   <div className="window-body"><PhotoZoom onActivate={onImageActivate} src={photo.image_url} alt={characterName(photo.character)+' #'+number+' 수집 사진'}/><div className="window-photo-actions"><button className={photo.favorite?'selected-fav':''} onClick={onFavorite} disabled={saving}><Star size={17} fill={photo.favorite?'currentColor':'none'}/>{photo.favorite?'별표 한 순간':'별표 붙이기'}</button><button onClick={onShare}><Share2 size={16}/>출처와 공유</button><a href={photo.source} target="_blank" rel="noreferrer">{photo.source_kind} <ArrowUpRight size={13}/></a></div><p className="window-source-note">{photo.source_kind==='Pinterest'?'출처: Pinterest 핀 · 원저작자 정보는 핀 페이지에서 확인해 주세요.':photo.source_kind==='치이카와 공식 애니메이션'?'출처: 치이카와 공식 애니메이션 캐릭터 일러스트.':photo.source_kind==='치이카와 공식 마켓'?'출처: 치이카와 공식 마켓 · 원본 상품 페이지에서 확인해 주세요.':'기존 기록의 이미지 파일 주소를 출처로 보존했어요.'}</p></div>
