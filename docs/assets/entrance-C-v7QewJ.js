@@ -1,1 +1,0 @@
-import{a as e,d as t,i as n}from"./theme-C_1sJB6P.js";import{t as r}from"./entrance-preview-CkYGj5Cn.js";t();var i=n(),a=e();(0,i.createRoot)(document.getElementById(`root`)).render((0,a.jsx)(r,{}));

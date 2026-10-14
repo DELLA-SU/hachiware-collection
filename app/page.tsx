@@ -27,7 +27,7 @@ const label=(d:string)=>new Intl.DateTimeFormat(languageLocale(),{timeZone:'Asia
 function BrandCharacter(){return <span className="brand-face brand-photo"><svg viewBox="45 25 680 555" aria-hidden="true"><image href={assetUrl('/brand-hachiware.png')} width="836" height="612"/></svg></span>}
 export default function Home(){
  const language=useLanguage();
- useEffect(()=>{document.title=t("치이카와 가챠")+" · "+t("오늘의 작은 행복");},[language]);
+ useEffect(()=>{document.title=t("치이카와 가챠");},[language]);
  const [photos,setPhotos]=useState<Photo[]>([]),[loading,setLoading]=useState(true),[busy,setBusy]=useState(false),[view,setView]=useState('all'),[sort,setSort]=useState('new'),[filter,setFilter]=useState(''),[windows,setWindows]=useState<{key:string;id:string;z:number;placement:number}[]>([]),[notice,setNotice]=useState(''),[error,setError]=useState(''),[newId,setNewId]=useState(''),[about,setAbout]=useState(false),[saving,setSaving]=useState(''),[query,setQuery]=useState(''),[arrangement,setArrangement]=useState('desk'),[menuOpen,setMenuOpen]=useState(false),[removed,setRemoved]=useState<Photo|null>(null),[musicOpen,setMusicOpen]=useState(false);
  const [installOpen,setInstallOpen]=useState(false),[settingsOpen,setSettingsOpen]=useState(false),[introKey,setIntroKey]=useState(0);
  const [banner,setBanner]=useState(readBannerPreference);

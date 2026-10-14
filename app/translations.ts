@@ -2659,5 +2659,20 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "A qualification for drinking in the story. Make your own photo card based on Kurimanju’s license.",
   "zh": "这是作品中饮酒所需的资格。参考栗子馒头的证件形状，放入您的照片。",
   "ja": "作品の中でお酒を飲むための資格です。くりまんじゅうのカードを参考に自分の写真で作れます。"
+ },
+ "먼가 작고 귀여운 녀석을 뽑아보세요": {
+  "en": "Draw something small and cute.",
+  "zh": "抽一个小小可爱的家伙吧。",
+  "ja": "なんか小さくてかわいいやつを引いてみてね。"
+ },
+ "귀여운 녀석을": {
+  "en": "a cute little friend.",
+  "zh": "可爱的家伙",
+  "ja": "かわいいやつを"
+ },
+ "뽑아보세요": {
+  "en": "Draw one.",
+  "zh": "抽一个吧。",
+  "ja": "引いてみてね。"
  }
 };
