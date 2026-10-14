@@ -3124,5 +3124,10 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "Gacha!",
   "zh": "扭蛋！",
   "ja": "ガチャ！"
+ },
+ "내 치이들 보관함": {
+  "en": "My Chiikawa collection",
+  "zh": "我的吉伊收藏",
+  "ja": "私のちいかわコレクション"
  }
 };
