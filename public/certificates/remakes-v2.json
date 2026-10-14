@@ -1,0 +1,36 @@
+{
+  "tool": "built-in image_gen",
+  "artwork": "Reference-based recreation; not a frame from the anime",
+  "dimensions": [
+    1536,
+    1024
+  ],
+  "references": [
+    "https://kr.pinterest.com/pin/22729173113708015/",
+    "https://kr.pinterest.com/pin/633178028892187467/",
+    "https://kr.pinterest.com/pin/633178028892187472/",
+    "https://kr.pinterest.com/pin/895583075922424096/",
+    "https://blog.naver.com/hugungchilbaek/224437593578",
+    "https://x.com/ngnchiikawa/status/1744289861019083008",
+    "https://monomaster.jp/article/item/7286/"
+  ],
+  "assets": [
+    "grass5-hachi-clean-v2.png",
+    "grass5-chii-clean-v2.png",
+    "grass2-clean-v2.png",
+    "worker-clean-v2.png",
+    "kurimanju-drink-clean-v2.png"
+  ],
+  "layout": {
+    "canvas": [
+      1536,
+      1024
+    ],
+    "cardBounds": [
+      64,
+      80,
+      1408,
+      864
+    ]
+  }
+}

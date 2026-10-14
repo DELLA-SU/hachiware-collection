@@ -15,7 +15,6 @@ export default function CapsuleIntro(){
  function enter(){if(leaving)return;void playMotion('switch');setLeaving(true);}
  function reveal(){if(open||leaving)return;void playMotion('reveal');setOpen(true);}
  useEffect(()=>{if(!visible)return;const timer=setTimeout(()=>setOpen(true),matchMedia('(prefers-reduced-motion: reduce)').matches?150:1200);return()=>clearTimeout(timer);},[visible]);
- useEffect(()=>{if(!open||leaving)return;const timer=setTimeout(()=>setLeaving(true),matchMedia('(prefers-reduced-motion: reduce)').matches?1400:2400);return()=>clearTimeout(timer);},[open,leaving]);
  useEffect(()=>{
   if(!leaving)return;
   const timer=setTimeout(()=>{

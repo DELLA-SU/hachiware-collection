@@ -1,0 +1,44 @@
+{
+  "canvas": [
+    1536,
+    1024
+  ],
+  "cardBox": [
+    64,
+    80,
+    1408,
+    864
+  ],
+  "bounds": {
+    "grass5-hachi-clean-v2.png": [
+      139,
+      110,
+      1269,
+      829
+    ],
+    "grass5-chii-clean-v2.png": [
+      76,
+      96,
+      1384,
+      852
+    ],
+    "grass2-clean-v2.png": [
+      57,
+      73,
+      1424,
+      884
+    ],
+    "worker-clean-v2.png": [
+      61,
+      92,
+      1415,
+      835
+    ],
+    "kurimanju-drink-clean-v2.png": [
+      115,
+      144,
+      1309,
+      740
+    ]
+  }
+}

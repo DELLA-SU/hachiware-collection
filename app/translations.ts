@@ -2469,5 +2469,195 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "Shopping test grade 1 from the official EPOS collaboration, labeled separately from anime cards.",
   "zh": "EPOS官方联名的购物检定1级，与动画卡片分开标注。",
   "ja": "エポス公式コラボのおかいもの検定1級です。アニメのカードと区別して表示します。"
+ },
+ "먼가 작고 귀여운 거 뽑아볼래?": {
+  "en": "Want to draw something small and cute?",
+  "zh": "想抽一个小小可爱的东西吗？",
+  "ja": "なんか小さくてかわいいもの、引いてみる？"
+ },
+ "먼가": {
+  "en": "Something",
+  "zh": "有点",
+  "ja": "なんか"
+ },
+ "작고": {
+  "en": "small and",
+  "zh": "小小的",
+  "ja": "小さくて"
+ },
+ "귀여운 거": {
+  "en": "cute.",
+  "zh": "可爱的东西",
+  "ja": "かわいいもの"
+ },
+ "뽑아볼래?": {
+  "en": "Pick one?",
+  "zh": "抽一个吗？",
+  "ja": "引いてみる？"
+ },
+ "첫 화면 가챠 다시 보기": {
+  "en": "Replay the capsule welcome",
+  "zh": "再看胶囊欢迎画面",
+  "ja": "最初のカプセルをもう一度"
+ },
+ "원본 참고 정리 양식": {
+  "en": "Redrawn from the original",
+  "zh": "参考原图整理的模板",
+  "ja": "原本を参考に整えた様式"
+ },
+ "카드 전체 이미지": {
+  "en": "Full card image",
+  "zh": "完整卡片图片",
+  "ja": "カード全体の画像"
+ },
+ "정리 양식": {
+  "en": "Redrawn form",
+  "zh": "整理模板",
+  "ja": "整えた様式"
+ },
+ "카드 전체": {
+  "en": "Full card",
+  "zh": "完整卡片",
+  "ja": "カード全体"
+ },
+ "작은 도전의 주인공이 되어 볼까요?": {
+  "en": "Ready for your own little challenge?",
+  "zh": "成为小小挑战的主角吧？",
+  "ja": "小さな挑戦の主役になってみる？"
+ },
+ "자격증 이미지 보기": {
+  "en": "Certificate artwork view",
+  "zh": "查看证书图片",
+  "ja": "資格証の画像表示"
+ },
+ "깔끔한 양식": {
+  "en": "Clean card",
+  "zh": "清晰模板",
+  "ja": "きれいな様式"
+ },
+ "원본 이미지": {
+  "en": "Original image",
+  "zh": "原始图片",
+  "ja": "元の画像"
+ },
+ "사진을 넣으면 오른쪽 사진 칸을 가득 채워요.": {
+  "en": "Your photo fills the frame on the right.",
+  "zh": "照片会填满右侧的相片框。",
+  "ja": "写真は右の枠いっぱいに入ります。"
+ },
+ "원본 카드의 글자·색상·배치를 참고해 정면으로 다시 그린 양식이에요. 원본은 위의 ‘원본 이미지’에서 확인해요.": {
+  "en": "A front-facing form redrawn with the original card’s text, colors and layout as reference. Select Original image above to see the source.",
+  "zh": "参考原卡的文字、颜色和布局重新绘制的正面模板。点击上方的原始图片可查看原图。",
+  "ja": "原本カードの文字・色・配置を参考に正面に描き直した様式です。上の元の画像で原本をご覧ください。"
+ },
+ "테두리가 잘리지 않은 카드 전체 이미지예요. 작품 속 원본 장면은 따로 확인할 수 있어요.": {
+  "en": "A full card image with its border intact. You can also view the original scene separately.",
+  "zh": "完整保留边框的卡片图片。也可以单独查看作品中的原始场景。",
+  "ja": "枠が切れていないカード全体の画像です。作品の元の場面も別に確認できます。"
+ },
+ "작품 이미지와 원본을 참고한 양식을 활용한 사진 놀이예요. 실제 효력이 있는 자격증은 아니에요.": {
+  "en": "A photo activity using artwork and forms based on the originals. These are not valid qualifications.",
+  "zh": "使用作品图片和参考原图的模板制作的照片游戏，并非有效资格证书。",
+  "ja": "作品画像と原本を参考にした様式で遊ぶ写真づくりです。実際に効力のある資格証ではありません。"
+ },
+ "라멘 가게에서 일하고 싶었던 시사의 자격이에요. 카드 원본과 사진을 넣기 좋은 정리 양식을 골라요.": {
+  "en": "Shisa earned this qualification to work at the ramen shop. Choose the original card or a clean form for your photo.",
+  "zh": "这是想在拉面店工作的狮萨所持资格。可选择原卡或便于放入照片的整理模板。",
+  "ja": "ラーメン店で働きたかったシーサーの資格です。原本か写真を入れやすい様式を選べます。"
+ },
+ "작품 속에서 술을 마시기 위한 자격이에요. 카드 원본과 정면으로 정리한 양식을 함께 볼 수 있어요.": {
+  "en": "A qualification for drinking in the story. View both the original card and a clean front-facing form.",
+  "zh": "这是作品中饮酒所需的资格。可以查看原卡及整理后的正面模板。",
+  "ja": "作品の中でお酒を飲むための資格です。原本と正面に整えた様式を見られます。"
+ },
+ "풀뽑기 검정 5급 · 하치와레": {
+  "en": "Weeding grade 5 · Hachiware",
+  "zh": "除草检定5级 · 小八",
+  "ja": "草むしり検定5級・ハチワレ"
+ },
+ "풀뽑기 검정 5급 · 치이카와": {
+  "en": "Weeding grade 5 · Chiikawa",
+  "zh": "除草检定5级 · 吉伊",
+  "ja": "草むしり検定5級・ちいかわ"
+ },
+ "풀뽑기 검정 2급": {
+  "en": "Weeding grade 2",
+  "zh": "除草检定2级",
+  "ja": "草むしり検定2級"
+ },
+ "2급": {
+  "en": "Grade 2",
+  "zh": "2级",
+  "ja": "2級"
+ },
+ "5급 · 3급 · 2급": {
+  "en": "Grades 5, 3 and 2",
+  "zh": "5级 · 3级 · 2级",
+  "ja": "5級・3級・2級"
+ },
+ "참고 이미지": {
+  "en": "Reference image",
+  "zh": "参考图片",
+  "ja": "参考画像"
+ },
+ "보내준 참고 이미지 · 치이카와 5급": {
+  "en": "Your reference · Chiikawa grade 5",
+  "zh": "提供的参考图片 · 吉伊5级",
+  "ja": "いただいた参考画像・ちいかわ5級"
+ },
+ "보내준 카드 비교 이미지에서 치이카와의 5급 카드를 참고했어요.": {
+  "en": "Based on the Chiikawa grade-5 card in your comparison image.",
+  "zh": "参考了您提供的卡片对比图中的吉伊5级卡。",
+  "ja": "いただいた比較画像のちいかわ5級カードを参考にしました。"
+ },
+ "보내준 참고 이미지 · 우사기 2급": {
+  "en": "Your reference · Usagi grade 2",
+  "zh": "提供的参考图片 · 乌萨奇2级",
+  "ja": "いただいた参考画像・うさぎ2級"
+ },
+ "보내준 카드 비교 이미지의 우사기 2급 카드를 참고했어요. 새 양식에서는 정면으로 펼쳤어요.": {
+  "en": "Based on Usagi’s grade-2 card in your comparison image. The recreated form is front-facing.",
+  "zh": "参考了您提供的对比图中的乌萨奇2级卡。新模板为正面布局。",
+  "ja": "いただいた比較画像のうさぎ2級カードを参考にし、新しい様式は正面に整えました。"
+ },
+ "풀뽑기 일을 위한 검정이에요. 하치와레·치이카와의 5급, 우사기의 3급·2급 카드를 골라요.": {
+  "en": "A qualification for weeding jobs. Choose Hachiware or Chiikawa’s grade-5 card, or Usagi’s grade-3 or grade-2 card.",
+  "zh": "除草工作所需的检定。可选择小八和吉伊的5级、乌萨奇的3级或2级卡。",
+  "ja": "草むしりの仕事をするための検定です。ハチワレ・ちいかわの5級、うさぎの3級・2級を選べます。"
+ },
+ "풀뽑기 검정 2급 · 우사기": {
+  "en": "Weeding grade 2 · Usagi",
+  "zh": "除草检定2级 · 乌萨奇",
+  "ja": "草むしり検定2級・うさぎ"
+ },
+ "5급 · 2급": {
+  "en": "Grades 5 and 2",
+  "zh": "5级 · 2级",
+  "ja": "5級・2級"
+ },
+ "풀뽑기 일을 위한 검정이에요. 하치와레·치이카와의 5급과 우사기의 2급 카드를 골라요.": {
+  "en": "A qualification for weeding jobs. Choose Hachiware or Chiikawa’s grade-5 card, or Usagi’s grade-2 card.",
+  "zh": "除草工作所需的检定。可选择小八和吉伊的5级或乌萨奇的2级卡。",
+  "ja": "草むしりの仕事をするための検定です。ハチワレ・ちいかわの5級、うさぎの2級を選べます。"
+ },
+ "음주 자격 · 쿠리만쥬": {
+  "en": "Liquor qualification · Kurimanju",
+  "zh": "饮酒资格 · 栗子馒头",
+  "ja": "お酒の資格・くりまんじゅう"
+ },
+ "나가노 공식 원작 · 쿠리만쥬 음주 자격": {
+  "en": "Nagano’s official manga · Kurimanju liquor qualification",
+  "zh": "Nagano官方原作 · 栗子馒头饮酒资格",
+  "ja": "ナガノ公式原作・くりまんじゅうのお酒の資格"
+ },
+ "공식 원작과 공식 콜라보에 등장한 쿠리만쥬의 음주 자격증을 참고했어요. 이 참고 사진은 MonoMaster 공식 콜라보 제품이에요.": {
+  "en": "Based on Kurimanju’s liquor qualification in the official manga and collaboration. This reference photo is a MonoMaster official collaboration product.",
+  "zh": "参考官方原作和联名中的栗子馒头饮酒资格证。这张参考照片为MonoMaster官方联名产品。",
+  "ja": "公式原作とコラボに登場するくりまんじゅうのお酒の資格を参考にしました。この写真はMonoMaster公式コラボ商品です。"
+ },
+ "작품 속에서 술을 마시기 위한 자격이에요. 쿠리만쥬의 카드 모양을 참고해 내 사진으로 만들어요.": {
+  "en": "A qualification for drinking in the story. Make your own photo card based on Kurimanju’s license.",
+  "zh": "这是作品中饮酒所需的资格。参考栗子馒头的证件形状，放入您的照片。",
+  "ja": "作品の中でお酒を飲むための資格です。くりまんじゅうのカードを参考に自分の写真で作れます。"
  }
 };
