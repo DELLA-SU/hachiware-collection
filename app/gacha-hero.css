@@ -15,6 +15,9 @@
 /* The controls and crane share their bottom edge at every breakpoint. */
 .gacha-v1{--crane-top:8%;--crane-height:85%;--crane-bottom:7%}
 .gacha-v1 .gacha-machine{top:var(--crane-top);height:var(--crane-height)}
+.gacha-marquee:has(span[lang="en"]){gap:6px}
+.gacha-marquee span[lang="en"]{font-size:.9em;letter-spacing:.3px;white-space:nowrap}
+.gacha-marquee svg{flex:none}
 .gacha-v1 .gacha-copy{top:22%;transform:none}
 .gacha-v1>.arcade-controls{position:absolute;z-index:4;left:6%;bottom:var(--crane-bottom);max-width:40%}
 .arcade-label{display:grid;place-items:center;min-height:2.7em;text-align:center}
