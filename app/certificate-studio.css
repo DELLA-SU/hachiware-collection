@@ -10,10 +10,6 @@
 .certificate-top-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:29px}
 .certificate-top-nav a,.certificate-top-nav button{display:inline-flex;align-items:center;gap:7px;font:11px 'Noto Sans KR',sans-serif;color:#857766}
 .certificate-top-nav button{padding:9px 13px;border:1px solid #c3d4d2;border-radius:99px;background:#e8f2ef;cursor:pointer}
-.certificate-artwork-tabs{display:flex;gap:4px;padding:4px;background:#eeeade;border:1px solid #d5cebc;border-radius:99px;align-self:center;margin-bottom:22px}
-.certificate-artwork-tabs button{padding:9px 17px;border:0;background:transparent;color:#9a8d7a;border-radius:99px;font:11px 'Noto Sans KR',sans-serif;cursor:pointer}
-.certificate-artwork-tabs button[aria-pressed=true]{background:#fffdf7;color:#766656;font-weight:700;box-shadow:0 2px 4px #a994771a}
-.certificate-artwork-tabs button:focus-visible{outline:2px solid #9da98b;outline-offset:1px}
 .certificate-list-images:has(button:nth-child(3)){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
 .certificate-list-images:has(button:nth-child(3)) img{height:62px}
 

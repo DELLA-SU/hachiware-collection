@@ -12,6 +12,6 @@ export const certificateTemplates:CertificateTemplate[]=[
 export const sourceKindLabel={anime:'애니 장면',original:'공식 원작',collab:'공식 콜라보',reference:'참고 이미지'};
 export const qualifications=[
  {name:'풀뽑기 검정',original:'草むしり検定',grades:'5급 · 2급',text:'풀뽑기 일을 위한 검정이에요. 하치와레·치이카와의 5급과 우사기의 2급 카드를 골라요.',source:'https://cstation.kodansha.co.jp/mangaip/database/0000354016',sourceLabel:'코단샤 작품 소개'},
- {name:'슈퍼 아르바이터',original:'スーパーアルバイター',grades:'급수 없음',text:'라멘 가게에서 일하고 싶었던 시사의 자격이에요. 카드 원본과 사진을 넣기 좋은 정리 양식을 골라요.',source:'https://times.abema.tv/articles/-/10194369?page=1',sourceLabel:'ABEMA · 애니 124화'},
+ {name:'슈퍼 아르바이터',original:'スーパーアルバイター',grades:'급수 없음',text:'라멘 가게에서 일하고 싶었던 시사의 자격이에요. 사진을 넣기 좋은 정리 양식으로 만들어 봐요.',source:'https://times.abema.tv/articles/-/10194369?page=1',sourceLabel:'ABEMA · 애니 124화'},
  {name:'음주 자격',original:'お酒の資格',grades:'급수 없음',text:'작품 속에서 술을 마시기 위한 자격이에요. 쿠리만쥬의 카드 모양을 참고해 내 사진으로 만들어요.',source:'https://x.com/ngnchiikawa/status/1744289861019083008',sourceLabel:'나가노 공식 원작'},
 ];

@@ -3089,5 +3089,40 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "Couldn't load the dance video. Please reopen the page.",
   "zh": "无法加载舞蹈视频，请重新打开页面。",
   "ja": "ダンス動画を読み込めませんでした。ページを開き直してね。"
+ },
+ "원본 카드의 글자·색상·배치를 참고해 정면으로 다시 그린 양식이에요. 원본은 아래 ‘원본 장면·출처 보기’에서 확인해요.": {
+  "en": "A front-facing form redrawn using the original card’s text, colors and layout. See the original under “Original scene and source” below.",
+  "zh": "参考原卡的文字、颜色和布局重新绘制的正面模板。可在下方“原始场景与出处”查看原图。",
+  "ja": "元のカードの文字・色・配置を参考に正面に描き直した様式です。原本は下の「元の場面・出典を見る」でご確認ください。"
+ },
+ "라멘 가게에서 일하고 싶었던 시사의 자격이에요. 사진을 넣기 좋은 정리 양식으로 만들어 봐요.": {
+  "en": "Shisa earned this qualification to work at the ramen shop. Make your own using a clean form for your photo.",
+  "zh": "这是想在拉面店工作的狮萨所持资格。用便于放入照片的整理模板制作自己的卡片吧。",
+  "ja": "ラーメン店で働きたかったシーサーの資格です。写真を入れやすい様式で自分の一枚を作ってみましょう。"
+ },
+ "‘춤추기’를 누르면 영상이 시작돼요.": {
+  "en": "Tap “Dance” to start the video.",
+  "zh": "点击“跳舞”开始播放视频。",
+  "ja": "「踊る」を押すと動画が始まります。"
+ },
+ "치이카와 가챠가 펼쳐져요": {
+  "en": "Chiikawa Gacha opens",
+  "zh": "打开吉伊卡哇扭蛋",
+  "ja": "ちいかわガチャが開きます"
+ },
+ "먼가 작고 귀여운 뽑기!": {
+  "en": "A small, cute surprise!",
+  "zh": "扭出小小的可爱！",
+  "ja": "なんか小さくてかわいいガチャ！"
+ },
+ "귀여운": {
+  "en": "cute",
+  "zh": "可爱的",
+  "ja": "かわいい"
+ },
+ "뽑기!": {
+  "en": "Gacha!",
+  "zh": "扭蛋！",
+  "ja": "ガチャ！"
  }
 };

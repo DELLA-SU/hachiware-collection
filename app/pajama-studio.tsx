@@ -28,7 +28,7 @@ function paintPortrait(ctx:CanvasRenderingContext2D,photo:Portrait,face:FaceOpen
 export default function PajamaStudio(){
   const language=useLanguage();
   const [photos,setPhotos]=useState<(Portrait|null)[]>(emptyPhotos);
-  const [selected,setSelected]=useState(0),[playing,setPlaying]=useState(false),[muted,setMuted]=useState(false),[ready,setReady]=useState(false);
+  const [selected,setSelected]=useState(0),[playing,setPlaying]=useState(false),[muted,setMuted]=useState(false),[ready,setReady]=useState(false),[starting,setStarting]=useState(false);
   const [duration,setDuration]=useState(0),[time,setTime]=useState(0),[error,setError]=useState(''),[movieFailed,setMovieFailed]=useState(false);
   const video=useRef<HTMLVideoElement>(null),audio=useRef<HTMLAudioElement>(null),canvas=useRef<HTMLCanvasElement>(null),photoInput=useRef<HTMLInputElement>(null);
   const photoState=useRef(photos),currentFaces=useRef<(FaceOpening|null)[]>([null,null,null,null]);
@@ -75,15 +75,28 @@ export default function PajamaStudio(){
     function stop(){cancelAnimationFrame(raf);audio.current?.pause();setPlaying(false);draw();}
     function loaded(){setReady(true);setDuration(Number.isFinite(el!.duration)?el!.duration:0);draw();}
     function seek(){draw();}
-    el.addEventListener('loadeddata',loaded);el.addEventListener('play',start);el.addEventListener('pause',stop);el.addEventListener('ended',stop);el.addEventListener('seeked',seek);
-    if(el.readyState>=2)loaded();
-    return()=>{active=false;cancelAnimationFrame(raf);poster.onload=null;paint.current=()=>{};el.removeEventListener('loadeddata',loaded);el.removeEventListener('play',start);el.removeEventListener('pause',stop);el.removeEventListener('ended',stop);el.removeEventListener('seeked',seek);};
+    const loadEvents=['loadedmetadata','loadeddata','canplay','playing'];
+    loadEvents.forEach(event=>el.addEventListener(event,loaded));el.addEventListener('play',start);el.addEventListener('pause',stop);el.addEventListener('ended',stop);el.addEventListener('seeked',seek);
+    if(el.readyState>=1)loaded();
+    return()=>{active=false;cancelAnimationFrame(raf);poster.onload=null;paint.current=()=>{};loadEvents.forEach(event=>el.removeEventListener(event,loaded));el.removeEventListener('play',start);el.removeEventListener('pause',stop);el.removeEventListener('ended',stop);el.removeEventListener('seeked',seek);};
   },[]);
 
   async function togglePlay(){
-    const el=video.current;if(!el||!ready)return;
+    const el=video.current;if(!el||starting)return;
     if(!el.paused){el.pause();return;}
-    try{if(el.ended)el.currentTime=0;await Promise.all([el.play(),...(audio.current?[audio.current.play()]:[])]);setError('');}catch{el.pause();audio.current?.pause();setError('재생하지 못했어요. ‘춤추기’를 다시 눌러 주세요.');}
+    setStarting(true);setMovieFailed(false);setError('');
+    try{
+      if(el.error)el.load();if(el.ended)el.currentTime=0;
+      // Start in the tap handler even when mobile browsers have not preloaded a frame.
+      const started=el.play();
+      const song=audio.current;if(song)void song.play().catch(e=>{if(e.name!=='AbortError'){song.muted=true;setMuted(true);}});
+      await started;
+    }catch{el.pause();audio.current?.pause();setError('재생하지 못했어요. ‘춤추기’를 다시 눌러 주세요.');}
+    finally{setStarting(false);}
+  }
+  function toggleSound(){
+    const song=audio.current,next=!muted;setMuted(next);if(!song)return;song.muted=next;
+    if(!next&&video.current&&!video.current.paused)void song.play().catch(()=>{song.muted=true;setMuted(true);});
   }
   function selectFace(e:PointerEvent<HTMLCanvasElement>){
     const rect=e.currentTarget.getBoundingClientRect(),px=(e.clientX-rect.left)/rect.width,py=(e.clientY-rect.top)/rect.height;
@@ -96,12 +109,12 @@ export default function PajamaStudio(){
     <section className="pajama-studio" aria-label={t('파자마 파티즈 영상 만들기')}>
       <div className="pajama-stage-panel"><div className="pajama-stage-title"><h2>{t('우리의 파자마 파티')}</h2><span>{photos.filter(Boolean).length}/4</span></div>
         <div className="pajama-stage">
-          <video ref={video} src={danceVideo} playsInline preload="auto" loop muted className="pajama-source-video" onError={()=>{setReady(false);setPlaying(false);setMovieFailed(true);setError('춤 영상을 불러오지 못했어요. 페이지를 새로 열어 주세요.');}}/>
-          <audio ref={audio} src={assetUrl('pajama/dance-song-v2.m4a')} preload="auto" loop muted={muted}/>
+          <video ref={video} src={danceVideo} playsInline preload="metadata" loop muted className="pajama-source-video" onError={()=>{setReady(false);setPlaying(false);setStarting(false);setMovieFailed(true);audio.current?.pause();setError('춤 영상을 불러오지 못했어요. 페이지를 새로 열어 주세요.');}}/>
+          <audio ref={audio} src={assetUrl('pajama/dance-song-v2.m4a')} preload="metadata" loop muted={muted}/>
           <canvas ref={canvas} onPointerDown={selectFace} aria-label={t('파자마 파티즈 춤 영상 미리보기')} style={{aspectRatio:ready&&video.current?`${video.current.videoWidth}/${video.current.videoHeight}`:'16/9'}}/>
-          {!ready&&!movieFailed&&<p className="pajama-loading" role="status">{t('영상을 준비하고 있어요…')}</p>}
+          {!ready&&!movieFailed&&<p className="pajama-loading" role="status">{t(starting?'영상을 준비하고 있어요…':'‘춤추기’를 누르면 영상이 시작돼요.')}</p>}
         </div>
-        <div className="pajama-playback"><button onClick={()=>void togglePlay()} disabled={!ready} aria-label={t(playing?'일시 정지':'춤추기')}>{playing?<Pause size={18}/>:<Play size={18}/>}<span>{t(playing?'일시 정지':'춤추기')}</span></button><button onClick={resetPlayback} disabled={!ready} aria-label={t('처음부터 보기')} title={t('처음부터 보기')}><RotateCcw size={17}/></button><input type="range" min="0" max={duration||1} step=".01" value={Math.min(time,duration||1)} aria-label={t('영상 재생 위치')} disabled={!ready} onChange={e=>{if(video.current){video.current.pause();video.current.currentTime=Number(e.target.value);}}}/><output>{clock(time)} / {clock(duration)}</output><button onClick={()=>setMuted(!muted)} aria-label={t(muted?'영상 소리 켜기':'영상 소리 끄기')} title={t(muted?'영상 소리 켜기':'영상 소리 끄기')}>{muted?<VolumeX size={18}/>:<Volume2 size={18}/>}</button></div>
+        <div className="pajama-playback"><button onClick={()=>void togglePlay()} disabled={starting} aria-label={t(playing?'일시 정지':'춤추기')}>{playing?<Pause size={18}/>:<Play size={18}/>}<span>{t(playing?'일시 정지':'춤추기')}</span></button><button onClick={resetPlayback} disabled={!ready} aria-label={t('처음부터 보기')} title={t('처음부터 보기')}><RotateCcw size={17}/></button><input type="range" min="0" max={duration||1} step=".01" value={Math.min(time,duration||1)} aria-label={t('영상 재생 위치')} disabled={!ready} onChange={e=>{if(video.current){video.current.pause();video.current.currentTime=Number(e.target.value);}}}/><output>{clock(time)} / {clock(duration)}</output><button onClick={toggleSound} aria-label={t(muted?'영상 소리 켜기':'영상 소리 끄기')} title={t(muted?'영상 소리 켜기':'영상 소리 끄기')}>{muted?<VolumeX size={18}/>:<Volume2 size={18}/>}</button></div>
         {ready&&<p className="pajama-track-note" role="status">{t('사진은 같은 색 파자마의 얼굴에 들어가요.')}</p>}
         {error&&<p role="alert" className="pajama-error">{t(error)}</p>}
         <p className="pajama-private-note">{t('사진과 영상은 이 브라우저에서만 편집해요.')}</p>
