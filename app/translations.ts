@@ -3079,5 +3079,15 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "Use a different video",
   "zh": "换成其他视频",
   "ja": "別の動画に変える"
+ },
+ "재생하지 못했어요. ‘춤추기’를 다시 눌러 주세요.": {
+  "en": "Couldn't play. Please press Dance again.",
+  "zh": "无法播放，请再次点击“跳舞”。",
+  "ja": "再生できませんでした。「踊る」をもう一度押してね。"
+ },
+ "춤 영상을 불러오지 못했어요. 페이지를 새로 열어 주세요.": {
+  "en": "Couldn't load the dance video. Please reopen the page.",
+  "zh": "无法加载舞蹈视频，请重新打开页面。",
+  "ja": "ダンス動画を読み込めませんでした。ページを開き直してね。"
  }
 };
