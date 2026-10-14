@@ -39,5 +39,5 @@ export default function CapsuleIntro(){
   return()=>{document.body.style.overflow=oldOverflow;siblings.forEach((el,i)=>{el.inert=inert[i];});document.removeEventListener('keydown',key);if(previous&&previous!==document.body)previous.focus({preventScroll:true});else document.querySelector<HTMLAnchorElement>('.index-brand a')?.focus({preventScroll:true});};
  },[visible]);
  if(!visible)return null;
- return <div ref={dialog} className={'capsule-intro'+(leaving?' leaving':'')} role="dialog" aria-modal="true" aria-label={t('오늘의 귀여움을 열어봐요')}><CapsuleScene open={open} className="capsule-intro-scene" onOpen={reveal} onEnter={enter}/><button ref={skip} className="capsule-intro-skip" disabled={leaving} onClick={enter}>{t('바로 들어가기')}<span aria-hidden="true">↗</span></button></div>;
+ return <div ref={dialog} className={'capsule-intro'+(leaving?' leaving':'')} role="dialog" aria-modal="true" aria-label={t('치이카와 가챠')}><CapsuleScene open={open} className="capsule-intro-scene" onOpen={reveal} onEnter={enter}/><button ref={skip} className="capsule-intro-skip" disabled={leaving} onClick={enter}>{t('바로 들어가기')}<span aria-hidden="true">↗</span></button></div>;
 }

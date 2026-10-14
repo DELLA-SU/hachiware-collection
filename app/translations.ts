@@ -2694,5 +2694,10 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "If the same error persists, tell us your macOS version and the exact message. This error is not resolved by changing security settings.",
   "zh": "如果仍出现相同错误，请提供 macOS 版本和错误信息。此错误不应通过更改安全设置来解决。",
   "ja": "同じエラーが続く場合は、macOSのバージョンとエラーメッセージを教えてください。このエラーはセキュリティ設定の変更で解決する警告ではありません。"
+ },
+ "짜잔, 먼가 작고 귀여운 친구들이에요!": {
+  "en": "Ta-da! Meet your small and cute little friends!",
+  "zh": "锵锵，小小可爱的朋友们来啦！",
+  "ja": "じゃーん、なんか小さくてかわいい友達だよ！"
  }
 };

@@ -7,3 +7,7 @@
 
 .entrance-scene .capsule-bottom{width:auto;margin:0;display:block}
 .entrance-1>.entrance-photos{pointer-events:none}.entrance-welcome{pointer-events:none}.entrance-scene.is-open .entrance-welcome{pointer-events:auto}
+.entrance-closed-copy .capsule-title{max-width:19em;margin:0 auto;font-size:20px;line-height:1.15;text-wrap:balance}
+.entrance-closed-copy .capsule-acrostic{display:inline-grid;text-align:left}
+.capsule-acrostic em{color:#b57b8c;font-style:normal}
+.entrance-welcome .capsule-title{display:grid;max-width:22em;line-height:1.2;text-wrap:balance}
