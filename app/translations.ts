@@ -3049,5 +3049,35 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "Couldn't open the video. Try a video saved as MP4.",
   "zh": "无法打开视频，请重新选择保存为MP4的视频。",
   "ja": "動画を開けませんでした。MP4で保存した動画を選び直してね。"
+ },
+ "기본 춤 영상으로": {
+  "en": "Use the default dance",
+  "zh": "使用默认舞蹈视频",
+  "ja": "元のダンス動画に戻る"
+ },
+ "사진은 같은 색 파자마의 얼굴에 들어가요.": {
+  "en": "Photos go into the matching pajama colour.",
+  "zh": "照片会放入对应颜色睡衣的脸部。",
+  "ja": "写真は同じ色のパジャマの顔に入ります。"
+ },
+ "함께 춤추기": {
+  "en": "Dance together",
+  "zh": "一起跳舞",
+  "ja": "一緒に踊る"
+ },
+ "춤 장면은 반복되고 노래가 함께 재생돼요.": {
+  "en": "The dance loops while the song plays.",
+  "zh": "舞蹈画面循环播放，并配上歌曲。",
+  "ja": "ダンスを繰り返しながら歌も流れます。"
+ },
+ "원본 영상·노래": {
+  "en": "Original video and song",
+  "zh": "原视频与歌曲",
+  "ja": "元の動画・歌"
+ },
+ "다른 영상으로 바꾸기": {
+  "en": "Use a different video",
+  "zh": "换成其他视频",
+  "ja": "別の動画に変える"
  }
 };
