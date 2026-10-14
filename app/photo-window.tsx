@@ -5,7 +5,8 @@ import {characterName} from './characters';
 import {useEffect,useLayoutEffect,useRef,useState} from 'react';
 import PhotoZoom from './photo-zoom';
 import PhotoMemo from './photo-memo';
-import {Star,Share2,X,ArrowUpRight,ChevronLeft,ChevronRight,Maximize2,Minimize2} from 'lucide-react';
+import {trackEvent} from './analytics';
+import {Star,Share2,Heart,X,ArrowUpRight,ChevronLeft,ChevronRight,Maximize2,Minimize2} from 'lucide-react';
 type Photo={character?:string;id:string;image_url:string;source:string;source_kind:string;collected_at:string;imported:number;favorite:number};
 type Props={onImageActivate?:()=>void;photo:Photo;number:string;index:number;z:number;saving:boolean;onClose:()=>void;onRaise:()=>void;onFavorite:()=>void;onShare:()=>void;onStep:(direction:number)=>void;canStep:boolean};
 export default function PhotoWindow({onImageActivate,photo,number,index,z,saving,onClose,onRaise,onFavorite,onShare,onStep,canStep}:Props){
@@ -63,6 +64,13 @@ export default function PhotoWindow({onImageActivate,photo,number,index,z,saving
    onPointerUp={e=>{resizing.current=null;if(e.currentTarget.hasPointerCapture(e.pointerId))e.currentTarget.releasePointerCapture(e.pointerId);}}
    onPointerCancel={()=>{resizing.current=null;}}
    onKeyDown={e=>{if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;e.preventDefault();resizeWidth(side,(e.key==='ArrowRight'?1:-1)*(e.shiftKey?60:20),currentBox());}}/>)}
-  <div className="window-body"><PhotoZoom onActivate={onImageActivate} src={photo.image_url} alt={characterName(photo.character)+' #'+number+t(" 수집 사진")}/><div className="window-photo-actions"><button className={photo.favorite?'selected-fav':''} onClick={onFavorite} disabled={saving}><Star size={17} fill={photo.favorite?'currentColor':'none'}/>{photo.favorite?t("별표 한 순간"):t("별표 붙이기")}</button><button onClick={onShare}><Share2 size={16}/>{t("출처와 공유")}</button><a href={photo.source} target="_blank" rel="noreferrer">{t(photo.source_kind)} <ArrowUpRight size={13}/></a></div><PhotoMemo key={photo.id} id={photo.id}/><p className="window-source-note">{photo.source_kind==='Pinterest'?t("출처: Pinterest 핀 · 원저작자 정보는 핀 페이지에서 확인해 주세요."):photo.source_kind==='치이카와 공식 애니메이션'?t("출처: 치이카와 공식 애니메이션 캐릭터 일러스트."):photo.source_kind==='치이카와 공식 마켓'?t("출처: 치이카와 공식 마켓 · 원본 상품 페이지에서 확인해 주세요."):t("기존 기록의 이미지 파일 주소를 출처로 보존했어요.")}</p></div>
+  <div className="window-body"><PhotoZoom onActivate={onImageActivate} src={photo.image_url} alt={characterName(photo.character)+' #'+number+t(" 수집 사진")}/>
+   <div className="window-photo-actions">
+    <button className={'window-icon-action'+(photo.favorite?' selected-fav':'')} onClick={onFavorite} disabled={saving} aria-label={photo.favorite?t("즐겨찾기 해제"):t("별표 붙이기")} title={photo.favorite?t("즐겨찾기 해제"):t("별표 붙이기")} aria-pressed={!!photo.favorite}><Star size={19} fill={photo.favorite?'currentColor':'none'} aria-hidden="true"/></button>
+    <button className="window-icon-action" onClick={onShare} aria-label={t("출처와 공유")} title={t("출처와 공유")}><Share2 size={19} aria-hidden="true"/></button>
+    <a className="window-community-link" href="https://hachiware-favorite-gallery.nextrunners-1929.chatgpt.site" target="_blank" rel="noreferrer" onClick={()=>trackEvent('open_community')}><Heart size={16} aria-hidden="true"/>{t("최애로 공유하기")}<ArrowUpRight size={13} aria-hidden="true"/></a>
+    <a className="window-source-link" href={photo.source} target="_blank" rel="noreferrer">{t(photo.source_kind)} <ArrowUpRight size={13}/></a>
+   </div>
+   <PhotoMemo key={photo.id} id={photo.id}/><p className="window-source-note">{photo.source_kind==='Pinterest'?t("출처: Pinterest 핀 · 원저작자 정보는 핀 페이지에서 확인해 주세요."):photo.source_kind==='치이카와 공식 애니메이션'?t("출처: 치이카와 공식 애니메이션 캐릭터 일러스트."):photo.source_kind==='치이카와 공식 마켓'?t("출처: 치이카와 공식 마켓 · 원본 상품 페이지에서 확인해 주세요."):t("기존 기록의 이미지 파일 주소를 출처로 보존했어요.")}</p></div>
  </section>;
 }

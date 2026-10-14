@@ -2495,6 +2495,11 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "zh": "抽一个吗？",
   "ja": "引いてみる？"
  },
+ "최애로 공유하기": {
+  "en": "Share a favorite",
+  "zh": "分享最爱",
+  "ja": "お気に入りを共有"
+ },
  "첫 화면 가챠 다시 보기": {
   "en": "Replay the capsule welcome",
   "zh": "再看胶囊欢迎画面",

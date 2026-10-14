@@ -54,6 +54,13 @@ body{background:#bddfe3;color:var(--ink)}
 .window-close{background:#fff6eb;border-color:#ae857b;color:#8b6259}.window-title-actions>a{background:#fff3df;border-color:#af9888;color:#755d4e;border-radius:999px}
 .window-caption{background:#e5edce;border-color:#ccd5b7;color:#7e8668}.window-photo-actions button{background:#d8edef;color:#5c7774;border-radius:999px}.window-photo-actions .selected-fav{background:#f5e6aa;color:#8b7443}
 .window-source-note{color:#9a8f7b}.desk-bottom{border-color:#e4d4b6}.desk-footer{border-color:#ded4be;background:#f7f0df;border-radius:18px 18px 0 0;padding-left:22px;padding-right:22px;color:#968978}.desk-footer button{color:#776453}.desk-bottom>span{color:#998a78}
+.photo-window .window-photo-actions .window-icon-action{width:44px;height:44px;padding:0;display:grid;place-items:center;flex:none}
+.photo-window .window-icon-action svg{width:19px;height:19px}
+.photo-window .window-photo-actions .window-community-link{display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px;margin-left:0;padding:9px 12px;border:1px solid #d7bcc5;border-radius:999px;background:#f7e2e8;color:#86616e;font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap}
+.photo-window .window-community-link svg{flex:none}
+.photo-window .window-community-link:hover{background:#f2d4de}
+.photo-window .window-photo-actions button:hover:not(:disabled){filter:brightness(.97)}
+.photo-window .window-photo-actions :is(button,a):focus-visible{outline:2px solid #789aa7;outline-offset:3px}
 .about-modal{background:#fffdf7;border:1px solid #d8cbb6;border-radius:20px}.about-modal h2{font-family:'Jua',sans-serif;color:#443930}.toast{background:#d3e2aa;border:1px solid #a4b582;color:#566243;border-radius:999px}
 @media(min-width:1600px){.hero{min-height:560px;padding:50px 44px 65px}.hero-art{transform:scale(1.16)}.hero .collect{width:280px;font-size:15px}.stats>div{padding:28px 30px}}
 @media(max-width:1200px) and (min-width:1101px){.hero{padding-left:25px;padding-right:20px}.hero-art{transform:scale(.76)}.hero h1 .hero-name{font-size:44px}.hero h1 .hero-greeting{font-size:29px}}
