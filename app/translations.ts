@@ -2674,5 +2674,25 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "Draw one.",
   "zh": "抽一个吧。",
   "ja": "引いてみてね。"
+ },
+ "‘응답하지 않음’ 때문에 열 수 없다고 뜬다면?": {
+  "en": "If the app cannot open because it is not responding",
+  "zh": "如果提示应用没有响应而无法打开？",
+  "ja": "「応答しないため開けません」と表示されたら？"
+ },
+ "활성 상태 보기에서 HachiwareDesktop 또는 치이 친구를 찾아 ‘강제 종료’해 주세요.": {
+  "en": "In Activity Monitor, find HachiwareDesktop or Chii Friend and choose Force Quit.",
+  "zh": "在“活动监视器”中找到 HachiwareDesktop 或 Chii Friend，选择“强制退出”。",
+  "ja": "アクティビティモニタで HachiwareDesktop または Chii Friend を探して「強制終了」してください。"
+ },
+ "위 버튼에서 새 맥용 앱(v1.4.2)을 받고 ZIP을 모두 풀어 주세요. 응용 프로그램 폴더의 이전 치이 친구.app을 새 앱으로 교체한 뒤 다시 실행해요.": {
+  "en": "Download the new Mac app (v1.4.2) using the button above and fully extract the ZIP. Replace the old Chii Friend.app in Applications with the new app, then launch it again.",
+  "zh": "点击上方按钮下载新版 Mac 应用（v1.4.2），完整解压 ZIP。用新应用替换“应用程序”中的旧版 치이 친구.app，再重新打开。",
+  "ja": "上のボタンから新しいMac版（v1.4.2）をダウンロードし、ZIPを完全に展開してください。アプリケーションフォルダ内の古い 치이 친구.app を新しいアプリで置き換え、もう一度起動します。"
+ },
+ "계속 같은 오류가 뜨면 macOS 버전과 오류 문구를 알려 주세요. 이 오류는 보안 설정을 바꿔 해결하는 경고가 아니에요.": {
+  "en": "If the same error persists, tell us your macOS version and the exact message. This error is not resolved by changing security settings.",
+  "zh": "如果仍出现相同错误，请提供 macOS 版本和错误信息。此错误不应通过更改安全设置来解决。",
+  "ja": "同じエラーが続く場合は、macOSのバージョンとエラーメッセージを教えてください。このエラーはセキュリティ設定の変更で解決する警告ではありません。"
  }
 };

@@ -2,6 +2,7 @@ import Cocoa
 import WebKit
 
 let publicSite = "https://della-su.github.io/hachiware-collection/"
+let startupCheck = CommandLine.arguments.contains("--startup-check")
 class PetView: NSView {
  var image: NSImage?
  var action: (() -> Void)?
@@ -83,14 +84,18 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
  var bounceCount = 0
  func applicationDidFinishLaunching(_ notification: Notification) {
   NSApp.setActivationPolicy(.accessory)
-  NSApp.applicationIconImage=NSImage(contentsOfFile:Bundle.main.path(forResource:"character",ofType:"png")!)
+  guard let characterURL=Bundle.main.url(forResource:"character",withExtension:"png"),let character=NSImage(contentsOf:characterURL),character.isValid else{
+   if startupCheck{fputs("Missing or invalid character.png\n",stderr);exit(1)}
+   let alert=NSAlert();alert.messageText="앱 파일을 다시 받아 주세요";alert.informativeText="캐릭터 파일이 없거나 손상되었어요. ZIP 파일의 압축을 모두 푼 다음 치이 친구.app 전체를 응용 프로그램 폴더로 옮겨 주세요.";alert.runModal();NSApp.terminate(nil);return
+  }
+  NSApp.applicationIconImage=character
   soundsEnabled=UserDefaults.standard.object(forKey:"motionSounds") as? Bool ?? true
   let savedSize=UserDefaults.standard.integer(forKey:"petSize")
   petSize=CGFloat([120,160,200,240].contains(savedSize) ? savedSize : 160)
   let menu=NSMenu()
   menu.addItem(withTitle:"오늘의 치이 친구 보여줘",action:#selector(collect),keyEquivalent:"")
   menu.addItem(withTitle:"치이카와 가챠 열기",action:#selector(openArchive),keyEquivalent:"")
-  menu.addItem(withTitle:"치이카와 노래 TV",action:#selector(openMusic),keyEquivalent:"")
+  menu.addItem(withTitle:"하치와레 노래 TV",action:#selector(openMusic),keyEquivalent:"")
   menu.addItem(withTitle:"캐릭터 위치 초기화",action:#selector(resetPosition),keyEquivalent:"")
   let sizeMenu=NSMenu(title:"캐릭터 크기")
   for (title,size) in [("작게 · 75%",120),("기본 · 100%",160),("크게 · 125%",200),("아주 크게 · 150%",240)]{let item=NSMenuItem(title:title,action:#selector(changeSize(_:)),keyEquivalent:"");item.tag=size;item.target=self;item.state=CGFloat(size)==petSize ? .on : .off;sizeMenu.addItem(item);sizeItems.append(item)}
@@ -100,16 +105,25 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
   menu.addItem(withTitle:"종료",action:#selector(quit),keyEquivalent:"q")
   for item in menu.items { item.target=self }
   status=NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength);status.button?.title="🐾";status.menu=menu
+  status.isVisible = !startupCheck
   pet=NSPanel(contentRect:NSRect(x:0,y:0,width:petSize,height:petSize),styleMask:[.borderless,.nonactivatingPanel],backing:.buffered,defer:false)
   pet.isOpaque=false;pet.backgroundColor = .clear;pet.hasShadow=false;pet.level = .floating;pet.collectionBehavior=[.canJoinAllSpaces,.fullScreenAuxiliary];pet.isReleasedWhenClosed=false
-  let v=PetView(frame:NSRect(x:0,y:0,width:petSize,height:petSize));v.autoresizingMask=[.width,.height];v.image=NSImage(contentsOfFile:Bundle.main.path(forResource:"character",ofType:"png")!);v.action={ [weak self] in self?.collect() };v.doubleAction={ [weak self] in self?.openMusic() };v.menuAction={ [weak self,weak v] in if let menu=self?.status.menu,let view=v,let event=NSApp.currentEvent{NSMenu.popUpContextMenu(menu,with:event,for:view)} };v.launchAction={ [weak self] in self?.launchPet() };v.throwAction={ [weak self] velocity in self?.throwPet(velocity) };v.hoverAction={ [weak self] active in self?.setSpin(active ? 1 : 0) };pet.contentView=v
+  let v=PetView(frame:NSRect(x:0,y:0,width:petSize,height:petSize));v.autoresizingMask=[.width,.height];v.image=character;v.action={ [weak self] in self?.collect() };v.doubleAction={ [weak self] in self?.openMusic() };v.menuAction={ [weak self,weak v] in if let menu=self?.status.menu,let view=v,let event=NSApp.currentEvent{NSMenu.popUpContextMenu(menu,with:event,for:view)} };v.launchAction={ [weak self] in self?.launchPet() };v.throwAction={ [weak self] velocity in self?.throwPet(velocity) };v.hoverAction={ [weak self] active in self?.setSpin(active ? 1 : 0) };pet.contentView=v
   let screen=NSScreen.main?.visibleFrame ?? NSRect(x:0,y:0,width:1200,height:800);base=NSPoint(x:screen.maxX-petSize-50,y:screen.minY+100)
   if UserDefaults.standard.object(forKey:"x") != nil { base=NSPoint(x:UserDefaults.standard.double(forKey:"x"),y:UserDefaults.standard.double(forKey:"y"));pet.setFrameOrigin(base) }
   clampPetPosition();pet.setFrameOrigin(base)
-  pet.orderFrontRegardless()
+  if !startupCheck{pet.orderFrontRegardless()}
   if CommandLine.arguments.contains("--music-preview"){openMusic()}
   timer=Timer.scheduledTimer(withTimeInterval:1.0/30.0,repeats:true){ [weak self] _ in guard let s=self else{return}; if NSEvent.pressedMouseButtons != 0 { s.base=s.pet.frame.origin;s.flightTime=nil;(s.pet.contentView as? PetView)?.inFlight=false;return };if let v=s.pet.contentView as? PetView,v.hovering && !v.inFlight{s.setSpin(v.hoverDuration>4 ? 3 : v.hoverDuration>2 ? 2 : 1)};s.pet.contentView?.needsDisplay=true;s.tick += 1.0/30.0;if s.flightTime != nil{s.advanceFlight()}else{s.pet.setFrameOrigin(NSPoint(x:s.base.x+sin(s.tick*0.65)*5,y:s.base.y+sin(s.tick*1.15)*9))} }
+  if startupCheck{Task{[weak self] in try? await Task.sleep(nanoseconds:1_000_000_000);await MainActor.run{self?.finishStartupCheck()}}}
  }
+ func finishStartupCheck(){
+  guard tick>0,let url=Bundle.main.url(forResource:"catalog",withExtension:"json"),let data=try? Data(contentsOf:url),let photos=try? JSONSerialization.jsonObject(with:data) as? [[String:Any]],!photos.isEmpty,let resourcePath=Bundle.main.resourcePath,let first=photos.first?["image_url"] as? String,let image=NSImage(contentsOfFile:resourcePath+"/"+first),image.isValid else{fputs("Startup check failed: event loop or bundled photos\n",stderr);exit(1)}
+  let version=Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
+  print("Startup check passed: responsive main loop, character, catalog and bundled photo; version \(version)")
+  NSApp.terminate(nil)
+ }
+ func applicationShouldHandleReopen(_ sender:NSApplication,hasVisibleWindows flag:Bool)->Bool{if let pet=pet{clampPetPosition();pet.setFrameOrigin(base);pet.orderFrontRegardless()};return true}
  func launchPet(){
   guard flightTime == nil else{return}
   setSpin(0);playEffect("launch")
@@ -194,7 +208,7 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
   let screen=pet.screen?.visibleFrame ?? NSScreen.main!.visibleFrame
   let width=min(900,screen.width-60),height=min(630,screen.height-70)
   let window=NSWindow(contentRect:NSRect(x:0,y:0,width:width,height:height),styleMask:[.titled,.closable,.resizable,.miniaturizable],backing:.buffered,defer:false)
-  window.title="치이카와 노래 TV ♪";window.isReleasedWhenClosed=false;window.contentMinSize=NSSize(width:420,height:340);window.delegate=self
+  window.title="하치와레 노래 TV ♪";window.isReleasedWhenClosed=false;window.contentMinSize=NSSize(width:420,height:340);window.delegate=self
   let configuration=WKWebViewConfiguration();configuration.mediaTypesRequiringUserActionForPlayback=[]
   let web=WKWebView(frame:NSRect(x:0,y:0,width:width,height:height),configuration:configuration);web.autoresizingMask=[.width,.height];window.contentView=web;web.load(URLRequest(url:URL(string:publicSite+"desktop-tv.html")!));musicView=web;musicWindow=window
   window.center();window.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true)
