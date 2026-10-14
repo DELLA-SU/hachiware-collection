@@ -27,6 +27,7 @@ function framePoint(p:PhotoFrame,x:number,y:number){
 }
 function drawFrame(ctx:CanvasRenderingContext2D,tile:HTMLCanvasElement,p:PhotoFrame){
  ctx.save();if(p.clip){ctx.beginPath();ctx.rect(...p.clip);ctx.clip();}
+ if(p.outline?.length){ctx.beginPath();p.outline.forEach(([x,y],index)=>index?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.closePath();ctx.clip();}
  if(p.quad){const [tl,tr,br,bl]=p.quad,w=tile.width,h=tile.height;
   for(const first of [true,false]){const a=tl,b=first?tr:br,c=first?br:bl;ctx.save();ctx.beginPath();ctx.moveTo(...a);ctx.lineTo(...b);ctx.lineTo(...c);ctx.closePath();ctx.clip();const right=first?tr:br,bottom=first?br:bl,origin=first?tr:tl;ctx.transform((right[0]-(first?tl[0]:bl[0]))/w,(right[1]-(first?tl[1]:bl[1]))/w,(bottom[0]-origin[0])/h,(bottom[1]-origin[1])/h,tl[0],tl[1]);ctx.drawImage(tile,0,0);ctx.restore();}
  }else{ctx.transform(...frameMatrix(p) as [number,number,number,number,number,number]);ctx.drawImage(tile,0,0,p.width,p.height);}ctx.restore();
