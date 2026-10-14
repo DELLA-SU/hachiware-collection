@@ -2824,5 +2824,230 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "Click desktop Hachiware character once for a random photo. Open website opens the web collection.",
   "zh": "单击桌面小八角色会打开随机照片窗口。点击“打开网站”可打开网页收藏册。",
   "ja": "デスクトップのハチワレキャラクターを1回押すとランダムな写真が開きます。「ウェブサイトへ」でウェブ図鑑を開けます。"
+ },
+ "나도 파자마 파티즈 되기": {
+  "en": "Join the Pajama Partyz",
+  "zh": "加入睡衣派对",
+  "ja": "パジャマパーティーズになる"
+ },
+ "오늘 밤은 우리도 파자마 파티즈!": {
+  "en": "Tonight, we're the Pajama Partyz!",
+  "zh": "今晚，我们也是睡衣派对的一员！",
+  "ja": "今夜は私たちもパジャマパーティーズ！"
+ },
+ "나와 친구들 사진을 넣고, 함께 춤춰요.": {
+  "en": "Add photos of you and your friends, then dance together.",
+  "zh": "放入自己和朋友的照片，一起跳舞吧。",
+  "ja": "自分と友だちの写真を入れて、一緒に踊ろう。"
+ },
+ "파자마 파티즈 영상 만들기": {
+  "en": "Make a Pajama Partyz video",
+  "zh": "制作睡衣派对视频",
+  "ja": "パジャマパーティーズの動画を作る"
+ },
+ "우리의 파자마 파티": {
+  "en": "Our pajama party",
+  "zh": "我们的睡衣派对",
+  "ja": "私たちのパジャマパーティー"
+ },
+ "보라 파자마": {
+  "en": "Purple pajamas",
+  "zh": "紫色睡衣",
+  "ja": "むらさきのパジャマ"
+ },
+ "초록 파자마": {
+  "en": "Green pajamas",
+  "zh": "绿色睡衣",
+  "ja": "みどりのパジャマ"
+ },
+ "분홍 파자마": {
+  "en": "Pink pajamas",
+  "zh": "粉色睡衣",
+  "ja": "ピンクのパジャマ"
+ },
+ "하양 파자마": {
+  "en": "White pajamas",
+  "zh": "白色睡衣",
+  "ja": "しろいパジャマ"
+ },
+ "함께 춤출 영상을 골라 주세요": {
+  "en": "Choose a video to dance in",
+  "zh": "选择一起跳舞的视频",
+  "ja": "一緒に踊る動画を選んでね"
+ },
+ "실제 파자마 파티즈 춤 영상을 넣으면 사진 합성을 시작할 수 있어요.": {
+  "en": "Add actual Pajama Partyz dance footage to start adding your photos.",
+  "zh": "放入真实的睡衣派对舞蹈视频，就能开始合成照片。",
+  "ja": "パジャマパーティーズが踊る動画を入れると、写真の合成を始められます。"
+ },
+ "춤 영상 넣기": {
+  "en": "Add dance video",
+  "zh": "添加舞蹈视频",
+  "ja": "ダンス動画を入れる"
+ },
+ "나와 친구들 사진 넣기": {
+  "en": "Add you and your friends",
+  "zh": "放入自己和朋友的照片",
+  "ja": "自分と友だちの写真を入れる"
+ },
+ "사진을 넣을 친구 고르기": {
+  "en": "Choose a pajama member",
+  "zh": "选择要放入照片的成员",
+  "ja": "写真を入れるメンバーを選ぶ"
+ },
+ "파자마 파티즈에 넣을 사진": {
+  "en": "Photo for the Pajama Partyz",
+  "zh": "放入睡衣派对的照片",
+  "ja": "パジャマパーティーズに入れる写真"
+ },
+ "사진 고르기": {
+  "en": "Choose photo",
+  "zh": "选择照片",
+  "ja": "写真を選ぶ"
+ },
+ "실제 춤 영상 넣기": {
+  "en": "Add the actual dance footage",
+  "zh": "添加真实舞蹈视频",
+  "ja": "実際のダンス動画を入れる"
+ },
+ "파자마 파티즈 춤 영상": {
+  "en": "Pajama Partyz dance footage",
+  "zh": "睡衣派对舞蹈视频",
+  "ja": "パジャマパーティーズのダンス動画"
+ },
+ "다른 영상 고르기": {
+  "en": "Choose another video",
+  "zh": "选择其他视频",
+  "ja": "別の動画を選ぶ"
+ },
+ "MP4 · WEBM · MOV / 최대 300MB": {
+  "en": "MP4 · WEBM · MOV / up to 300MB",
+  "zh": "MP4 · WEBM · MOV / 最大300MB",
+  "ja": "MP4 · WEBM · MOV / 最大300MB"
+ },
+ "사진이 다른 친구에게 들어갔나요?": {
+  "en": "Photo on the wrong member?",
+  "zh": "照片放到了其他成员身上？",
+  "ja": "別のメンバーに写真が入りましたか？"
+ },
+ "영상을 멈추고 사진을 고른 뒤, 해당 친구의 회색 얼굴 칸을 눌러 연결해 주세요.": {
+  "en": "Pause, choose a photo, then click that member's grey face opening to connect it.",
+  "zh": "暂停视频，选择照片，再点击对应成员的灰色脸部区域进行关联。",
+  "ja": "動画を止めて写真を選び、そのメンバーの灰色の顔の部分を押してつなげてね。"
+ },
+ "이 사진의 얼굴 칸 선택": {
+  "en": "Choose face for this photo",
+  "zh": "选择这张照片的脸部位置",
+  "ja": "この写真を入れる顔を選ぶ"
+ },
+ "얼굴 위치 다시 찾기": {
+  "en": "Find face positions again",
+  "zh": "重新寻找脸部位置",
+  "ja": "顔の位置を探し直す"
+ },
+ "회색 얼굴 칸이 선명한 장면에서 가장 잘 맞아요. 얼굴이 가려지면 사진도 잠시 숨겨져요.": {
+  "en": "Works best when the grey face openings are clear. Photos hide briefly when a face is obscured.",
+  "zh": "灰色脸部区域清晰时效果最好。脸部被遮挡时，照片也会暂时隐藏。",
+  "ja": "灰色の顔の部分がはっきり映る場面でよく合います。顔が隠れると写真も一時的に隠れます。"
+ },
+ "파자마 파티즈 · 공식 캐릭터 소개": {
+  "en": "Pajama Partyz · official characters",
+  "zh": "睡衣派对 · 官方角色介绍",
+  "ja": "パジャマパーティーズ・公式キャラクター紹介"
+ },
+ "파자마 파티즈 춤 영상 미리보기": {
+  "en": "Pajama Partyz dance preview",
+  "zh": "睡衣派对舞蹈预览",
+  "ja": "パジャマパーティーズのダンスプレビュー"
+ },
+ "영상을 준비하고 있어요…": {
+  "en": "Preparing the video…",
+  "zh": "正在准备视频…",
+  "ja": "動画を準備しています…"
+ },
+ "일시 정지": {
+  "en": "Pause",
+  "zh": "暂停",
+  "ja": "一時停止"
+ },
+ "춤추기": {
+  "en": "Dance",
+  "zh": "跳舞",
+  "ja": "踊る"
+ },
+ "처음부터 보기": {
+  "en": "Watch from the start",
+  "zh": "从头观看",
+  "ja": "最初から見る"
+ },
+ "영상 재생 위치": {
+  "en": "Video playback position",
+  "zh": "视频播放位置",
+  "ja": "動画の再生位置"
+ },
+ "영상 소리 켜기": {
+  "en": "Unmute video",
+  "zh": "打开视频声音",
+  "ja": "動画の音をオン"
+ },
+ "영상 소리 끄기": {
+  "en": "Mute video",
+  "zh": "关闭视频声音",
+  "ja": "動画の音をオフ"
+ },
+ "선택한 사진을 넣을 회색 얼굴 칸을 눌러 주세요.": {
+  "en": "Click the grey face opening for the selected photo.",
+  "zh": "点击放入所选照片的灰色脸部区域。",
+  "ja": "選んだ写真を入れる灰色の顔の部分を押してね。"
+ },
+ "찾은 얼굴 칸": {
+  "en": "Detected faces",
+  "zh": "已找到的脸部区域",
+  "ja": "見つかった顔"
+ },
+ "얼굴 칸이 보이는 장면에서 위치를 다시 맞춰 주세요.": {
+  "en": "Find positions again in a scene with visible face openings.",
+  "zh": "请在脸部区域可见的场景中重新匹配位置。",
+  "ja": "顔の部分が見える場面で、位置を探し直してね。"
+ },
+ "사진과 영상은 이 브라우저에서만 편집해요.": {
+  "en": "Photos and video are edited only in this browser.",
+  "zh": "照片和视频仅在此浏览器内编辑。",
+  "ja": "写真と動画はこのブラウザ内だけで編集します。"
+ },
+ "보라·초록·분홍·하양 파자마 파티즈": {
+  "en": "Purple, green, pink and white Pajama Partyz",
+  "zh": "紫色、绿色、粉色和白色睡衣派对成员",
+  "ja": "むらさき・みどり・ピンク・しろのパジャマパーティーズ"
+ },
+ "20MB 이하의 JPG, PNG, WEBP 사진을 골라 주세요.": {
+  "en": "Choose a JPG, PNG or WEBP photo under 20MB.",
+  "zh": "请选择20MB以下的JPG、PNG或WEBP照片。",
+  "ja": "20MB以下のJPG・PNG・WEBPの写真を選んでね。"
+ },
+ "사진을 열지 못했어요. 다른 사진을 골라 주세요.": {
+  "en": "Couldn't open the photo. Choose another one.",
+  "zh": "无法打开照片，请选择其他照片。",
+  "ja": "写真を開けませんでした。別の写真を選んでね。"
+ },
+ "300MB 이하의 MP4, WEBM, MOV 영상을 골라 주세요.": {
+  "en": "Choose an MP4, WEBM or MOV video under 300MB.",
+  "zh": "请选择300MB以下的MP4、WEBM或MOV视频。",
+  "ja": "300MB以下のMP4・WEBM・MOVの動画を選んでね。"
+ },
+ "영상을 재생하지 못했어요. 다른 영상 파일을 골라 주세요.": {
+  "en": "Couldn't play the video. Choose another video file.",
+  "zh": "无法播放视频，请选择其他视频文件。",
+  "ja": "動画を再生できませんでした。別の動画ファイルを選んでね。"
+ },
+ "회색 얼굴 칸의 가운데를 눌러 주세요.": {
+  "en": "Click the middle of a grey face opening.",
+  "zh": "请点击灰色脸部区域的中央。",
+  "ja": "灰色の顔の部分の真ん中を押してね。"
+ },
+ "영상을 열지 못했어요. MP4로 저장한 영상을 다시 골라 주세요.": {
+  "en": "Couldn't open the video. Try a video saved as MP4.",
+  "zh": "无法打开视频，请重新选择保存为MP4的视频。",
+  "ja": "動画を開けませんでした。MP4で保存した動画を選び直してね。"
  }
 };
