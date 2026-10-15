@@ -15,6 +15,8 @@
 
 방문 통계는 쿠키 없는 Umami Cloud Hobby 요금제로 집계합니다. 메인 도감·자격증·파자마 페이지의 조회와 고정된 기능 사용 이벤트만 전송하며, URL의 사진 식별자·검색어·메모·드로잉은 전송하지 않습니다. 통계 사용은 설정에서 끌 수 있고 과거의 명시적 거부와 브라우저의 Do Not Track 설정을 존중합니다. 이전 GA4 데이터는 그대로 두며 새 페이지에서는 GA 태그를 로드하지 않습니다.
 
+파자마의 `pajama_dance_start`는 사용자가 재생을 눌러 영상이 시작됐을 때(반복 재생 제외), `pajama_photo_add`는 사진 적용에 성공했을 때 기록합니다. 자격증의 `certificate_select`는 직접 양식을 골랐을 때, `certificate_photo_add`는 사진 적용에 성공했을 때, `certificate_download`는 PNG 생성 후 다운로드를 실행했을 때 기록합니다. 파일 이름·사진·저장할 이름·선택한 자격증 정보는 보내지 않으며 다운로드 이벤트는 운영체제의 저장 완료를 보장하지 않습니다.
+
 ## 실행 및 배포
 
 Node.js 22 이상에서 `npm install`, `npm run dev`로 실행합니다. `npm run build`는 GitHub Pages에 올릴 `docs/`를 생성합니다.

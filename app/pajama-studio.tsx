@@ -1,6 +1,7 @@
 import {useEffect,useRef,useState,type CSSProperties,type PointerEvent} from 'react';
 import {ArrowLeft,ImagePlus,Play,Pause,RotateCcw,Trash2,Volume2,VolumeX,MoonStar} from 'lucide-react';
 import {assetUrl} from './asset-url';
+import {trackEvent} from './analytics';
 import {t,useLanguage} from './locale';
 import type {FaceOpening} from './pajama-tracking';
 import danceTracks from '../lib/pajama-dance-tracks.json';
@@ -42,7 +43,7 @@ export default function PajamaStudio(){
     if(!file)return;const slot=selected,request=++requests.current[slot];
     if(!/^image\/(jpeg|png|webp)$/.test(file.type)||file.size>20_000_000){setError('20MB 이하의 JPG, PNG, WEBP 사진을 골라 주세요.');return;}
     const url=URL.createObjectURL(file);urls.current.add(url);const image=new Image();image.src=url;
-    try{await image.decode();if(request!==requests.current[slot]){discard(url);return;}const old=photoState.current[slot];if(old)discard(old.url);setPhotos(values=>values.map((value,i)=>i===slot?{image,url,zoom:1,x:0,y:0}:value));setError('');}
+    try{await image.decode();if(request!==requests.current[slot]){discard(url);return;}const old=photoState.current[slot];if(old)discard(old.url);setPhotos(values=>values.map((value,i)=>i===slot?{image,url,zoom:1,x:0,y:0}:value));setError('');trackEvent('pajama_photo_add');}
     catch{discard(url);setError('사진을 열지 못했어요. 다른 사진을 골라 주세요.');}
     finally{if(photoInput.current)photoInput.current.value='';}
   }
@@ -91,6 +92,7 @@ export default function PajamaStudio(){
       const started=el.play();
       const song=audio.current;if(song)void song.play().catch(e=>{if(e.name!=='AbortError'){song.muted=true;setMuted(true);}});
       await started;
+      trackEvent('pajama_dance_start');
     }catch{el.pause();audio.current?.pause();setError('재생하지 못했어요. ‘춤추기’를 다시 눌러 주세요.');}
     finally{setStarting(false);}
   }

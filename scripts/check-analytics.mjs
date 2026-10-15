@@ -30,6 +30,11 @@ const loading=setup();loading.api.initAnalytics();loading.api.trackEvent('photo_
 loading.store.set('hachiware-statistics-disabled','true');loading.api.refreshAnalyticsPreference();loading.api.trackEvent('photo_draw');assert.equal(loading.sent.length,1);
 const blocked=setup({blocked:true});blocked.api.initAnalytics();blocked.api.setAnalyticsEnabled(false);assert.equal(blocked.api.analyticsEnabled(),false);blocked.ready();assert.equal(blocked.sent.length,0);
 for(const options of [{host:'127.0.0.1'},{path:'/other-private-site/'},{path:'/hachiware-collection/__proto__'},{dnt:'1'}]){const s=setup(options);s.api.initAnalytics();s.api.trackEvent('photo_draw');assert.equal(s.scripts.length,0);}
-for(const path of ['/hachiware-collection/certificates.html','/hachiware-collection/pajama.html']){const s=setup({path});s.api.initAnalytics();s.ready();assert.equal(s.sent.length,1);assert.equal(s.sent[0].url,path+'?utm_source=instagram&utm_campaign=launch');}
+for(const [page,names] of [['certificates.html',['certificate_select','certificate_photo_add','certificate_download']],['pajama.html',['pajama_dance_start','pajama_photo_add']]]){
+ const path='/hachiware-collection/'+page,s=setup({path});s.api.initAnalytics();s.ready();assert.equal(s.sent.length,1);assert.equal(s.sent[0].url,path+'?utm_source=instagram&utm_campaign=launch');
+ for(const name of names){s.api.trackEvent(name);const clean=s.api.sanitizeAnalyticsPayload('event',{...dirty,name});assert.equal(clean.name,name);assert(!Object.hasOwn(clean,'data'));assert(!Object.hasOwn(clean,'id'));assert.equal(clean.url,path+'?utm_source=instagram&utm_campaign=launch');}
+ assert.deepEqual(s.sent.slice(1).map(p=>p.name),names);
+ const count=s.sent.length;s.api.setAnalyticsEnabled(false);for(const name of names)s.api.trackEvent(name);assert.equal(s.sent.length,count);
+}
 const unavailable=setup();unavailable.api.initAnalytics();unavailable.scripts[0].onerror();unavailable.window.umami={track:()=>{throw Error('offline');}};assert.doesNotThrow(()=>unavailable.api.trackEvent('photo_draw'));
-console.log('PASS: cookieless loading, one pageview, safe payloads, preserved opt-outs, cross-tab preferences, legacy cookie cleanup, local record isolation, all three pages, DNT/development exclusion, and analytics failure isolation');
+console.log('PASS: cookieless loading, one pageview, safe payloads, preserved opt-outs, cross-tab preferences, legacy cookie cleanup, local record isolation, all three pages and five studio events, DNT/development exclusion, and analytics failure isolation');
