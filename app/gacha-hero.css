@@ -52,5 +52,5 @@
 .gacha-acrostic-copy h1 em{font-style:normal;color:#9b5370}
 @media(max-width:650px){.gacha-v1 .gacha-acrostic-copy{top:12%;width:44%}.gacha-v1 .gacha-acrostic-copy h1{font-size:clamp(21px,5.5vw,26px);line-height:1.13;margin-top:11px}}
 
-.gacha-acrostic-copy h1:has(.title-draw-label){display:flex;align-items:center;gap:16px}.title-acrostic-lines{display:grid;gap:1px;text-align:left}.title-acrostic-lines>span{display:block;white-space:nowrap}.gacha-acrostic-copy .title-draw-label{font-size:.46em;line-height:1.2;letter-spacing:0;padding:.4em .65em;border:1.5px solid #bd8d9f;border-radius:99px;background:#fffaf080;color:#9b5370;transform:rotate(-6deg)}
-@media(max-width:650px){.gacha-acrostic-copy h1:has(.title-draw-label){gap:9px}.gacha-acrostic-copy .title-draw-label{font-size:.48em;padding:.4em .5em}}
+.gacha-acrostic-copy h1:has(.title-draw-label){display:flex;align-items:center;gap:16px}.title-acrostic-lines{order:1;display:grid;gap:1px;text-align:left}.title-acrostic-lines>span{display:block;white-space:nowrap}.gacha-acrostic-copy .title-draw-label{order:2;font-size:1.28em;line-height:1;letter-spacing:-.06em;padding:0;border:0;background:none;color:#9b5370;transform:none;flex:none}
+@media(max-width:650px){.gacha-v1 .gacha-acrostic-copy{width:48%}.gacha-v1 .gacha-acrostic-copy h1:has(.title-draw-label){gap:9px;font-size:clamp(19px,5vw,24px)}.gacha-acrostic-copy .title-draw-label{font-size:1.28em;padding:0}}

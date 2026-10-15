@@ -17,8 +17,8 @@ export default function CapsuleIntro(){
  useEffect(()=>{if(!visible||open||leaving)return;const timer=setTimeout(()=>setOpen(true),matchMedia('(prefers-reduced-motion: reduce)').matches?150:1200);return()=>clearTimeout(timer);},[visible,open,leaving]);
  useEffect(()=>{
   if(!visible||!open||leaving)return;
-  // Let the three photos finish appearing, then continue straight into the collection.
-  const timer=setTimeout(()=>setLeaving(true),matchMedia('(prefers-reduced-motion: reduce)').matches?1200:1750);
+  // Continue as soon as the capsule has finished opening.
+  const timer=setTimeout(()=>setLeaving(true),matchMedia('(prefers-reduced-motion: reduce)').matches?0:950);
   return()=>clearTimeout(timer);
  },[visible,open,leaving]);
  useEffect(()=>{
@@ -45,5 +45,5 @@ export default function CapsuleIntro(){
   return()=>{document.body.style.overflow=oldOverflow;siblings.forEach((el,i)=>{el.inert=inert[i];});document.removeEventListener('keydown',key);if(previous&&previous!==document.body)previous.focus({preventScroll:true});else document.querySelector<HTMLAnchorElement>('.index-brand a')?.focus({preventScroll:true});};
  },[visible]);
  if(!visible)return null;
- return <div ref={dialog} className={'capsule-intro'+(leaving?' leaving':'')} role="dialog" aria-modal="true" aria-label={t('치이카와 가챠')} tabIndex={-1}><CapsuleScene open={open} className="capsule-intro-scene" onOpen={reveal} showWelcome={false}/>{!open&&<button ref={skip} className="capsule-intro-skip" disabled={leaving} onClick={enter}>{t('바로 들어가기')}<span aria-hidden="true">↗</span></button>}</div>;
+ return <div ref={dialog} className={'capsule-intro'+(leaving?' leaving':'')} role="dialog" aria-modal="true" aria-label={t('치이카와 가챠')} tabIndex={-1}><CapsuleScene open={open} className="capsule-intro-scene" onOpen={reveal} showWelcome={false} showPhotos={false}/>{!open&&<button ref={skip} className="capsule-intro-skip" disabled={leaving} onClick={enter}>{t('바로 들어가기')}<span aria-hidden="true">↗</span></button>}</div>;
 }
