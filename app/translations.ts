@@ -3095,10 +3095,10 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "zh": "参考原卡的文字、颜色和布局重新绘制的正面模板。可在下方“原始场景与出处”查看原图。",
   "ja": "元のカードの文字・色・配置を参考に正面に描き直した様式です。原本は下の「元の場面・出典を見る」でご確認ください。"
  },
- "라멘 가게에서 일하고 싶었던 시사의 자격이에요. 사진을 넣기 좋은 정리 양식으로 만들어 봐요.": {
-  "en": "Shisa earned this qualification to work at the ramen shop. Make your own using a clean form for your photo.",
-  "zh": "这是想在拉面店工作的狮萨所持资格。用便于放入照片的整理模板制作自己的卡片吧。",
-  "ja": "ラーメン店で働きたかったシーサーの資格です。写真を入れやすい様式で自分の一枚を作ってみましょう。"
+ "라멘 가게에서 일하고 싶었던 시사의 자격이에요. 내 사진으로 슈퍼 아르바이터가 되어 봐요!": {
+  "en": "Shisa earned this qualification to work at the ramen shop. Become a Super Part-Timer with your own photo!",
+  "zh": "这是想在拉面店工作的狮萨所持资格。用自己的照片变身超级兼职员吧！",
+  "ja": "ラーメン店で働きたかったシーサーの資格です。自分の写真でスーパーアルバイターになってみましょう！"
  },
  "‘춤추기’를 누르면 영상이 시작돼요.": {
   "en": "Tap “Dance” to start the video.",
