@@ -5,6 +5,7 @@ import {playMotion} from './motion-sounds';
 import './capsule-intro.css';
 
 function shouldShow(){
+ if(new URLSearchParams(location.search).get('skip_intro')==='1')return false;
  if(new URLSearchParams(location.hash.slice(1)).has('desktop_photo'))return false;
  return true;
 }
@@ -42,7 +43,7 @@ export default function CapsuleIntro(){
    if(e.key==='Tab'){const buttons=[...dialog.current!.querySelectorAll<HTMLButtonElement>('button:not(:disabled)')].filter(button=>button.tabIndex>=0),first=buttons[0],last=buttons.at(-1);if(!buttons.length){e.preventDefault();}else if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}}
   };
   document.addEventListener('keydown',key);
-  return()=>{document.body.style.overflow=oldOverflow;siblings.forEach((el,i)=>{el.inert=inert[i];});document.removeEventListener('keydown',key);if(previous&&previous!==document.body)previous.focus({preventScroll:true});else document.querySelector<HTMLAnchorElement>('.index-brand a')?.focus({preventScroll:true});};
+  return()=>{document.body.style.overflow=oldOverflow;siblings.forEach((el,i)=>{el.inert=inert[i];});document.removeEventListener('keydown',key);if(previous&&previous!==document.body)previous.focus({preventScroll:true});else document.querySelector<HTMLElement>('.scrap-desk')?.focus({preventScroll:true});};
  },[visible]);
  if(!visible)return null;
  return <div ref={dialog} className={'capsule-intro'+(leaving?' leaving':'')} role="dialog" aria-modal="true" aria-label={t('치이카와 가챠')} tabIndex={-1}><CapsuleScene open={open} className="capsule-intro-scene" onOpen={reveal} showWelcome={false} showPhotos={false}/>{!open&&<button ref={skip} className="capsule-intro-skip" disabled={leaving} onClick={enter}>{t('바로 들어가기')}<span aria-hidden="true">↗</span></button>}</div>;

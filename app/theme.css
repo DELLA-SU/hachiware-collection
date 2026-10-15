@@ -198,3 +198,5 @@ html[lang=en] .archive-shell .gacha-v1 .gacha-acrostic-copy h1{font-size:clamp(2
 @media(max-width:650px){.archive-shell .gacha-v1:has(.gacha-acrostic-copy){height:380px}}
 
 .index-collection .dates-index{margin-top:12px;padding-top:9px}
+
+.scrap-desk:focus{outline:none}

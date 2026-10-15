@@ -105,7 +105,7 @@ export default function PajamaStudio(){
   const photo=photos[selected];
   const clock=(value:number)=>`${Math.floor(value/60)}:${String(Math.floor(value%60)).padStart(2,'0')}`;
   return <main className="pajama-page">
-    <header className="pajama-header"><a href={assetUrl('')}><ArrowLeft size={16}/>{t('내 도감으로')}</a><span>PAJAMA PARTYZ</span><h1>{t('나도 파자마 파티즈 되기')}<MoonStar size={32}/></h1><p>{t('오늘 밤은 우리도 파자마 파티즈!')}<br/>{t('나와 친구들 사진을 넣고, 함께 춤춰요.')}</p></header>
+    <header className="pajama-header"><a href={assetUrl('?skip_intro=1')}><ArrowLeft size={16}/>{t('내 도감으로')}</a><span>PAJAMA PARTYZ</span><h1>{t('나도 파자마 파티즈 되기')}<MoonStar size={32}/></h1><p>{t('오늘 밤은 우리도 파자마 파티즈!')}<br/>{t('나와 친구들 사진을 넣고, 함께 춤춰요.')}</p></header>
     <section className="pajama-studio" aria-label={t('파자마 파티즈 영상 만들기')}>
       <div className="pajama-stage-panel"><div className="pajama-stage-title"><h2>{t('우리의 파자마 파티')}</h2><span>{photos.filter(Boolean).length}/4</span></div>
         <div className="pajama-stage">
