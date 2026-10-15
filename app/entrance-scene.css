@@ -12,5 +12,5 @@
 .capsule-acrostic em{color:#b57b8c;font-style:normal}
 .entrance-welcome .capsule-title{display:grid;max-width:22em;line-height:1.2;text-wrap:balance}
 
-.entrance-closed-copy .capsule-acrostic:has(.title-draw-label){display:inline-flex;align-items:center;gap:16px}.capsule-acrostic .title-draw-label{order:2;font-size:1.28em;line-height:1;padding:0;border:0;background:none;color:#9b5370;transform:none}
+.entrance-closed-copy .capsule-acrostic:has(.title-draw-label){display:inline-flex;align-items:flex-end;gap:16px}.capsule-acrostic .title-draw-label{order:2;font-size:1em;line-height:inherit;padding:0;border:0;background:none;color:#9b5370;transform:none}
 .capsule-acrostic .title-acrostic-lines{display:grid;order:1;gap:1px;text-align:left}.capsule-acrostic .title-acrostic-lines>span{display:block;white-space:nowrap}

@@ -3110,7 +3110,7 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "zh": "打开吉伊卡哇扭蛋",
   "ja": "ちいかわガチャが開きます"
  },
- "먼가 작고 귀여운 뽑기!": {
+ "먼가 작고 귀여운 뽑기": {
   "en": "A small, cute surprise!",
   "zh": "扭出小小的可爱！",
   "ja": "なんか小さくてかわいいガチャ！"
