@@ -3129,5 +3129,15 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "My Chiikawa collection",
   "zh": "我的吉伊收藏",
   "ja": "私のちいかわコレクション"
+ },
+ "Umami로 쿠키 없이 방문 수와 기능 사용 횟수를 집계해요. 사진·메모·드로잉·검색 내용은 보내지 않아요.": {
+  "en": "Umami counts visits and feature usage without cookies. Photos, notes, drawings, and search text are not sent.",
+  "zh": "Umami 无需 Cookie 即可统计访问与功能使用次数，不会发送照片、笔记、绘画或搜索内容。",
+  "ja": "UmamiでCookieを使わず訪問数や機能の利用回数を集計します。写真・メモ・描画・検索内容は送信しません。"
+ },
+ "이 선택은 현재 브라우저에만 적용돼요. 브라우저의 추적 거부 설정도 존중해요.": {
+  "en": "This choice applies only to this browser. Your browser’s Do Not Track setting is also respected.",
+  "zh": "此选择仅适用于当前浏览器，同时尊重浏览器的“请勿跟踪”设置。",
+  "ja": "この選択は現在のブラウザにのみ適用されます。ブラウザの追跡拒否設定も尊重します。"
  }
 };

@@ -1,1 +1,1 @@
-import React from 'react';import {createRoot} from 'react-dom/client';import PajamaStudio from './app/pajama-studio';import './app/globals.css';import './app/theme.css';createRoot(document.getElementById('root')!).render(<PajamaStudio/>);
+import React from 'react';import {createRoot} from 'react-dom/client';import PajamaStudio from './app/pajama-studio';import SiteAnalytics from './app/site-analytics';import './app/globals.css';import './app/theme.css';createRoot(document.getElementById('root')!).render(<><PajamaStudio/><SiteAnalytics/></>);
