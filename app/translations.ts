@@ -3264,5 +3264,55 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "Reject",
   "zh": "拒绝",
   "ja": "拒否する"
+ },
+ "오른쪽 클릭으로 설정하기": {
+  "en": "Right-click to adjust settings",
+  "zh": "右键点击以调整设置",
+  "ja": "右クリックで設定する"
+ },
+ "하치와레 캐릭터를 마우스 오른쪽 버튼으로 클릭하면 설정 메뉴가 열려요.": {
+  "en": "Right-click the Hachiware character to open its settings menu.",
+  "zh": "用鼠标右键点击小八角色，即可打开设置菜单。",
+  "ja": "ハチワレキャラクターをマウスの右ボタンでクリックすると設定メニューが開きます。"
+ },
+ "맥 트랙패드는 두 손가락으로 클릭해요.": {
+  "en": "On a Mac trackpad, click with two fingers.",
+  "zh": "Mac 触控板请用双指点击。",
+  "ja": "Macのトラックパッドは2本指でクリックします。"
+ },
+ "캐릭터 크기": {
+  "en": "Character size",
+  "zh": "角色大小",
+  "ja": "キャラクターの大きさ"
+ },
+ "캐릭터 위치 초기화": {
+  "en": "Reset character position",
+  "zh": "重置角色位置",
+  "ja": "キャラクターの位置をリセット"
+ },
+ "캐릭터를 기본 위치로 돌려요.": {
+  "en": "Return the character to its default position.",
+  "zh": "让角色回到默认位置。",
+  "ja": "キャラクターを初期位置に戻します。"
+ },
+ "효과음 켜기": {
+  "en": "Enable sound effects",
+  "zh": "开启音效",
+  "ja": "効果音をオンにする"
+ },
+ "캐릭터 목소리와 동작 효과음을 켜거나 꺼요.": {
+  "en": "Turn character voices and movement sounds on or off.",
+  "zh": "开启或关闭角色语音和动作音效。",
+  "ja": "キャラクターの声や動作の効果音をオン・オフできます。"
+ },
+ "화면 맨 위 메뉴 막대의 🐾에서도 같은 설정 메뉴를 열 수 있어요.": {
+  "en": "You can also open the same settings menu from 🐾 in the menu bar at the top of the screen.",
+  "zh": "也可点击屏幕顶部菜单栏的 🐾 打开相同设置菜单。",
+  "ja": "画面上部のメニューバーの🐾からも同じ設定メニューを開けます。"
+ },
+ "작업 표시줄 오른쪽의 캐릭터 아이콘을 오른쪽 클릭해도 같은 설정 메뉴가 열려요.": {
+  "en": "You can also right-click the character icon in the taskbar notification area to open the same settings menu.",
+  "zh": "右键点击任务栏右侧的角色图标，也可打开相同设置菜单。",
+  "ja": "タスクバー右側のキャラクターアイコンを右クリックしても同じ設定メニューが開きます。"
  }
 };
