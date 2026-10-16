@@ -3249,5 +3249,20 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "May we use Google visitor statistics to learn which activities you enjoy?",
   "zh": "可以通过 Google 访问统计了解您喜欢哪些玩法吗？",
   "ja": "Googleの訪問統計で好きな遊びを調べてみませんか？"
+ },
+ "서비스 개선을 위해 쿠키를 사용합니다.": {
+  "en": "We use cookies to improve our service.",
+  "zh": "我们使用 Cookie 来改进服务。",
+  "ja": "サービス改善のためにCookieを使用します。"
+ },
+ "동의": {
+  "en": "Accept",
+  "zh": "同意",
+  "ja": "同意する"
+ },
+ "거절": {
+  "en": "Reject",
+  "zh": "拒绝",
+  "ja": "拒否する"
  }
 };
