@@ -3,17 +3,20 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import ts from 'typescript';
 const source=ts.transpileModule(fs.readFileSync(new URL('../app/analytics.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
-function setup({host='della-su.github.io',path='/hachiware-collection/',consent=null,dnt='0',blocked=false}={}){
+function setup({host='della-su.github.io',path='/hachiware-collection/',consent=null,googleConsent=null,dnt='0',blocked=false}={}){
  const store=new Map([['private-record','keep me']]),scripts=[],cookies=[],sent=[],notifications=[];
  if(consent)store.set('hachiware-analytics-consent',consent);
+ if(googleConsent)store.set('hachiware-google-analytics-consent',googleConsent);
  const document={referrer:'https://example.com/private?note=private#photo',head:{appendChild:s=>scripts.push(s)},createElement:()=>({dataset:{}})};
  Object.defineProperty(document,'cookie',{get:()=> 'hachiware_ga=123; hachiware_ga_YXDXZV7X3Y=789; unrelated_ga=456; hachiware_language=ko',set:value=>cookies.push(value)});
  const window={dispatchEvent:event=>notifications.push(event.type)},location={hostname:host,origin:'https://'+host,pathname:path,href:'https://'+host+path+'?memo=secret&utm_source=instagram&utm_campaign=launch#desktop_photo=secret'};
  const context={exports:{},window,document,navigator:{doNotTrack:dnt},localStorage:{getItem:k=>{if(blocked)throw Error('blocked');return store.get(k)??null;},setItem:(k,v)=>{if(blocked)throw Error('blocked');store.set(k,v);}},location,URL,URLSearchParams,Event,Date,Set};
  vm.runInNewContext(source,context);
  const api=context.exports;
- const ready=()=>{window.umami={track:payload=>{const clean=window.hachiwareStatisticsBeforeSend('event',payload);if(clean)sent.push(clean);return Promise.resolve();}};scripts[0]?.onload();};
- return {api,window,store,scripts,cookies,sent,notifications,context,ready};
+ const ready=()=>{window.umami={track:payload=>{const clean=window.hachiwareStatisticsBeforeSend('event',payload);if(clean)sent.push(clean);return Promise.resolve();}};scripts.find(s=>s.id==='hachiware-statistics-tag')?.onload();};
+ const googleReady=()=>scripts.find(s=>s.id==='hachiware-google-analytics-tag')?.onload();
+ const googleCommands=()=>Array.from(window.dataLayer||[],args=>Array.from(args));
+ return {api,window,store,scripts,cookies,sent,notifications,context,ready,googleReady,googleCommands};
 }
 const x=setup();x.api.initAnalytics();x.api.trackEvent('photo_draw');
 assert.equal(x.scripts.length,1);assert.equal(x.sent.length,0);assert.equal(x.scripts[0].dataset.autoTrack,'false');assert.equal(x.scripts[0].dataset.beforeSend,'hachiwareStatisticsBeforeSend');assert.equal(x.scripts[0].dataset.websiteId,x.api.websiteId);assert.equal(x.scripts[0].src,'https://cloud.umami.is/script.js');
@@ -38,3 +41,20 @@ for(const [page,names] of [['certificates.html',['certificate_select','certifica
 }
 const unavailable=setup();unavailable.api.initAnalytics();unavailable.scripts[0].onerror();unavailable.window.umami={track:()=>{throw Error('offline');}};assert.doesNotThrow(()=>unavailable.api.trackEvent('photo_draw'));
 console.log('PASS: cookieless loading, one pageview, safe payloads, preserved opt-outs, cross-tab preferences, legacy cookie cleanup, local record isolation, all three pages and five studio events, DNT/development exclusion, and analytics failure isolation');
+
+const ga=setup();ga.api.initAnalytics();ga.api.trackEvent('pajama_dance_start');assert.equal(ga.api.googleAnalyticsConsent(),null);assert(!ga.scripts.some(s=>s.id==='hachiware-google-analytics-tag'));assert.equal(ga.window.dataLayer,undefined);
+ga.api.setGoogleAnalyticsConsent(true);assert.equal(ga.store.get('hachiware-google-analytics-consent'),'granted');assert.equal(ga.window['ga-disable-G-YXDXZV7X3Y'],false);assert.equal(ga.googleCommands().filter(c=>c[0]==='event').length,0);
+ga.api.trackEvent('certificate_select');ga.googleReady();const commands=ga.googleCommands(),defaults=commands.find(c=>c[0]==='consent'&&c[1]==='default'),config=commands.find(c=>c[0]==='config');
+assert.equal(defaults[2].analytics_storage,'denied');assert.equal(defaults[2].ad_storage,'denied');assert.equal(config[1],'G-YXDXZV7X3Y');assert.equal(config[2].send_page_view,false);assert.equal(config[2].allow_google_signals,false);assert.equal(config[2].allow_ad_personalization_signals,false);assert.equal(config[2].cookie_path,'/hachiware-collection/');assert.equal(config[2].cookie_domain,'none');
+assert.deepEqual(commands.filter(c=>c[0]==='event').map(c=>c[1]),['page_view','certificate_select']);
+ga.api.initAnalytics();ga.api.setGoogleAnalyticsConsent(true);assert.equal(ga.googleCommands().filter(c=>c[0]==='event'&&c[1]==='page_view').length,1);assert.equal(ga.scripts.filter(s=>s.id==='hachiware-google-analytics-tag').length,1);
+ga.api.setAnalyticsEnabled(false);ga.api.trackEvent('download_desktop','windows_x64');assert.equal(ga.googleCommands().at(-1)[2].platform,'windows_x64');ga.api.trackEvent('private_photo_id','secret');assert(!ga.googleCommands().some(c=>c[1]==='private_photo_id'));
+for(const c of ga.googleCommands().filter(c=>c[0]==='event'||c[0]==='config')){assert.equal(c[2].page_location,'https://della-su.github.io/hachiware-collection/?utm_source=instagram&utm_campaign=launch');assert.equal(c[2].page_referrer,'https://example.com');assert(!JSON.stringify(c).includes('secret'));assert(!JSON.stringify(c).includes('private'));}
+const gaEventsBefore=ga.googleCommands().filter(c=>c[0]==='event').length;ga.api.setGoogleAnalyticsConsent(false);ga.api.trackEvent('photo_draw');assert.equal(ga.window['ga-disable-G-YXDXZV7X3Y'],true);assert.equal(ga.googleCommands().filter(c=>c[0]==='event').length,gaEventsBefore);assert.equal(ga.store.get('private-record'),'keep me');
+const pendingGa=setup();pendingGa.api.setGoogleAnalyticsConsent(true);pendingGa.api.trackEvent('photo_draw');pendingGa.api.setGoogleAnalyticsConsent(false);pendingGa.googleReady();assert.equal(pendingGa.googleCommands().filter(c=>c[0]==='event'||c[0]==='config').length,0);pendingGa.api.setGoogleAnalyticsConsent(true);assert.deepEqual(pendingGa.googleCommands().filter(c=>c[0]==='event').map(c=>c[1]),['page_view']);
+pendingGa.store.set('hachiware-google-analytics-consent','denied');pendingGa.api.refreshGoogleAnalyticsConsent();const pendingCount=pendingGa.googleCommands().length;pendingGa.api.trackEvent('photo_draw');assert.equal(pendingGa.googleCommands().length,pendingCount);assert.equal(pendingGa.window['ga-disable-G-YXDXZV7X3Y'],true);
+for(const options of [{consent:'denied'},{googleConsent:'denied'},{googleConsent:'granted',dnt:'1'},{googleConsent:'granted',host:'localhost'},{googleConsent:'granted',path:'/other-site/'}]){const s=setup(options);s.api.initAnalytics();s.api.trackEvent('photo_draw');assert(!s.scripts.some(script=>script.id==='hachiware-google-analytics-tag'));}
+for(const path of ['/hachiware-collection/','/hachiware-collection/certificates.html','/hachiware-collection/pajama.html']){const s=setup({path,googleConsent:'granted'});s.api.initAnalytics();s.googleReady();assert.equal(s.googleCommands().filter(c=>c[0]==='event'&&c[1]==='page_view').length,1);assert.equal(s.googleCommands().at(-1)[2].page_location,'https://della-su.github.io'+path+'?utm_source=instagram&utm_campaign=launch');}
+const googleBlockedStore=setup({blocked:true});googleBlockedStore.api.setGoogleAnalyticsConsent(true);googleBlockedStore.googleReady();googleBlockedStore.api.setGoogleAnalyticsConsent(false);googleBlockedStore.api.trackEvent('photo_draw');assert.equal(googleBlockedStore.api.googleAnalyticsConsent(),'denied');assert.equal(googleBlockedStore.window['ga-disable-G-YXDXZV7X3Y'],true);
+const googleFailure=setup();googleFailure.api.setGoogleAnalyticsConsent(true);googleFailure.scripts.find(s=>s.id==='hachiware-google-analytics-tag').onerror();assert.doesNotThrow(()=>googleFailure.api.trackEvent('photo_draw'));
+console.log('PASS: GA4 basic consent blocks tags before opt-in, does not replay earlier actions, sends safe fields once, keeps ads denied, respects revocation across tabs and during load, preserves Umami independence and local records, and excludes DNT/local pages.');

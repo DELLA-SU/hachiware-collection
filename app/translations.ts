@@ -3139,5 +3139,110 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "This choice applies only to this browser. Your browser’s Do Not Track setting is also respected.",
   "zh": "此选择仅适用于当前浏览器，同时尊重浏览器的“请勿跟踪”设置。",
   "ja": "この選択は現在のブラウザにのみ適用されます。ブラウザの追跡拒否設定も尊重します。"
+ },
+ "Google 통계 설정": {
+  "en": "Google statistics settings",
+  "zh": "Google 统计设置",
+  "ja": "Google統計設定"
+ },
+ "Google 방문 통계": {
+  "en": "Google visitor statistics",
+  "zh": "Google 访问统计",
+  "ja": "Google訪問統計"
+ },
+ "통계 안내 닫기": {
+  "en": "Close statistics notice",
+  "zh": "关闭统计提示",
+  "ja": "統計のお知らせを閉じる"
+ },
+ "방문 통계, 함께해도 될까요?": {
+  "en": "May we count your visit?",
+  "zh": "可以统计您的访问吗？",
+  "ja": "訪問統計にご協力いただけますか？"
+ },
+ "어떤 놀이를 좋아하는지 알아볼까요? 허용하면 Google Analytics가 방문·기능 사용 정보를 분석용 쿠키와 함께 수집해요.": {
+  "en": "Help us learn which activities you enjoy. If you allow, Google Analytics collects visits and feature usage with analytics cookies.",
+  "zh": "一起了解大家喜欢哪些玩法吧。允许后，Google Analytics 会使用分析 Cookie 收集访问和功能使用信息。",
+  "ja": "どの遊びが人気か調べてみませんか？許可すると、Google Analyticsが分析用Cookieを使って訪問・機能の利用情報を収集します。"
+ },
+ "사진·메모·드로잉·이름은 보내지 않아요.": {
+  "en": "Photos, notes, drawings and names are not sent.",
+  "zh": "不会发送照片、笔记、绘画或姓名。",
+  "ja": "写真・メモ・描画・名前は送信しません。"
+ },
+ "브라우저의 추적 거부 설정으로 통계 수집이 꺼져 있어요.": {
+  "en": "Statistics are off because your browser has Do Not Track enabled.",
+  "zh": "浏览器已启用“请勿跟踪”，统计收集已关闭。",
+  "ja": "ブラウザの追跡拒否設定により統計の収集は無効です。"
+ },
+ "허용": {
+  "en": "Allow",
+  "zh": "允许",
+  "ja": "許可する"
+ },
+ "괜찮아요": {
+  "en": "No thanks",
+  "zh": "不用了",
+  "ja": "遠慮する"
+ },
+ "자세히": {
+  "en": "Details",
+  "zh": "详情",
+  "ja": "詳しく"
+ },
+ "허용한 뒤부터 페이지 조회·기능 사용·유입 경로·기기 정보를 Google로 보내요. 광고 개인화는 사용하지 않아요. 거절해도 모든 기능을 이용할 수 있어요.": {
+  "en": "After you allow, page views, feature usage, traffic sources and device information are sent to Google. Ad personalization is off. All features work if you decline.",
+  "zh": "允许后，页面浏览、功能使用、来源和设备信息会发送给 Google，不用于广告个性化。拒绝后仍可使用全部功能。",
+  "ja": "許可した後から閲覧・機能の利用・流入元・端末の情報をGoogleに送信します。広告のパーソナライズは無効です。拒否してもすべての機能を使えます。"
+ },
+ "선택은 현재 브라우저에 기억하며, 페이지 아래 ‘Google 통계 설정’에서 언제든 바꿀 수 있어요. 거절하면 이후 GA4 전송을 중단하고 이 사이트의 분석 쿠키를 지워요.": {
+  "en": "Your choice is saved in this browser and can be changed anytime under Google statistics settings at the bottom of the page. Declining stops future GA4 tracking and clears this site's analytics cookies.",
+  "zh": "您的选择会保存在当前浏览器，可随时在页面底部的“Google 统计设置”修改。拒绝将停止后续 GA4 传输并清除此网站的分析 Cookie。",
+  "ja": "選択はこのブラウザに保存され、ページ下部の「Google統計設定」でいつでも変更できます。拒否すると以後のGA4送信を止め、このサイトの分析用Cookieを削除します。"
+ },
+ "쿠키 없는 Umami 통계는 별도로 운영하며, 도감의 ‘방문 통계 설정’에서 끌 수 있어요.": {
+  "en": "Cookieless Umami statistics run separately and can be turned off in the collection's visitor statistics settings.",
+  "zh": "无 Cookie 的 Umami 统计单独运行，可在图鉴的访问统计设置中关闭。",
+  "ja": "Cookieを使わないUmami統計は別に運用しており、図鑑の「訪問統計設定」で無効にできます。"
+ },
+ "Google의 데이터 사용 안내": {
+  "en": "How Google uses data",
+  "zh": "Google 数据使用说明",
+  "ja": "Googleのデータ利用について"
+ },
+ "추적 거부": {
+  "en": "Do Not Track",
+  "zh": "请勿跟踪",
+  "ja": "追跡拒否"
+ },
+ "허용됨": {
+  "en": "Allowed",
+  "zh": "已允许",
+  "ja": "許可済み"
+ },
+ "거절됨": {
+  "en": "Declined",
+  "zh": "已拒绝",
+  "ja": "拒否済み"
+ },
+ "선택 전": {
+  "en": "Not chosen",
+  "zh": "尚未选择",
+  "ja": "未選択"
+ },
+ "Google 통계는 허용한 경우에만 분석용 쿠키를 사용해요.": {
+  "en": "Google statistics use analytics cookies only with your permission.",
+  "zh": "Google 统计仅在获得允许后使用分析 Cookie。",
+  "ja": "Google統計は許可された場合のみ分析用Cookieを使います。"
+ },
+ "거절하기": {
+  "en": "Decline",
+  "zh": "拒绝",
+  "ja": "拒否する"
+ },
+ "허용하기": {
+  "en": "Allow tracking",
+  "zh": "允许统计",
+  "ja": "許可する"
  }
 };
