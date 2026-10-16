@@ -3244,5 +3244,10 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "Allow tracking",
   "zh": "允许统计",
   "ja": "許可する"
+ },
+ "어떤 놀이를 좋아하는지 Google 방문 통계로 알아볼까요?": {
+  "en": "May we use Google visitor statistics to learn which activities you enjoy?",
+  "zh": "可以通过 Google 访问统计了解您喜欢哪些玩法吗？",
+  "ja": "Googleの訪問統計で好きな遊びを調べてみませんか？"
  }
 };
