@@ -1,10 +1,10 @@
 import {useEffect,useRef,useState} from 'react';
-import {Check,NotebookPen,Save} from 'lucide-react';
+import {Check,Download,NotebookPen} from 'lucide-react';
 import {apiFetch} from '../lib/browser-api';
 import {t,useLanguage} from './locale';
 
 type Draft={note:string;strokes:any[]};
-export default function PhotoMemo({id}:{id:string}){
+export default function PhotoMemo({id,imageUrl,filename}:{id:string;imageUrl:string;filename:string}){
  useLanguage();
  const [note,setNote]=useState(''),[loaded,setLoaded]=useState(false),[status,setStatus]=useState('불러오는 중…'),[error,setError]=useState('');
  const data=useRef<Draft>({note:'',strokes:[]}),revision=useRef(0),dirty=useRef(false),mounted=useRef(true),timer=useRef<ReturnType<typeof setTimeout>|null>(null),queue=useRef(Promise.resolve());
@@ -27,5 +27,5 @@ export default function PhotoMemo({id}:{id:string}){
   return()=>{canceled=true;mounted.current=false;if(timer.current)clearTimeout(timer.current);save();};
  },[id]);
  function update(value:string){data.current={...data.current,note:value};setNote(value);dirty.current=true;keepDraft();setStatus('저장 대기');if(timer.current)clearTimeout(timer.current);timer.current=setTimeout(save,700);}
- return <section className="photo-notes photo-memo" aria-label={t('사진 메모')}><div className="notes-heading"><strong><NotebookPen size={15}/>{t('메모')}</strong><span role="status" className="notes-status">{status==='저장했어요'&&<Check size={12}/>} {t(status)}</span><button className="notes-save" onClick={save} disabled={!loaded}><Save size={14}/>{t('저장')}</button></div>{error&&<p className="notes-error" role="alert">{t(error)}</p>}<textarea aria-label={t('이 사진의 메모')} placeholder={t('이 순간에 남기고 싶은 말…')} value={note} disabled={!loaded} maxLength={4000} onChange={e=>update(e.target.value)} onBlur={save}/><small className="notes-count">{note.length} / 4000</small></section>;
+ return <section className="photo-notes photo-memo" aria-label={t('사진 메모')}><div className="notes-heading"><strong><NotebookPen size={15}/>{t('메모')}</strong><span role="status" className="notes-status">{status==='저장했어요'&&<Check size={12}/>} {t(status)}</span><a className="notes-save" href={imageUrl} download={filename}><Download size={14}/>{t('사진 저장')}</a></div>{error&&<p className="notes-error" role="alert">{t(error)}</p>}<textarea aria-label={t('이 사진의 메모')} placeholder={t('이 순간에 남기고 싶은 말…')} value={note} disabled={!loaded} maxLength={4000} onChange={e=>update(e.target.value)} onBlur={save}/><small className="notes-count">{note.length} / 4000</small></section>;
 }

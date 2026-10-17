@@ -71,6 +71,6 @@ export default function PhotoWindow({onImageActivate,photo,number,index,z,saving
     <a className="window-community-link" href="https://hachiware-favorite-gallery.nextrunners-1929.chatgpt.site" target="_blank" rel="noreferrer" onClick={()=>trackEvent('open_community')}><Heart size={16} aria-hidden="true"/>{t("최애로 공유하기")}<ArrowUpRight size={13} aria-hidden="true"/></a>
     <a className="window-source-link" href={photo.source} target="_blank" rel="noreferrer">{t(photo.source_kind)} <ArrowUpRight size={13}/></a>
    </div>
-   <PhotoMemo key={photo.id} id={photo.id}/><p className="window-source-note">{photo.source_kind==='Pinterest'?t("출처: Pinterest 핀 · 원저작자 정보는 핀 페이지에서 확인해 주세요."):photo.source_kind==='치이카와 공식 애니메이션'?t("출처: 치이카와 공식 애니메이션 캐릭터 일러스트."):photo.source_kind==='치이카와 공식 마켓'?t("출처: 치이카와 공식 마켓 · 원본 상품 페이지에서 확인해 주세요."):t("기존 기록의 이미지 파일 주소를 출처로 보존했어요.")}</p></div>
+   <PhotoMemo key={photo.id} id={photo.id} imageUrl={photo.image_url} filename={characterName(photo.character)+'-'+number+'.jpg'}/><p className="window-source-note">{photo.source_kind==='Pinterest'?t("출처: Pinterest 핀 · 원저작자 정보는 핀 페이지에서 확인해 주세요."):photo.source_kind==='치이카와 공식 애니메이션'?t("출처: 치이카와 공식 애니메이션 캐릭터 일러스트."):photo.source_kind==='치이카와 공식 마켓'?t("출처: 치이카와 공식 마켓 · 원본 상품 페이지에서 확인해 주세요."):t("기존 기록의 이미지 파일 주소를 출처로 보존했어요.")}</p></div>
  </section>;
 }

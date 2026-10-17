@@ -3314,5 +3314,10 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "You can also right-click the character icon in the taskbar notification area to open the same settings menu.",
   "zh": "右键点击任务栏右侧的角色图标，也可打开相同设置菜单。",
   "ja": "タスクバー右側のキャラクターアイコンを右クリックしても同じ設定メニューが開きます。"
+ },
+ "사진 저장": {
+  "en": "Save photo",
+  "zh": "保存图片",
+  "ja": "写真を保存"
  }
 };
