@@ -16,13 +16,20 @@ done
 mkdir -p "$output_dir"
 output_dir="$(cd "$output_dir" && pwd)"
 app_dir="$output_dir/치이 친구.app"
-mkdir -p "$app_dir/Contents/MacOS" "$app_dir/Contents/Frameworks"
-/usr/bin/ditto --norsrc --noextattr "$resource_dir" "$app_dir/Contents/Resources"
+mkdir -p "$app_dir/Contents/MacOS" "$app_dir/Contents/Frameworks" "$app_dir/Contents/Resources"
+# Package only public assets; a personal build may also contain collection history.
+for resource in character.png Hachiware.icns catalog.json photos usagi-voices.json; do
+  /usr/bin/ditto --norsrc --noextattr "$resource_dir/$resource" "$app_dir/Contents/Resources/$resource"
+done
+for resource in "$resource_dir"/*.wav; do
+  [[ -f "$resource" ]] || continue
+  /usr/bin/ditto --norsrc --noextattr "$resource" "$app_dir/Contents/Resources/$(basename "$resource")"
+done
 for arch in arm64 x86_64; do
   /usr/bin/xcrun swiftc -O -target "$arch-apple-macosx11.0" \
     -framework Cocoa -framework WebKit \
     -Xlinker -rpath -Xlinker '@executable_path/../Frameworks' \
-    "$repo_dir/desktop/Main.swift" -o "$output_dir/HachiwareDesktop-$arch"
+    "$repo_dir/desktop/Main.swift" "$repo_dir/desktop/PetPosition.swift" -o "$output_dir/HachiwareDesktop-$arch"
 done
 /usr/bin/lipo -create "$output_dir/HachiwareDesktop-arm64" "$output_dir/HachiwareDesktop-x86_64" \
   -output "$app_dir/Contents/MacOS/HachiwareDesktop"

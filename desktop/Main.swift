@@ -20,6 +20,8 @@ class PetView: NSView {
  var start: NSPoint = .zero
  var base: NSPoint = .zero
  var moved = false
+ var dragging = false
+ var dragEnded: (() -> Void)?
  var hovering = false
  var angle = 0.0
  var hoverDuration = 0.0
@@ -44,9 +46,9 @@ class PetView: NSView {
  image.draw(in:NSRect(x:-w/2,y:-h/2,width:w,height:h),from:.zero,operation:.sourceOver,fraction:1)
  NSGraphicsContext.restoreGraphicsState()
  }
- override func mouseDown(with event: NSEvent) { start = NSEvent.mouseLocation; base = window!.frame.origin; moved = false; dragSamples=[(start,Date.timeIntervalSinceReferenceDate)] }
+ override func mouseDown(with event: NSEvent) { dragging=true;start = NSEvent.mouseLocation; base = window!.frame.origin; moved = false; dragSamples=[(start,Date.timeIntervalSinceReferenceDate)] }
  override func mouseDragged(with event: NSEvent) { pendingClick?.cancel(); let p = NSEvent.mouseLocation; let now=Date.timeIntervalSinceReferenceDate; dragSamples.append((p,now));dragSamples.removeAll{now-$0.time>0.12}; moved = moved || hypot(p.x-start.x,p.y-start.y)>5; window?.setFrameOrigin(NSPoint(x:base.x+p.x-start.x,y:base.y+p.y-start.y)) }
- override func mouseUp(with event: NSEvent) { if moved { let now=Date.timeIntervalSinceReferenceDate;let p=NSEvent.mouseLocation;if let sample=dragSamples.first,now-sample.time<0.16{let dt=max(0.016,now-sample.time);let velocity=NSPoint(x:(p.x-sample.point.x)/dt,y:(p.y-sample.point.y)/dt);if hypot(velocity.x,velocity.y)>350{throwAction?(velocity);return}}; if let p=window?.frame.origin { UserDefaults.standard.set(p.x,forKey:"x");UserDefaults.standard.set(p.y,forKey:"y") } } else if event.clickCount>=2 { pendingClick?.cancel();pendingClick=nil;doubleAction?() } else { pendingClick?.cancel();let work=DispatchWorkItem{[weak self] in self?.action?()};pendingClick=work;DispatchQueue.main.asyncAfter(deadline:.now()+NSEvent.doubleClickInterval+0.05,execute:work) } }
+ override func mouseUp(with event: NSEvent) { dragging=false;if moved { let now=Date.timeIntervalSinceReferenceDate;let p=NSEvent.mouseLocation;if let sample=dragSamples.first,now-sample.time<0.16{let dt=max(0.016,now-sample.time);let velocity=NSPoint(x:(p.x-sample.point.x)/dt,y:(p.y-sample.point.y)/dt);if hypot(velocity.x,velocity.y)>350{throwAction?(velocity);return}}; if let p=window?.frame.origin { UserDefaults.standard.set(p.x,forKey:"x");UserDefaults.standard.set(p.y,forKey:"y");dragEnded?() } } else if event.clickCount>=2 { pendingClick?.cancel();pendingClick=nil;doubleAction?() } else { pendingClick?.cancel();let work=DispatchWorkItem{[weak self] in self?.action?()};pendingClick=work;DispatchQueue.main.asyncAfter(deadline:.now()+NSEvent.doubleClickInterval+0.05,execute:work) } }
  override func rightMouseDown(with event: NSEvent) { menuAction?() }
 }
 class ClickableImageView: NSImageView {
@@ -107,14 +109,19 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
   status=NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength);status.button?.title="🐾";status.menu=menu
   status.isVisible = !startupCheck
   pet=NSPanel(contentRect:NSRect(x:0,y:0,width:petSize,height:petSize),styleMask:[.borderless,.nonactivatingPanel],backing:.buffered,defer:false)
+  pet.hidesOnDeactivate=false;pet.canHide=false;pet.isFloatingPanel=true
   pet.isOpaque=false;pet.backgroundColor = .clear;pet.hasShadow=false;pet.level = .floating;pet.collectionBehavior=[.canJoinAllSpaces,.fullScreenAuxiliary];pet.isReleasedWhenClosed=false
-  let v=PetView(frame:NSRect(x:0,y:0,width:petSize,height:petSize));v.autoresizingMask=[.width,.height];v.image=character;v.action={ [weak self] in self?.collect() };v.doubleAction={ [weak self] in self?.openMusic() };v.menuAction={ [weak self,weak v] in if let menu=self?.status.menu,let view=v,let event=NSApp.currentEvent{NSMenu.popUpContextMenu(menu,with:event,for:view)} };v.launchAction={ [weak self] in self?.launchPet() };v.throwAction={ [weak self] velocity in self?.throwPet(velocity) };v.hoverAction={ [weak self] active in self?.setSpin(active ? 1 : 0) };pet.contentView=v
+  let v=PetView(frame:NSRect(x:0,y:0,width:petSize,height:petSize));v.autoresizingMask=[.width,.height];v.image=character;v.action={ [weak self] in self?.collect() };v.doubleAction={ [weak self] in self?.openMusic() };v.menuAction={ [weak self,weak v] in if let menu=self?.status.menu,let view=v,let event=NSApp.currentEvent{NSMenu.popUpContextMenu(menu,with:event,for:view)} };v.launchAction={ [weak self] in self?.launchPet() };v.throwAction={ [weak self] velocity in self?.throwPet(velocity) };v.hoverAction={ [weak self] active in self?.setSpin(active ? 1 : 0) };v.dragEnded={ [weak self] in guard let self=self else{return};self.base=self.pet.frame.origin;self.restorePetVisibility() };pet.contentView=v
   let screen=NSScreen.main?.visibleFrame ?? NSRect(x:0,y:0,width:1200,height:800);base=NSPoint(x:screen.maxX-petSize-50,y:screen.minY+100)
   if UserDefaults.standard.object(forKey:"x") != nil { base=NSPoint(x:UserDefaults.standard.double(forKey:"x"),y:UserDefaults.standard.double(forKey:"y"));pet.setFrameOrigin(base) }
   clampPetPosition();pet.setFrameOrigin(base)
   if !startupCheck{pet.orderFrontRegardless()}
   if CommandLine.arguments.contains("--music-preview"){openMusic()}
-  timer=Timer.scheduledTimer(withTimeInterval:1.0/30.0,repeats:true){ [weak self] _ in guard let s=self else{return}; if NSEvent.pressedMouseButtons != 0 { s.base=s.pet.frame.origin;s.flightTime=nil;(s.pet.contentView as? PetView)?.inFlight=false;return };if let v=s.pet.contentView as? PetView,v.hovering && !v.inFlight{s.setSpin(v.hoverDuration>4 ? 3 : v.hoverDuration>2 ? 2 : 1)};s.pet.contentView?.needsDisplay=true;s.tick += 1.0/30.0;if s.flightTime != nil{s.advanceFlight()}else{s.pet.setFrameOrigin(NSPoint(x:s.base.x+sin(s.tick*0.65)*5,y:s.base.y+sin(s.tick*1.15)*9))} }
+  if !startupCheck{
+   NotificationCenter.default.addObserver(self,selector:#selector(restorePetVisibility),name:NSApplication.didChangeScreenParametersNotification,object:nil)
+   for name in [NSWorkspace.didWakeNotification,NSWorkspace.screensDidWakeNotification,NSWorkspace.activeSpaceDidChangeNotification]{NSWorkspace.shared.notificationCenter.addObserver(self,selector:#selector(restorePetVisibility),name:name,object:nil)}
+  }
+  timer=Timer.scheduledTimer(withTimeInterval:1.0/30.0,repeats:true){ [weak self] _ in guard let s=self else{return}; if let v=s.pet.contentView as? PetView,v.dragging { s.base=s.pet.frame.origin;s.flightTime=nil;(s.pet.contentView as? PetView)?.inFlight=false;return };if let v=s.pet.contentView as? PetView,v.hovering && !v.inFlight{s.setSpin(v.hoverDuration>4 ? 3 : v.hoverDuration>2 ? 2 : 1)};s.pet.contentView?.needsDisplay=true;s.tick += 1.0/30.0;if s.flightTime != nil{s.advanceFlight()}else{s.pet.setFrameOrigin(NSPoint(x:s.base.x+sin(s.tick*0.65)*5,y:s.base.y+sin(s.tick*1.15)*9))} }
   if startupCheck{Task{[weak self] in try? await Task.sleep(nanoseconds:1_000_000_000);await MainActor.run{self?.finishStartupCheck()}}}
  }
  func finishStartupCheck(){
@@ -123,7 +130,7 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
   print("Startup check passed: responsive main loop, character, catalog and bundled photo; version \(version)")
   NSApp.terminate(nil)
  }
- func applicationShouldHandleReopen(_ sender:NSApplication,hasVisibleWindows flag:Bool)->Bool{if let pet=pet{clampPetPosition();pet.setFrameOrigin(base);pet.orderFrontRegardless()};return true}
+ func applicationShouldHandleReopen(_ sender:NSApplication,hasVisibleWindows flag:Bool)->Bool{restorePetVisibility();return true}
  func launchPet(){
   guard flightTime == nil else{return}
   setSpin(0);playEffect("launch")
@@ -169,9 +176,21 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
    if u>=1{playEffect("return");flightTime=nil;pet.setFrameOrigin(base);if let v=pet.contentView as? PetView{v.inFlight=false;v.hovering=false;v.angle=0;v.bounceSquash=0;v.flung=true}}
   }
  }
- func clampPetPosition(){let r=(NSScreen.screens.first{NSIntersectsRect($0.visibleFrame,pet.frame)} ?? NSScreen.main)?.visibleFrame ?? NSRect(x:0,y:0,width:1200,height:800);base.x=min(max(base.x,r.minX+8),max(r.minX+8,r.maxX-petSize-8));base.y=min(max(base.y,r.minY+8),max(r.minY+8,r.maxY-petSize-8))}
+ func clampPetPosition(){
+  let main=NSScreen.main,others=NSScreen.screens.filter{$0 !== main}
+  base=visiblePetOrigin(base,size:petSize,screens:([main].compactMap{$0}+others).map{$0.visibleFrame})
+ }
+ @objc func restorePetVisibility(){
+  guard pet != nil,!startupCheck else{return}
+  flightTime=nil;setSpin(0)
+  if let view=pet.contentView as? PetView{view.inFlight=false;view.hovering=false;view.angle=0;view.lastFrame=Date.timeIntervalSinceReferenceDate;view.needsDisplay=true}
+  clampPetPosition();pet.setFrameOrigin(base);pet.alphaValue=1
+  NSApp.unhideWithoutActivation();pet.orderFrontRegardless()
+ }
+ func applicationDidBecomeActive(_ notification:Notification){restorePetVisibility()}
+
  @objc func changeSize(_ sender:NSMenuItem){guard [120,160,200,240].contains(sender.tag) else{return};let center=NSPoint(x:pet.frame.midX,y:pet.frame.midY);flightTime=nil;spinSound?.stop();spinLevel=0;petSize=CGFloat(sender.tag);pet.setContentSize(NSSize(width:petSize,height:petSize));base=NSPoint(x:center.x-petSize/2,y:center.y-petSize/2);clampPetPosition();pet.setFrameOrigin(base);if let v=pet.contentView as? PetView{v.inFlight=false;v.hovering=false;v.angle=0;v.bounceSquash=0;v.needsDisplay=true};UserDefaults.standard.set(sender.tag,forKey:"petSize");UserDefaults.standard.set(base.x,forKey:"x");UserDefaults.standard.set(base.y,forKey:"y");for item in sizeItems{item.state=item.tag==sender.tag ? .on : .off}}
- @objc func resetPosition(){flightTime=nil;let r=NSScreen.main?.visibleFrame ?? NSRect(x:0,y:0,width:1200,height:800);base=NSPoint(x:r.maxX-petSize-50,y:r.minY+100);clampPetPosition();pet?.setFrameOrigin(base);UserDefaults.standard.removeObject(forKey:"x");UserDefaults.standard.removeObject(forKey:"y")}
+ @objc func resetPosition(){flightTime=nil;let r=NSScreen.main?.visibleFrame ?? NSRect(x:0,y:0,width:1200,height:800);base=NSPoint(x:r.maxX-petSize-50,y:r.minY+100);restorePetVisibility();UserDefaults.standard.removeObject(forKey:"x");UserDefaults.standard.removeObject(forKey:"y")}
  @objc func collect(){
   guard !busy else{return};busy=true;setSpin(0);status.button?.title="⏳"
   Task {do{
@@ -252,7 +271,9 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
   w.setFrameOrigin(NSPoint(x:screen.midX-w.frame.width/2,y:screen.midY-w.frame.height/2));w.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true);result=w
  }
  @objc func quit(){NSApp.terminate(nil)}
- func applicationWillTerminate(_ notification:Notification){timer?.invalidate();server?.terminate()}
+ func applicationWillTerminate(_ notification:Notification){timer?.invalidate();NotificationCenter.default.removeObserver(self);NSWorkspace.shared.notificationCenter.removeObserver(self);server?.terminate()}
 }
-let app=NSApplication.shared
-let delegate=App();app.delegate=delegate;app.run()
+@main
+struct HachiwareMain {
+ static func main(){let app=NSApplication.shared;let delegate=App();app.delegate=delegate;withExtendedLifetime(delegate){app.run()}}
+}

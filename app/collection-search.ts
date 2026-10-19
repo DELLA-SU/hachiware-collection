@@ -1,4 +1,5 @@
 import keywords from '../lib/collection-keywords.json';
+import {translations} from './translations';
 type SearchPhoto={title:string;source_kind:string;character?:string};
 export function photoMatchesSearch(photo:SearchPhoto,photoNumber:string,photoDay:string,input:string){
  const query=input.trim().toLowerCase();
@@ -12,7 +13,7 @@ export function photoMatchesSearch(photo:SearchPhoto,photoNumber:string,photoDay
   return photoDay.startsWith(prefix);
  }
  const entry=keywords.find(k=>k.id===photo.character);
- const names=entry?[entry.name,entry.japanese,...entry.aliases].join(' '):'';
+ const names=entry?[entry.name,entry.japanese,...entry.aliases,...Object.values(translations[entry.name]||{})].join(' '):'';
  const text=[photo.title,photo.source_kind,photoDay,photoDay.replaceAll('-','.'),photoNumber,names].join(' ').toLowerCase();
  return query.split(/\s+/).every(term=>text.includes(term));
 }

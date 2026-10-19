@@ -5,7 +5,7 @@ Build a release using the desktop resource folder (character, icon, catalog,
 photos and WAV clips) from the previous release:
 
 ```sh
-bash scripts/build-macos-desktop.sh /path/to/Contents/Resources /path/to/new-build 1.4.2 142
+bash scripts/build-macos-desktop.sh /path/to/Contents/Resources /path/to/new-build 1.4.3 143
 ```
 
 The output folder must be new. The script compiles both architectures, adds the
@@ -40,3 +40,19 @@ If Finder says the app cannot open because it is not responding, quit the hung
 process in Activity Monitor, fully extract the new ZIP, replace the previous
 app in Applications, and reopen it. If it persists, request the macOS version
 and diagnostic report. Do not change Gatekeeper settings for this error.
+
+The mascot stays visible when other apps are active and restores its position
+after wake, display changes, Space changes and reopening. Dragging updates its
+base position only while the mascot itself is being dragged. Positions are
+clamped with room for idle motion on the closest available display.
+
+Run the geometry regression checks before building:
+
+```sh
+xcrun swiftc desktop/PetPosition.swift desktop/tests/main.swift -o /tmp/hachiware-position-check
+/tmp/hachiware-position-check
+```
+
+These checks cover every mascot size, offscreen positions, disconnected displays,
+negative display coordinates and invalid saved coordinates. They do not replace
+manual sleep, display reconnect and Space-switch testing on the target Mac.
