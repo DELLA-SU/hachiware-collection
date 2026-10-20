@@ -9,23 +9,64 @@ permissions:
   contents: read
 jobs:
   windows:
-    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2022, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
-      - name: Publish Windows x64
-        run: dotnet publish desktop/windows/Hachiware.csproj -c Release -r win-x64 --self-contained true -o publish
-      - name: Check Windows app and resources
+      - name: Reproduce missing sidecar failure in the old download
+        if: matrix.os == 'windows-2022'
         shell: pwsh
         run: |
-          $app = Start-Process -FilePath "$PWD/publish/Hachiware.exe" -ArgumentList '--self-test', "$PWD/smoke-result.json" -PassThru
-          if (!$app.WaitForExit(60000)) { Stop-Process -Id $app.Id; throw 'App did not exit' }
-          Get-Content smoke-result.json
-          if ($app.ExitCode -ne 0 -or !(Get-Content smoke-result.json | ConvertFrom-Json).passed) { throw 'Windows validation failed' }
+          Invoke-WebRequest 'https://github.com/DELLA-SU/hachiware-collection/releases/download/v1.4.1/HachiwareDesktop-Windows-x64.zip' -OutFile old.zip
+          if ((Get-FileHash old.zip -Algorithm SHA256).Hash.ToLower() -ne 'b3d55e4c8e025f9207b2c85d72c172c38cd8588feea748e5d86426c852d80b6b') { throw 'Old release hash mismatch' }
+          Expand-Archive old.zip old-full
+          $report = "$PWD/old-full-result.json"
+          $app = Start-Process "$PWD/old-full/Hachiware.exe" -ArgumentList '--self-test', $report -PassThru
+          if (!$app.WaitForExit(60000)) { Stop-Process -Id $app.Id; throw 'Old full bundle hung' }
+          if (!(Get-Content $report | ConvertFrom-Json).passed) { Get-Content $report; throw 'Old full bundle failed' }
+          New-Item -ItemType Directory old-exe-only | Out-Null
+          Copy-Item old-full/Hachiware.exe old-exe-only/
+          $report = "$PWD/old-exe-only-result.json"
+          $app = Start-Process "$PWD/old-exe-only/Hachiware.exe" -ArgumentList '--self-test', $report -PassThru
+          if (!$app.WaitForExit(60000)) { Stop-Process -Id $app.Id; throw 'Old isolated app hung' }
+          $result = Get-Content $report | ConvertFrom-Json
+          if ($result.passed -or $result.error -notmatch 'catalog.json') { throw 'Expected missing sidecar failure was not reproduced' }
+          Write-Output 'Confirmed: old full bundle works, but moving only the old EXE loses required assets.'
+      - name: Publish self-contained Windows x64 app
+        run: dotnet publish desktop/windows/Hachiware.csproj -c Release -r win-x64 --self-contained true -o publish
+      - name: Package exactly the downloadable files
+        shell: pwsh
+        run: |
+          Compress-Archive -Path publish/Hachiware.exe,desktop/windows/읽어주세요.txt -DestinationPath HachiwareDesktop-Windows-x64.zip
+          Expand-Archive HachiwareDesktop-Windows-x64.zip '한글 폴더 ZIP 확인'
+          New-Item -ItemType Directory '실행 파일만 옮긴 폴더' | Out-Null
+          Copy-Item publish/Hachiware.exe '실행 파일만 옮긴 폴더/'
+      - name: Run the extracted ZIP and isolated executable
+        shell: pwsh
+        run: |
+          foreach ($case in @('한글 폴더 ZIP 확인','실행 파일만 옮긴 폴더')) {
+            $report = "$PWD/smoke-$($case.Replace(' ','-')).json"
+            $app = Start-Process -FilePath "$PWD/$case/Hachiware.exe" -ArgumentList '--self-test', $report -WorkingDirectory $env:TEMP -PassThru
+            if (!$app.WaitForExit(60000)) { Stop-Process -Id $app.Id; throw 'App did not exit' }
+            Get-Content $report
+            if ($app.ExitCode -ne 0 -or !(Get-Content $report | ConvertFrom-Json).passed) { throw 'Windows validation failed' }
+          }
+          Get-FileHash HachiwareDesktop-Windows-x64.zip -Algorithm SHA256
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: windows-validation
-          path: smoke-result.json
+          name: windows-validation-${{ matrix.os }}
+          path: |
+            smoke-*.json
+            old-*-result.json
+      - uses: actions/upload-artifact@v4
+        if: success() && matrix.os == 'windows-2022'
+        with:
+          name: windows-release-x64
+          path: HachiwareDesktop-Windows-x64.zip

@@ -8,16 +8,23 @@ using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.WinForms;
 namespace Hachiware;
 static class Program {
- [STAThread] static void Main(string[] args){if(args.FirstOrDefault()=="--self-test"){Smoke.Run(args.ElementAtOrDefault(1)??"smoke-result.json");return;}using var mutex=new Mutex(true,"Local\\HachiwareDesktop",out var fresh);if(!fresh)return;ApplicationConfiguration.Initialize();Application.Run(new Pet());}
+ [STAThread] static void Main(string[] args){
+  if(args.FirstOrDefault()=="--self-test"){Smoke.Run(args.ElementAtOrDefault(1)??"smoke-result.json");return;}
+  Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+  Application.ThreadException+=(_,e)=>{AppFailure.Show(e.Exception);Application.Exit();};
+  AppDomain.CurrentDomain.UnhandledException+=(_,e)=>AppFailure.Write(e.ExceptionObject as Exception??new Exception("앱이 종료되었어요."));
+  try{using var mutex=new Mutex(true,"Local\\HachiwareDesktop",out var fresh);if(!fresh){MessageBox.Show("치이 친구가 이미 실행 중이에요. 작업 표시줄 오른쪽의 캐릭터 아이콘을 오른쪽 클릭하고 ‘캐릭터 위치 초기화’를 눌러 주세요.","치이 친구");return;}ApplicationConfiguration.Initialize();Application.Run(new Pet());}
+  catch(Exception error){AppFailure.Show(error);}
+ }
 }
 record Photo(string id,string image_url,string? character,string source,bool? draw_enabled=null);
-sealed class Settings { public int X{get;set;} public int Y{get;set;} public bool Positioned{get;set;} public bool Sounds{get;set;}=true;public int CharacterSize{get;set;}=160;public int DrawCount{get;set;}public List<string> Seen{get;set;}=new(); }
+sealed class Settings { public int X{get;set;} public int Y{get;set;} public bool Positioned{get;set;} public bool Sounds{get;set;}=true;public int CharacterSize{get;set;}=160;public int DrawCount{get;set;}public List<string> Seen{get;set;}=new();public string DrawDay{get;set;}="";public List<string> DrawnToday{get;set;}=new(); }
 sealed class Pet:Form {
  public const string Website="https://della-su.github.io/hachiware-collection/";
  static readonly string DataDir=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"Hachiware");
  static readonly string SettingsFile=Path.Combine(DataDir,"settings.json");
- static string Asset(string path)=>Path.Combine(AppContext.BaseDirectory,"Assets",path);
- readonly Image character=Image.FromFile(Asset("character.png"));
+ readonly Image character=AppResources.Image("character.png");
+ readonly bool testing;
  readonly System.Windows.Forms.Timer clock=new(){Interval=16},singleClick=new();
  readonly Flight flight=new(); readonly Stopwatch elapsed=Stopwatch.StartNew();
  readonly List<(Point p,double time)> samples=new(); readonly List<SoundPlayer> players=new();
@@ -27,12 +34,14 @@ sealed class Pet:Form {
  readonly Photo[] photos; Settings settings; Point mouseStart,dragOrigin,home;Rectangle arena;bool dragging,moved,hover;double last,hoverTime,angle,squash,flightStart,returnX,returnY,spin=1100,lastBounce;int spinLevel;string? lastPhoto;MusicWindow? music;
  protected override bool ShowWithoutActivation=>true;
  protected override CreateParams CreateParams{get{var cp=base.CreateParams;cp.ExStyle|=0x80000|0x80;return cp;}}
- public Pet(){
-  Directory.CreateDirectory(DataDir);try{settings=JsonSerializer.Deserialize<Settings>(File.ReadAllText(SettingsFile))??new();}catch{settings=new();}
-  photos=JsonSerializer.Deserialize<Photo[]>(File.ReadAllText(Asset("catalog.json")))??[];
+ public Pet(bool testing=false){
+  this.testing=testing;
+  if(testing){settings=new(){Sounds=false};}else{Directory.CreateDirectory(DataDir);try{settings=JsonSerializer.Deserialize<Settings>(File.ReadAllText(SettingsFile))??new();}catch{settings=new();}}
+  settings.Seen??=[];settings.DrawnToday??=[];
+  photos=AppResources.Photos();
   if(!CharacterSizes.Contains(settings.CharacterSize))settings.CharacterSize=160;
   SetStyle(ControlStyles.StandardClick|ControlStyles.StandardDoubleClick,true);Text="치이 친구";FormBorderStyle=FormBorderStyle.None;ShowInTaskbar=false;TopMost=true;StartPosition=FormStartPosition.Manual;ClientSize=new(settings.CharacterSize,settings.CharacterSize);
-  Icon=new Icon(Path.Combine(AppContext.BaseDirectory,"Hachiware.ico"));
+  Icon=AppResources.Icon();
   var area=Screen.PrimaryScreen!.WorkingArea;Location=settings.Positioned?new(settings.X,settings.Y):new(area.Right-Width-50,area.Bottom-Height-100);ClampLocation();home=Location;
   menu.Items.Add("오늘의 치이 친구 보여줘",null,(_,_)=>ShowPhoto());menu.Items.Add("치이카와 가챠 열기",null,(_,_)=>Open(Website));menu.Items.Add("치이카와 노래 TV",null,(_,_)=>OpenMusic());
   menu.Items.Add("캐릭터 위치 초기화",null,(_,_)=>{flight.Active=false;Location=new(Screen.PrimaryScreen!.WorkingArea.Right-Width-50,Screen.PrimaryScreen.WorkingArea.Bottom-Height-100);ClampLocation();home=Location;Save();});
@@ -46,7 +55,7 @@ sealed class Pet:Form {
  }
  void ClampLocation(){var r=Screen.FromPoint(Location).WorkingArea;Location=new(Math.Clamp(Left,r.Left,Math.Max(r.Left,r.Right-Width)),Math.Clamp(Top,r.Top,Math.Max(r.Top,r.Bottom-Height)));}
  internal void ApplyCharacterSize(int size){if(!CharacterSizes.Contains(size))return;var center=new Point(Left+Width/2,Top+Height/2);flight.Active=false;hover=false;angle=0;squash=0;ClientSize=new(size,size);Location=new(center.X-size/2,center.Y-size/2);ClampLocation();home=Location;settings.CharacterSize=size;foreach(var item in sizeMenu.DropDownItems.OfType<ToolStripMenuItem>())item.Checked=(int)item.Tag! ==size;Save();if(IsHandleCreated)Render();}
- void Save(){settings.X=home.X;settings.Y=home.Y;settings.Positioned=true;try{File.WriteAllText(SettingsFile,JsonSerializer.Serialize(settings));}catch{}}
+ void Save(){if(testing)return;settings.X=home.X;settings.Y=home.Y;settings.Positioned=true;try{File.WriteAllText(SettingsFile,JsonSerializer.Serialize(settings));}catch{}}
  void Down(object? s,MouseEventArgs e){if(e.Button==MouseButtons.Right){menu.Show(Cursor.Position);return;}if(e.Button!=MouseButtons.Left)return;singleClick.Stop();flight.Active=false;angle=0;dragging=true;moved=false;Capture=true;mouseStart=Cursor.Position;dragOrigin=Location;samples.Clear();samples.Add((Cursor.Position,elapsed.Elapsed.TotalSeconds));if(e.Clicks>=2){dragging=false;Capture=false;OpenMusic();}}
  void DragMove(object? s,MouseEventArgs e){if(!dragging)return;var p=Cursor.Position;var now=elapsed.Elapsed.TotalSeconds;samples.Add((p,now));samples.RemoveAll(v=>now-v.time>.12);moved|=Math.Abs(p.X-mouseStart.X)+Math.Abs(p.Y-mouseStart.Y)>5;Location=new(dragOrigin.X+p.X-mouseStart.X,dragOrigin.Y+p.Y-mouseStart.Y);}
  void Up(object? s,MouseEventArgs e){if(e.Button!=MouseButtons.Left||!dragging)return;dragging=false;Capture=false;if(!moved){singleClick.Start();return;}ClampLocation();home=Location;Save();var now=elapsed.Elapsed.TotalSeconds;var p=Cursor.Position;var sample=samples.FirstOrDefault();var dt=Math.Max(.016,now-sample.time);var vx=(p.X-sample.p.X)/dt;var vy=(p.Y-sample.p.Y)/dt;if(samples.Count>0&&now-sample.time<.16&&Math.Sqrt(vx*vx+vy*vy)>350)Launch(vx,vy);}
@@ -59,14 +68,26 @@ sealed class Pet:Form {
   else{angle*=Math.Pow(.01,dt);Location=new(home.X+(int)(Math.Sin(now*.65)*5),home.Y+(int)(Math.Sin(now*1.15)*9));}
   Render();
  }
- void Sound(string name,bool voice=false){if(!settings.Sounds)return;try{var p=new SoundPlayer(Asset((voice?"voices/":"sounds/")+name+".wav"));p.Load();p.Play();players.Add(p);while(players.Count>8){players[0].Dispose();players.RemoveAt(0);}}catch{}}
- void Voice(){var paths=Directory.GetFiles(Asset("voices"),"*.wav");if(paths.Length>0)Sound(Path.GetFileNameWithoutExtension(paths[random.Next(paths.Length)]),true);}
- internal void ShowPhoto(){var mainTurn=settings.DrawCount%6<5;var primary=new HashSet<string>{"hachiware","chiikawa","usagi","friends"};var candidates=photos.Where(p=>p.draw_enabled!=false&&primary.Contains(p.character??"friends")==mainTurn).ToArray();var fresh=candidates.Where(p=>!settings.Seen.Contains(p.id)).ToArray();var choices=fresh.Length>0?fresh:candidates.Where(p=>p.id!=lastPhoto).ToArray();if(choices.Length==0)choices=candidates;if(choices.Length==0)return;var photo=choices[random.Next(choices.Length)];lastPhoto=photo.id;settings.DrawCount++;if(!settings.Seen.Contains(photo.id))settings.Seen.Add(photo.id);Save();var path=Asset("photos/"+photo.id+".jpg");if(!File.Exists(path))return;
-  Sound("reveal");if(photo.character=="usagi")Voice();var window=new Form{Text="오늘의 치이 친구",StartPosition=FormStartPosition.CenterScreen,Size=new(760,760),MinimumSize=new(360,400),BackColor=Color.FromArgb(255,249,237),Icon=Icon};
-  var image=Image.FromFile(path);var picture=new PictureBox{Dock=DockStyle.Fill,Image=image,SizeMode=PictureBoxSizeMode.Zoom};if(photo.character=="usagi")picture.Click+=(_,_)=>Voice();
-  var buttons=new FlowLayoutPanel{Dock=DockStyle.Bottom,Height=64,Padding=new(16),FlowDirection=FlowDirection.LeftToRight};var website=new Button{Text="웹사이트 바로가기 ↗",AutoSize=true,Height=32};website.Click+=(_,_)=>Open(DesktopPhotoUrl(photo.id));var source=new Button{Text="사진 출처 ↗",AutoSize=true,Height=32};source.Click+=(_,_)=>Open(photo.source);buttons.Controls.Add(website);buttons.Controls.Add(source);window.Controls.Add(picture);window.Controls.Add(buttons);window.FormClosed+=(_,_)=>image.Dispose();window.Show();
+ void Sound(string name,bool voice=false){if(!settings.Sounds)return;try{var stream=AppResources.Open((voice?"voices/":"sounds/")+name+".wav");var p=new SoundPlayer(stream);p.Load();p.Play();players.Add(p);while(players.Count>8){players[0].Stream?.Dispose();players[0].Dispose();players.RemoveAt(0);}}catch{}}
+ void Voice(){var paths=AppResources.Voices;if(paths.Length>0)Sound(Path.GetFileNameWithoutExtension(paths[random.Next(paths.Length)]),true);}
+ internal void ShowPhoto(){
+  var now=DateTimeOffset.UtcNow;var choices=PhotoDraws.Pool(photos,settings,now);
+  if(choices.Length==0){MessageBox.Show("오늘 만날 수 있는 사진을 모두 봤어요. 한국 시간 자정 이후에 다시 만나요.","치이 친구");return;}
+  var groups=choices.GroupBy(p=>p.character??"friends").ToArray();var previous=photos.FirstOrDefault(p=>p.id==lastPhoto)?.character;var different=groups.Where(g=>g.Key!=previous).ToArray();if(different.Length>0)groups=different;
+  var pool=groups[random.Next(groups.Length)].ToArray();var photo=pool[random.Next(pool.Length)];
+  var image=AppResources.Image("photos/"+photo.id+".jpg");lastPhoto=photo.id;PhotoDraws.Record(settings,photo.id,now);Save();
+  Sound("reveal");if(photo.character=="usagi")Voice();var area=Screen.FromControl(this).WorkingArea;
+  var size=PhotoWindowSize(area);var window=new Form{Text="오늘의 치이 친구",StartPosition=FormStartPosition.Manual,Size=size,MinimumSize=new(Math.Min(360,size.Width),Math.Min(400,size.Height)),MaximumSize=new(area.Width-24,area.Height-24),BackColor=Color.FromArgb(255,249,237),Icon=Icon};
+  window.Location=new(area.Left+(area.Width-window.Width)/2,area.Top+(area.Height-window.Height)/2);
+  var picture=new PictureBox{Dock=DockStyle.Fill,Image=image,SizeMode=PictureBoxSizeMode.Zoom};if(photo.character=="usagi")picture.Click+=(_,_)=>Voice();
+  var buttons=new TableLayoutPanel{Dock=DockStyle.Bottom,Height=70,Padding=new(10),ColumnCount=2,RowCount=1};buttons.ColumnStyles.Add(new(SizeType.Percent,50));buttons.ColumnStyles.Add(new(SizeType.Percent,50));
+  var save=new Button{Text="보관함 저장하기",Dock=DockStyle.Fill,Margin=new(4),BackColor=Color.FromArgb(132,181,204),ForeColor=Color.White,FlatStyle=FlatStyle.Flat};save.FlatAppearance.BorderSize=0;
+  var website=new Button{Text="웹사이트 바로가기 ↗",Dock=DockStyle.Fill,Margin=new(4),BackColor=Color.FromArgb(217,235,232),ForeColor=Color.FromArgb(75,102,102),FlatStyle=FlatStyle.Flat};website.FlatAppearance.BorderSize=0;
+  var saveUrl=DesktopPhotoUrl(photo.id);save.Click+=(_,_)=>Open(saveUrl);website.Click+=(_,_)=>Open(Website+"?skip_intro=1");
+  buttons.Controls.Add(save,0,0);buttons.Controls.Add(website,1,0);window.Controls.Add(picture);window.Controls.Add(buttons);window.FormClosed+=(_,_)=>image.Dispose();window.Show();
  }
- internal static string DesktopPhotoUrl(string id)=>Website+"#desktop_photo="+Uri.EscapeDataString(id)+"&request="+Guid.NewGuid().ToString();
+ internal static Size PhotoWindowSize(Rectangle area)=>new(Math.Min(680,area.Width-48),Math.Min(730,area.Height-48));
+ internal static string DesktopPhotoUrl(string id)=>Website+"?skip_intro=1#desktop_photo="+Uri.EscapeDataString(id)+"&request="+Guid.NewGuid().ToString();
  void OpenMusic(){if(music is {IsDisposed:false}){music.Activate();return;}music=new MusicWindow(Icon!,DataDir);music.Show();}
  public static void Open(string url){if(Uri.TryCreate(url,UriKind.Absolute,out var uri)&&uri.Scheme=="https")try{Process.Start(new ProcessStartInfo(url){UseShellExecute=true});}catch{MessageBox.Show("브라우저를 열지 못했어요. 웹사이트에서 다시 열어 주세요.","치이 친구");}}
  internal bool Render(){if(!IsHandleCreated||IsDisposed)return false;using var bitmap=new Bitmap(Width,Height,PixelFormat.Format32bppArgb);using(var g=Graphics.FromImage(bitmap)){g.Clear(Color.Transparent);g.SmoothingMode=SmoothingMode.AntiAlias;g.InterpolationMode=InterpolationMode.HighQualityBicubic;g.TranslateTransform(Width/2f,Height/2f);g.RotateTransform((float)(angle%360));g.ScaleTransform((float)(1+.26*squash),(float)(1-.2*squash));var side=Math.Min(Width,Height)-24f;var ratio=(float)character.Width/character.Height;var w=ratio>1?side:side*ratio;var h=ratio>1?side/ratio:side;g.DrawImage(character,-w/2,-h/2,w,h);}return Layered.Draw(Handle,bitmap,Location);}
