@@ -1,12 +1,21 @@
 import catalog from './catalog.json';
 import {assetUrl} from '../app/asset-url';
-type State={photos:any[];hidden:string[];requests:Record<string,string>;annotations:Record<string,any>;last?:string;draw_count?:number};
+type State={photos:any[];hidden:string[];requests:Record<string,string>;annotations:Record<string,any>;last?:string;draw_count?:number;daily_draws?:{day:string;ids:string[]}};
 const database=new Promise<IDBDatabase>((resolve,reject)=>{const r=indexedDB.open('hachiware-public',1);r.onupgradeneeded=()=>r.result.createObjectStore('records');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});
 async function read(){const db=await database;return new Promise<State>((resolve,reject)=>{const r=db.transaction('records').objectStore('records').get('collection');r.onsuccess=()=>resolve(r.result||{photos:catalog.slice(0,3).map((p,i)=>({...p,image_url:assetUrl(p.image_url),collected_at:new Date(Date.now()-i*1000).toISOString(),favorite:0})),hidden:[],requests:{},annotations:{}});r.onerror=()=>reject(r.error);});}
 async function write(state:State){const db=await database;return new Promise<void>((resolve,reject)=>{const tx=db.transaction('records','readwrite');tx.objectStore('records').put(state,'collection');tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error);});}
 let pending=Promise.resolve();
 function serial<T>(work:()=>Promise<T>):Promise<T>{const result=pending.then(work,work);pending=result.then(()=>{},()=>{});return result;}
 const json=(value:unknown,status=200)=>Response.json(value,{status});
+const koreaDateFormat=new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'});
+const koreaDay=(date:Date)=>koreaDateFormat.format(date);
+function seenToday(state:State,now:Date){
+ const day=koreaDay(now),ids=new Set(state.daily_draws?.day===day?state.daily_draws.ids:[]);
+ // Older records already contain the last encounter date; retain it on upgrade.
+ for(const p of state.photos)for(const value of [p.met_at,p.collected_at])if(typeof value==='string'&&Number.isFinite(Date.parse(value))&&koreaDay(new Date(value))===day)ids.add(p.id);
+ return {day,ids};
+}
+function recordToday(state:State,id:string,now:Date){const today=seenToday(state,now);today.ids.add(id);state.daily_draws={day:today.day,ids:[...today.ids]};}
 async function handle(input:string,init?:RequestInit){
  const path=new URL(input,'https://local.invalid'),state=await read(),b=init?.body?JSON.parse(String(init.body)):{};
  const visible=()=>state.photos.filter(p=>!state.hidden.includes(p.id)).sort((a,b)=>(b.met_at||b.collected_at).localeCompare(a.met_at||a.collected_at));
@@ -16,9 +25,10 @@ async function handle(input:string,init?:RequestInit){
   if(!original||!/^[a-zA-Z0-9-]{16,80}$/.test(b.request_id||''))return json({error:'바탕화면 사진 정보를 확인해 주세요.'},400);
   const prior=state.requests[b.request_id];if(prior)return json({photo:state.photos.find(p=>p.id===prior),replayed:true});
   let photo=state.photos.find(p=>p.id===original.id),existing=!!photo;
-  const now=new Date().toISOString();
-  if(!photo){photo={...original,image_url:assetUrl(original.image_url),collected_at:now,favorite:0};state.photos.push(photo);}
-  photo.met_at=now;state.last=photo.id;state.hidden=state.hidden.filter(id=>id!==photo.id);state.requests[b.request_id]=photo.id;
+  const now=new Date();
+  recordToday(state,original.id,now);
+  if(!photo){photo={...original,image_url:assetUrl(original.image_url),collected_at:now.toISOString(),favorite:0};state.photos.push(photo);}
+  photo.met_at=now.toISOString();state.last=photo.id;state.hidden=state.hidden.filter(id=>id!==photo.id);state.requests[b.request_id]=photo.id;
   const keys=Object.keys(state.requests);keys.slice(0,Math.max(0,keys.length-200)).forEach(k=>delete state.requests[k]);
   await write(state);return json({photo,existing});
  }
@@ -41,20 +51,21 @@ async function handle(input:string,init?:RequestInit){
   if(!/^[a-zA-Z0-9-]{16,80}$/.test(b.request_id||''))return json({error:'수집 요청 번호를 확인해 주세요.'},400);
   const prior=state.requests[b.request_id];if(prior)return json({photo:state.photos.find(p=>p.id===prior),replayed:true});
   const primary=(p:any)=>['hachiware','chiikawa','usagi','friends'].includes(p.character);
-  const available=catalog.filter(p=>p.draw_enabled!==false),mainTurn=(state.draw_count||0)%6<5;
+  const now=new Date(),today=seenToday(state,now);
+  const available=catalog.filter(p=>p.draw_enabled!==false&&!today.ids.has(p.id)&&!state.hidden.includes(p.id)),mainTurn=(state.draw_count||0)%6<5;
+  if(!available.length)return json({error:'오늘 만날 수 있는 사진을 모두 봤어요. 한국 시간 자정 이후에 다시 만나요.'},409);
   let candidates=available.filter(p=>primary(p)===mainTurn);
   if(!candidates.length)candidates=available;
-  const newPhotos=candidates.filter(p=>!state.photos.some(s=>s.id===p.id));const existing=!newPhotos.length;
-  let pool:any[]=existing?visible().filter(p=>available.some(a=>a.id===p.id)&&primary(p)===mainTurn&&p.id!==state.last):newPhotos;
-  if(!pool.length)pool=existing?visible().filter(p=>available.some(a=>a.id===p.id)&&primary(p)===mainTurn):newPhotos;
-  if(!pool.length)pool=available;
-  if(!pool.length)return json({error:'준비된 캐릭터 그림이 없어요.'},404);
+  const newPhotos=candidates.filter(p=>!state.photos.some(s=>s.id===p.id));
+  let pool:any[]=newPhotos.length?newPhotos:candidates;
   const groups=new Map<string,any[]>();for(const p of pool){const k=p.character||'friends',group=groups.get(k)||[];group.push(p);groups.set(k,group);}
   const previous=state.photos.find(p=>p.id===state.last)?.character,kinds=[...groups.keys()],different=kinds.filter(k=>k!==previous),eligible=different.length?different:kinds;
   const character=eligible[Math.floor(Math.random()*eligible.length)];pool=groups.get(character)!;
-  let photo=pool[Math.floor(Math.random()*pool.length)];
-  if(!existing){photo={...photo,image_url:assetUrl(photo.image_url),collected_at:new Date().toISOString(),favorite:0};state.photos.push(photo);}
-  state.draw_count=(state.draw_count||0)+1;photo.met_at=new Date().toISOString();state.last=photo.id;state.requests[b.request_id]=photo.id;
+  const chosen=pool[Math.floor(Math.random()*pool.length)];
+  let photo=state.photos.find(p=>p.id===chosen.id);const existing=!!photo;
+  recordToday(state,chosen.id,now);
+  if(!photo){photo={...chosen,image_url:assetUrl(chosen.image_url),collected_at:now.toISOString(),favorite:0};state.photos.push(photo);}
+  state.draw_count=(state.draw_count||0)+1;photo.met_at=now.toISOString();state.last=photo.id;state.requests[b.request_id]=photo.id;
   const keys=Object.keys(state.requests);keys.slice(0,Math.max(0,keys.length-200)).forEach(k=>delete state.requests[k]);
   await write(state);return json({photo,existing,replayed:false});
  }

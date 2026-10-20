@@ -2690,10 +2690,10 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "zh": "在“活动监视器”中找到 HachiwareDesktop 或 Chii Friend，选择“强制退出”。",
   "ja": "アクティビティモニタで HachiwareDesktop または Chii Friend を探して「強制終了」してください。"
  },
- "위 버튼에서 새 맥용 앱(v1.4.3)을 받고 ZIP을 모두 풀어 주세요. 응용 프로그램 폴더의 이전 치이 친구.app을 새 앱으로 교체한 뒤 다시 실행해요.": {
-  "en": "Download the new Mac app (v1.4.3) using the button above and fully extract the ZIP. Replace the old Chii Friend.app in Applications with the new app, then launch it again.",
-  "zh": "点击上方按钮下载新版 Mac 应用（v1.4.3），完整解压 ZIP。用新应用替换“应用程序”中的旧版 치이 친구.app，再重新打开。",
-  "ja": "上のボタンから新しいMac版（v1.4.3）をダウンロードし、ZIPを完全に展開してください。アプリケーションフォルダ内の古い 치이 친구.app を新しいアプリで置き換え、もう一度起動します。"
+ "위 버튼에서 새 맥용 앱(v1.4.4)을 받고 ZIP을 모두 풀어 주세요. 응용 프로그램 폴더의 이전 치이 친구.app을 새 앱으로 교체한 뒤 다시 실행해요.": {
+  "en": "Download the new Mac app (v1.4.4) using the button above and fully extract the ZIP. Replace the old Chii Friend.app in Applications with the new app, then launch it again.",
+  "zh": "点击上方按钮下载新版 Mac 应用（v1.4.4），完整解压 ZIP。用新应用替换“应用程序”中的旧版 치이 친구.app，再重新打开。",
+  "ja": "上のボタンから新しいMac版（v1.4.4）をダウンロードし、ZIPを完全に展開してください。アプリケーションフォルダ内の古い 치이 친구.app を新しいアプリで置き換え、もう一度起動します。"
  },
  "계속 같은 오류가 뜨면 macOS 버전과 오류 문구를 알려 주세요. 이 오류는 보안 설정을 바꿔 해결하는 경고가 아니에요.": {
   "en": "If the same error persists, tell us your macOS version and the exact message. This error is not resolved by changing security settings.",
@@ -3319,5 +3319,15 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "Save photo",
   "zh": "保存图片",
   "ja": "写真を保存"
+ },
+ "오늘 만날 수 있는 사진을 모두 봤어요. 한국 시간 자정 이후에 다시 만나요.": {
+  "en": "You have seen all available photos today. Come back after midnight in Korea.",
+  "zh": "今天可抽取的照片都看过啦。韩国时间午夜后再来吧。",
+  "ja": "今日出会える写真はすべて見ました。韓国時間の午前0時以降にまた会いましょう。"
+ },
+ "‘보관함 저장하기’로 도감에 담아요.": {
+  "en": "Use “Save to collection” to add the photo to your collection.",
+  "zh": "点击“保存到收藏”即可将照片加入图鉴。",
+  "ja": "「コレクションに保存」で図鑑に追加できます。"
  }
 };

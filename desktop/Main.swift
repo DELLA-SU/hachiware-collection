@@ -1,7 +1,6 @@
 import Cocoa
 import WebKit
 
-let publicSite = "https://della-su.github.io/hachiware-collection/"
 let startupCheck = CommandLine.arguments.contains("--startup-check")
 class PetView: NSView {
  var image: NSImage?
@@ -54,6 +53,10 @@ class PetView: NSView {
 class ClickableImageView: NSImageView {
  var onClick:(()->Void)?
  override func mouseUp(with event:NSEvent){onClick?()}
+}
+class ArchiveSaveButton: NSButton {
+ var photoID=""
+ var requestID=UUID().uuidString
 }
 class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
  var musicWindow:NSWindow?
@@ -204,23 +207,31 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
    if !UserDefaults.standard.bool(forKey:"desktopPhotosInitialized"),let url=Bundle.main.url(forResource:"legacy-collected-ids",withExtension:"json"),let data=try? Data(contentsOf:url),let ids=try? JSONSerialization.jsonObject(with:data) as? [String]{seen.formUnion(ids);UserDefaults.standard.set(true,forKey:"desktopPhotosInitialized")}
 #endif
    let mainTurn=UserDefaults.standard.integer(forKey:"desktopDrawCount")%6<5
-   let primary:Set<String>=["hachiware","chiikawa","usagi","friends"]
-   let category=photos.filter{primary.contains($0["character"] as? String ?? "friends")==mainTurn}
-   let candidates=category.isEmpty ? photos:category
-   let fresh=candidates.filter{!seen.contains($0["id"] as? String ?? "")};let repeatPool=candidates.filter{$0["id"] as? String != lastDesktopPhoto};let pool=fresh.isEmpty ? (repeatPool.isEmpty ? candidates:repeatPool):fresh
+   let now=Date()
+   var history=UserDefaults.standard.data(forKey:"desktopDailyDrawHistory").flatMap{try? JSONDecoder().decode(DesktopDrawHistory.self,from:$0)} ?? DesktopDrawHistory(day:DesktopDrawHistory.dayKey(now),ids:[])
+   let choices=photos.compactMap{p -> DesktopDrawCandidate? in guard let id=p["id"] as? String else{return nil};return DesktopDrawCandidate(id:id,character:p["character"] as? String ?? "friends")}
+   let eligibleIDs=Set(desktopDrawPool(choices,today:history.seen(on:now),seen:seen,mainTurn:mainTurn).map{$0.id})
+   let pool=photos.filter{eligibleIDs.contains($0["id"] as? String ?? "")}
+   guard !pool.isEmpty else{throw NSError(domain:"하치와레",code:3,userInfo:[NSLocalizedDescriptionKey:"오늘 만날 수 있는 사진을 모두 봤어요. 한국 시간 자정 이후에 다시 만나요."])}
    let previous=photos.first{$0["id"] as? String==lastDesktopPhoto}?["character"] as? String
    let groups=Dictionary(grouping:pool){$0["character"] as? String ?? "friends"};let different=groups.keys.filter{$0 != previous};let types=different.isEmpty ? Array(groups.keys):different
    guard let type=types.randomElement(),let photo=groups[type]?.randomElement(),let id=photo["id"] as? String else{throw NSError(domain:"하치와레",code:1,userInfo:[NSLocalizedDescriptionKey:"사진 목록을 불러오지 못했어요."])}
    var image=NSImage(contentsOfFile:Bundle.main.resourcePath!+"/photos/"+id+".jpg")
    if image==nil{let (bytes,_)=try await URLSession.shared.data(from:URL(string:publicSite+"photos/"+id+".jpg")!);image=NSImage(data:bytes)}
    guard let image=image else{throw NSError(domain:"하치와레",code:2,userInfo:[NSLocalizedDescriptionKey:"사진을 표시하지 못했어요."])}
+   history.record(id,on:now);UserDefaults.standard.set(try JSONEncoder().encode(history),forKey:"desktopDailyDrawHistory")
    UserDefaults.standard.set(UserDefaults.standard.integer(forKey:"desktopDrawCount")+1,forKey:"desktopDrawCount");seen.insert(id);UserDefaults.standard.set(Array(seen),forKey:"seenDesktopPhotoIDs")
-   await MainActor.run{self.lastDesktopPhoto=id;let usagi=photo["character"] as? String=="usagi";self.show(image,isUsagi:usagi);if usagi{self.playUna()}else{self.playEffect("reveal")}}
-  }catch{await MainActor.run{let a=NSAlert();a.messageText="사진을 불러오지 못했어요";a.informativeText=error.localizedDescription;a.runModal()}}
+   await MainActor.run{self.lastDesktopPhoto=id;let usagi=photo["character"] as? String=="usagi";self.show(image,photoID:id,isUsagi:usagi);if usagi{self.playUna()}else{self.playEffect("reveal")}}
+  }catch{await MainActor.run{let a=NSAlert();a.messageText=(error as NSError).code==3 ? "오늘의 사진을 모두 봤어요":"사진을 불러오지 못했어요";a.informativeText=error.localizedDescription;a.runModal()}}
   await MainActor.run{self.busy=false;self.status.button?.title="🐾"}
   }
  }
- @objc func openArchive(){let suffix=lastDesktopPhoto.map{"#desktop_photo="+$0+"&request="+UUID().uuidString} ?? "";_ = NSWorkspace.shared.open(URL(string:publicSite+suffix)!)}
+ @objc func openArchive(){_ = NSWorkspace.shared.open(URL(string:publicSite+"?skip_intro=1")!)}
+ @objc func saveDesktopPhoto(_ sender:ArchiveSaveButton){
+  guard let url=desktopArchiveURL(photoID:sender.photoID,requestID:sender.requestID),NSWorkspace.shared.open(url) else{
+   let alert=NSAlert();alert.messageText="보관함을 열지 못했어요";alert.informativeText="기본 브라우저를 확인한 다음 다시 눌러 주세요.";alert.runModal();return
+  }
+ }
  @objc func openMusic(){
   setSpin(0);playEffect("switch");if let v=pet.contentView as? PetView{v.hovering=false}
   if let window=musicWindow{window.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true);return}
@@ -254,20 +265,33 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
   unaSound?.stop();unaSound=NSSound(contentsOfFile:path,byReference:false);unaSound?.play()
  }
 
- func show(_ image:NSImage,isUsagi:Bool=false){
+ func show(_ image:NSImage,photoID:String,isUsagi:Bool=false){
   result?.close()
   let screen=pet.screen?.visibleFrame ?? NSScreen.main!.visibleFrame
-  let width=min(760,screen.width*0.76),height=min(840,screen.height-70)
+  let size=desktopPhotoContentSize(screen:screen.size),width=size.width,height=size.height
   let w=NSWindow(contentRect:NSRect(x:0,y:0,width:width,height:height),styleMask:[.titled,.closable,.resizable],backing:.buffered,defer:false)
-  w.title="오늘의 치이 친구";w.isReleasedWhenClosed=false;w.contentMinSize=NSSize(width:320,height:360)
+  w.title="오늘의 치이 친구";w.isReleasedWhenClosed=false;w.contentMinSize=NSSize(width:min(320,width),height:min(360,height));w.contentMaxSize=NSSize(width:screen.width-40,height:screen.height-50)
   w.backgroundColor=NSColor(calibratedRed:0.985,green:0.978,blue:0.949,alpha:1)
-  let v=ClickableImageView(frame:NSRect(x:20,y:80,width:width-40,height:height-100))
+  let v=ClickableImageView(frame:.zero)
+  // Large source images must shrink inside the layout rather than enlarge the window.
+  for orientation in [NSLayoutConstraint.Orientation.horizontal,.vertical]{v.setContentCompressionResistancePriority(.defaultLow,for:orientation);v.setContentHuggingPriority(.defaultLow,for:orientation)}
   v.onClick=isUsagi ? { [weak self] in self?.playUna() } : nil
-  v.image=image;v.imageScaling = .scaleProportionallyUpOrDown;v.autoresizingMask=[.width,.height];w.contentView?.addSubview(v)
+  v.image=image;v.imageScaling = .scaleProportionallyUpOrDown
+  let save=ArchiveSaveButton(title:"보관함 저장하기",target:self,action:#selector(saveDesktopPhoto(_:)))
+  save.photoID=photoID;save.toolTip="기본 브라우저의 웹 보관함에 이 사진을 저장해요."
+  save.isBordered=false;save.wantsLayer=true;save.layer?.backgroundColor=NSColor(calibratedRed:0.45,green:0.65,blue:0.78,alpha:1).cgColor;save.layer?.cornerRadius=10
+  save.attributedTitle=NSAttributedString(string:"보관함 저장하기",attributes:[.foregroundColor:NSColor.white,.font:NSFont.systemFont(ofSize:15,weight:.semibold)])
   let button=NSButton(title:"웹사이트 바로가기 ↗",target:self,action:#selector(openArchive))
-  button.isBordered=false;button.wantsLayer=true;button.layer?.backgroundColor=NSColor(calibratedRed:0.45,green:0.65,blue:0.78,alpha:1).cgColor;button.layer?.cornerRadius=10
-  button.attributedTitle=NSAttributedString(string:"웹사이트 바로가기 ↗",attributes:[.foregroundColor:NSColor.white,.font:NSFont.systemFont(ofSize:15,weight:.semibold)])
-  button.frame=NSRect(x:(width-230)/2,y:22,width:230,height:40);button.autoresizingMask=[.minXMargin,.maxXMargin,.maxYMargin];w.contentView?.addSubview(button)
+  button.isBordered=false;button.wantsLayer=true;button.layer?.backgroundColor=NSColor(calibratedRed:0.85,green:0.92,blue:0.91,alpha:1).cgColor;button.layer?.cornerRadius=10
+  button.attributedTitle=NSAttributedString(string:"웹사이트 바로가기 ↗",attributes:[.foregroundColor:NSColor(calibratedRed:0.30,green:0.40,blue:0.40,alpha:1),.font:NSFont.systemFont(ofSize:15,weight:.semibold)])
+  if let content=w.contentView{
+   for view in [v,save,button]{view.translatesAutoresizingMaskIntoConstraints=false;content.addSubview(view)}
+   NSLayoutConstraint.activate([
+    button.bottomAnchor.constraint(equalTo:content.bottomAnchor,constant:-14),button.centerXAnchor.constraint(equalTo:content.centerXAnchor),button.widthAnchor.constraint(equalToConstant:230),button.heightAnchor.constraint(equalToConstant:42),
+    save.bottomAnchor.constraint(equalTo:button.topAnchor,constant:-8),save.centerXAnchor.constraint(equalTo:content.centerXAnchor),save.widthAnchor.constraint(equalToConstant:230),save.heightAnchor.constraint(equalToConstant:42),
+    v.topAnchor.constraint(equalTo:content.topAnchor,constant:20),v.leadingAnchor.constraint(equalTo:content.leadingAnchor,constant:20),v.trailingAnchor.constraint(equalTo:content.trailingAnchor,constant:-20),v.bottomAnchor.constraint(equalTo:save.topAnchor,constant:-20)
+   ])
+  }
   w.setFrameOrigin(NSPoint(x:screen.midX-w.frame.width/2,y:screen.midY-w.frame.height/2));w.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true);result=w
  }
  @objc func quit(){NSApp.terminate(nil)}

@@ -536,7 +536,7 @@ TV 애니 자격증이 아닌, 에포스 공식 콜라보의 쇼핑 검정 1급 
 뽑아보세요|Draw one.|抽一个吧。|引いてみてね。
 ‘응답하지 않음’ 때문에 열 수 없다고 뜬다면?|If the app cannot open because it is not responding|如果提示应用没有响应而无法打开？|「応答しないため開けません」と表示されたら？
 활성 상태 보기에서 HachiwareDesktop 또는 치이 친구를 찾아 ‘강제 종료’해 주세요.|In Activity Monitor, find HachiwareDesktop or Chii Friend and choose Force Quit.|在“活动监视器”中找到 HachiwareDesktop 或 Chii Friend，选择“强制退出”。|アクティビティモニタで HachiwareDesktop または Chii Friend を探して「強制終了」してください。
-위 버튼에서 새 맥용 앱(v1.4.3)을 받고 ZIP을 모두 풀어 주세요. 응용 프로그램 폴더의 이전 치이 친구.app을 새 앱으로 교체한 뒤 다시 실행해요.|Download the new Mac app (v1.4.3) using the button above and fully extract the ZIP. Replace the old Chii Friend.app in Applications with the new app, then launch it again.|点击上方按钮下载新版 Mac 应用（v1.4.3），完整解压 ZIP。用新应用替换“应用程序”中的旧版 치이 친구.app，再重新打开。|上のボタンから新しいMac版（v1.4.3）をダウンロードし、ZIPを完全に展開してください。アプリケーションフォルダ内の古い 치이 친구.app を新しいアプリで置き換え、もう一度起動します。
+위 버튼에서 새 맥용 앱(v1.4.4)을 받고 ZIP을 모두 풀어 주세요. 응용 프로그램 폴더의 이전 치이 친구.app을 새 앱으로 교체한 뒤 다시 실행해요.|Download the new Mac app (v1.4.4) using the button above and fully extract the ZIP. Replace the old Chii Friend.app in Applications with the new app, then launch it again.|点击上方按钮下载新版 Mac 应用（v1.4.4），完整解压 ZIP。用新应用替换“应用程序”中的旧版 치이 친구.app，再重新打开。|上のボタンから新しいMac版（v1.4.4）をダウンロードし、ZIPを完全に展開してください。アプリケーションフォルダ内の古い 치이 친구.app を新しいアプリで置き換え、もう一度起動します。
 계속 같은 오류가 뜨면 macOS 버전과 오류 문구를 알려 주세요. 이 오류는 보안 설정을 바꿔 해결하는 경고가 아니에요.|If the same error persists, tell us your macOS version and the exact message. This error is not resolved by changing security settings.|如果仍出现相同错误，请提供 macOS 版本和错误信息。此错误不应通过更改安全设置来解决。|同じエラーが続く場合は、macOSのバージョンとエラーメッセージを教えてください。このエラーはセキュリティ設定の変更で解決する警告ではありません。
 짜잔, 먼가 작고 귀여운 친구들이에요!|Ta-da! Meet your small and cute little friends!|锵锵，小小可爱的朋友们来啦！|じゃーん、なんか小さくてかわいい友達だよ！
 바탕화면 하치와레 캐릭터 받기|Get desktop Hachiware character|下载桌面小八角色|デスクトップ版ハチワレキャラクターを入手
@@ -662,3 +662,5 @@ Google 통계는 허용한 경우에만 분석용 쿠키를 사용해요.|Google
 화면 맨 위 메뉴 막대의 🐾에서도 같은 설정 메뉴를 열 수 있어요.|You can also open the same settings menu from 🐾 in the menu bar at the top of the screen.|也可点击屏幕顶部菜单栏的 🐾 打开相同设置菜单。|画面上部のメニューバーの🐾からも同じ設定メニューを開けます。
 작업 표시줄 오른쪽의 캐릭터 아이콘을 오른쪽 클릭해도 같은 설정 메뉴가 열려요.|You can also right-click the character icon in the taskbar notification area to open the same settings menu.|右键点击任务栏右侧的角色图标，也可打开相同设置菜单。|タスクバー右側のキャラクターアイコンを右クリックしても同じ設定メニューが開きます。
 사진 저장|Save photo|保存图片|写真を保存
+오늘 만날 수 있는 사진을 모두 봤어요. 한국 시간 자정 이후에 다시 만나요.|You have seen all available photos today. Come back after midnight in Korea.|今天可抽取的照片都看过啦。韩国时间午夜后再来吧。|今日出会える写真はすべて見ました。韓国時間の午前0時以降にまた会いましょう。
+‘보관함 저장하기’로 도감에 담아요.|Use “Save to collection” to add the photo to your collection.|点击“保存到收藏”即可将照片加入图鉴。|「コレクションに保存」で図鑑に追加できます。

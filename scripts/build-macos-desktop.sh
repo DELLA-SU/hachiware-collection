@@ -29,7 +29,7 @@ for arch in arm64 x86_64; do
   /usr/bin/xcrun swiftc -O -target "$arch-apple-macosx11.0" \
     -framework Cocoa -framework WebKit \
     -Xlinker -rpath -Xlinker '@executable_path/../Frameworks' \
-    "$repo_dir/desktop/Main.swift" "$repo_dir/desktop/PetPosition.swift" -o "$output_dir/HachiwareDesktop-$arch"
+    "$repo_dir/desktop/Main.swift" "$repo_dir/desktop/PetPosition.swift" "$repo_dir/desktop/DesktopPhotos.swift" -o "$output_dir/HachiwareDesktop-$arch"
 done
 /usr/bin/lipo -create "$output_dir/HachiwareDesktop-arm64" "$output_dir/HachiwareDesktop-x86_64" \
   -output "$app_dir/Contents/MacOS/HachiwareDesktop"
