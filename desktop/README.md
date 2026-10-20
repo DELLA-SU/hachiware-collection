@@ -5,7 +5,7 @@ Build a release using the desktop resource folder (character, icon, catalog,
 photos and WAV clips) from the previous release:
 
 ```sh
-bash scripts/build-macos-desktop.sh /path/to/Contents/Resources /path/to/new-build 1.4.4 144
+bash scripts/build-macos-desktop.sh /path/to/Contents/Resources /path/to/new-build 1.4.5 145
 ```
 
 The output folder must be new. The script compiles both architectures, adds the

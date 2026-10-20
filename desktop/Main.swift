@@ -280,15 +280,15 @@ class App: NSObject, NSApplicationDelegate, NSWindowDelegate {
   let save=ArchiveSaveButton(title:"보관함 저장하기",target:self,action:#selector(saveDesktopPhoto(_:)))
   save.photoID=photoID;save.toolTip="기본 브라우저의 웹 보관함에 이 사진을 저장해요."
   save.isBordered=false;save.wantsLayer=true;save.layer?.backgroundColor=NSColor(calibratedRed:0.45,green:0.65,blue:0.78,alpha:1).cgColor;save.layer?.cornerRadius=10
-  save.attributedTitle=NSAttributedString(string:"보관함 저장하기",attributes:[.foregroundColor:NSColor.white,.font:NSFont.systemFont(ofSize:15,weight:.semibold)])
+  save.attributedTitle=NSAttributedString(string:"보관함 저장하기",attributes:[.foregroundColor:NSColor.white,.font:NSFont.systemFont(ofSize:14,weight:.semibold)])
   let button=NSButton(title:"웹사이트 바로가기 ↗",target:self,action:#selector(openArchive))
   button.isBordered=false;button.wantsLayer=true;button.layer?.backgroundColor=NSColor(calibratedRed:0.85,green:0.92,blue:0.91,alpha:1).cgColor;button.layer?.cornerRadius=10
-  button.attributedTitle=NSAttributedString(string:"웹사이트 바로가기 ↗",attributes:[.foregroundColor:NSColor(calibratedRed:0.30,green:0.40,blue:0.40,alpha:1),.font:NSFont.systemFont(ofSize:15,weight:.semibold)])
+  button.attributedTitle=NSAttributedString(string:"웹사이트 바로가기 ↗",attributes:[.foregroundColor:NSColor(calibratedRed:0.30,green:0.40,blue:0.40,alpha:1),.font:NSFont.systemFont(ofSize:14,weight:.semibold)])
   if let content=w.contentView{
    for view in [v,save,button]{view.translatesAutoresizingMaskIntoConstraints=false;content.addSubview(view)}
    NSLayoutConstraint.activate([
-    button.bottomAnchor.constraint(equalTo:content.bottomAnchor,constant:-14),button.centerXAnchor.constraint(equalTo:content.centerXAnchor),button.widthAnchor.constraint(equalToConstant:230),button.heightAnchor.constraint(equalToConstant:42),
-    save.bottomAnchor.constraint(equalTo:button.topAnchor,constant:-8),save.centerXAnchor.constraint(equalTo:content.centerXAnchor),save.widthAnchor.constraint(equalToConstant:230),save.heightAnchor.constraint(equalToConstant:42),
+    save.bottomAnchor.constraint(equalTo:content.bottomAnchor,constant:-14),save.leadingAnchor.constraint(equalTo:content.leadingAnchor,constant:20),save.heightAnchor.constraint(equalToConstant:42),
+    button.bottomAnchor.constraint(equalTo:save.bottomAnchor),button.leadingAnchor.constraint(equalTo:save.trailingAnchor,constant:12),button.trailingAnchor.constraint(equalTo:content.trailingAnchor,constant:-20),button.widthAnchor.constraint(equalTo:save.widthAnchor),button.heightAnchor.constraint(equalTo:save.heightAnchor),
     v.topAnchor.constraint(equalTo:content.topAnchor,constant:20),v.leadingAnchor.constraint(equalTo:content.leadingAnchor,constant:20),v.trailingAnchor.constraint(equalTo:content.trailingAnchor,constant:-20),v.bottomAnchor.constraint(equalTo:save.topAnchor,constant:-20)
    ])
   }
