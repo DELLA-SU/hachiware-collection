@@ -174,7 +174,7 @@ Apple 공식 안내|Apple's official guide|Apple官方说明|Apple公式ガイ�
 윈도우용 앱 다운로드|Download for Windows|下载Windows版|Windows版をダウンロード
 Intel·AMD PC에서 ‘윈도우용 하치와레 받기’를 눌러 ZIP 파일을 받아요.|On an Intel or AMD PC, click “Download Hachiware for Windows” to get the ZIP file.|在Intel或AMD电脑上，点击“下载Windows版小八”获取ZIP文件。|Intel・AMDのPCでは「Windows版ハチワレをダウンロード」でZIPを取得します。
 압축을 모두 풀기|Extract all files|解压全部文件|すべて展開する
-받은 ZIP 파일을 오른쪽 클릭하고 ‘모두 압축 풀기’를 선택하세요. 앱과 Assets 폴더를 함께 보관해 주세요.|Right-click the ZIP and choose Extract All. Keep the app and Assets folder together.|右键点击ZIP文件，选择“全部解压”。请将应用与Assets文件夹放在一起。|ZIPを右クリックして「すべて展開」を選びます。アプリとAssetsフォルダは一緒に保管してください。
+받은 ZIP 파일을 오른쪽 클릭하고 ‘모두 압축 풀기’를 선택하세요. 사진과 아이콘은 앱에 포함되어 있어요.|Right-click the ZIP and choose Extract All. Photos and icons are included in the app.|右键点击ZIP文件并选择“全部解压”。照片和图标已包含在应用中。|ZIPを右クリックして「すべて展開」を選びます。写真とアイコンはアプリに含まれています。
 Hachiware.exe 실행|Run Hachiware.exe|运行Hachiware.exe|Hachiware.exeを起動
 압축을 푼 폴더에서 Hachiware.exe를 더블클릭해요. .NET은 앱에 포함되어 있어 별도로 설치하지 않아도 돼요.|Double-click Hachiware.exe in the extracted folder. .NET is included; no separate installation is needed.|双击解压文件夹中的Hachiware.exe。应用已包含.NET，无需另行安装。|解凍したフォルダのHachiware.exeをダブルクリック。.NETは同梱されているため、別途インストールは不要です。
 첫 실행 때 Windows 경고가 뜬다면?|If Windows shows a warning|如果Windows显示警告|初回起動時にWindowsの警告が出たら
@@ -664,3 +664,6 @@ Google 통계는 허용한 경우에만 분석용 쿠키를 사용해요.|Google
 사진 저장|Save photo|保存图片|写真を保存
 오늘 만날 수 있는 사진을 모두 봤어요. 한국 시간 자정 이후에 다시 만나요.|You have seen all available photos today. Come back after midnight in Korea.|今天可抽取的照片都看过啦。韩国时间午夜后再来吧。|今日出会える写真はすべて見ました。韓国時間の午前0時以降にまた会いましょう。
 ‘보관함 저장하기’로 도감에 담아요.|Use “Save to collection” to add the photo to your collection.|点击“保存到收藏”即可将照片加入图鉴。|「コレクションに保存」で図鑑に追加できます。
+실행 후 캐릭터가 안 보일 때|If the character does not appear after launch|启动后看不到角色时|起動後にキャラクターが表示されない場合
+새 윈도우용 앱(v1.4.6)을 받아 실행해 주세요. 이미 실행 중이라면 작업 표시줄 오른쪽의 캐릭터 아이콘에서 ‘캐릭터 위치 초기화’를 선택해요.|Download and run the new Windows app (v1.4.6). If it is already running, choose Reset character position from the character icon in the taskbar notification area.|请下载并运行新版Windows应用(v1.4.6)。如果已在运行，请在任务栏右侧的角色图标中选择“重置角色位置”。|新しいWindows版アプリ(v1.4.6)をダウンロードして起動してください。すでに起動中の場合は、タスクバー右側のキャラクターアイコンから「キャラクターの位置をリセット」を選びます。
+앱 실행 오류 창이 나타나면 그 문구를 알려 주세요. 새 버전은 필요한 사진과 아이콘을 실행 파일 안에 포함해요.|If an app launch error appears, share its message. The new version includes the required photos and icons inside the executable.|如出现应用启动错误窗口，请告知错误信息。新版已将所需照片和图标包含在可执行文件中。|アプリの起動エラーが表示された場合は、そのメッセージをお知らせください。新しいバージョンは必要な写真とアイコンを実行ファイルに含んでいます。

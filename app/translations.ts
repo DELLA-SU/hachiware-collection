@@ -880,10 +880,10 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "zh": "解压全部文件",
   "ja": "すべて展開する"
  },
- "받은 ZIP 파일을 오른쪽 클릭하고 ‘모두 압축 풀기’를 선택하세요. 앱과 Assets 폴더를 함께 보관해 주세요.": {
-  "en": "Right-click the ZIP and choose Extract All. Keep the app and Assets folder together.",
-  "zh": "右键点击ZIP文件，选择“全部解压”。请将应用与Assets文件夹放在一起。",
-  "ja": "ZIPを右クリックして「すべて展開」を選びます。アプリとAssetsフォルダは一緒に保管してください。"
+ "받은 ZIP 파일을 오른쪽 클릭하고 ‘모두 압축 풀기’를 선택하세요. 사진과 아이콘은 앱에 포함되어 있어요.": {
+  "en": "Right-click the ZIP and choose Extract All. Photos and icons are included in the app.",
+  "zh": "右键点击ZIP文件并选择“全部解压”。照片和图标已包含在应用中。",
+  "ja": "ZIPを右クリックして「すべて展開」を選びます。写真とアイコンはアプリに含まれています。"
  },
  "Hachiware.exe 실행": {
   "en": "Run Hachiware.exe",
@@ -3329,5 +3329,20 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "Use “Save to collection” to add the photo to your collection.",
   "zh": "点击“保存到收藏”即可将照片加入图鉴。",
   "ja": "「コレクションに保存」で図鑑に追加できます。"
+ },
+ "실행 후 캐릭터가 안 보일 때": {
+  "en": "If the character does not appear after launch",
+  "zh": "启动后看不到角色时",
+  "ja": "起動後にキャラクターが表示されない場合"
+ },
+ "새 윈도우용 앱(v1.4.6)을 받아 실행해 주세요. 이미 실행 중이라면 작업 표시줄 오른쪽의 캐릭터 아이콘에서 ‘캐릭터 위치 초기화’를 선택해요.": {
+  "en": "Download and run the new Windows app (v1.4.6). If it is already running, choose Reset character position from the character icon in the taskbar notification area.",
+  "zh": "请下载并运行新版Windows应用(v1.4.6)。如果已在运行，请在任务栏右侧的角色图标中选择“重置角色位置”。",
+  "ja": "新しいWindows版アプリ(v1.4.6)をダウンロードして起動してください。すでに起動中の場合は、タスクバー右側のキャラクターアイコンから「キャラクターの位置をリセット」を選びます。"
+ },
+ "앱 실행 오류 창이 나타나면 그 문구를 알려 주세요. 새 버전은 필요한 사진과 아이콘을 실행 파일 안에 포함해요.": {
+  "en": "If an app launch error appears, share its message. The new version includes the required photos and icons inside the executable.",
+  "zh": "如出现应用启动错误窗口，请告知错误信息。新版已将所需照片和图标包含在可执行文件中。",
+  "ja": "アプリの起動エラーが表示された場合は、そのメッセージをお知らせください。新しいバージョンは必要な写真とアイコンを実行ファイルに含んでいます。"
  }
 };
