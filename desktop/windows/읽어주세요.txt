@@ -1,4 +1,4 @@
-치이 친구 1.4.6 · Windows 10/11, Intel·AMD 64비트
+치이 친구 1.4.7 · Windows 10/11, Intel·AMD 64비트
 
 1. ZIP 파일을 ‘모두 압축 풀기’로 풀어 주세요.
 2. Hachiware.exe를 실행해 주세요. 사진, 아이콘과 .NET은 앱 안에 포함되어 있어요.
@@ -16,4 +16,4 @@ Windows나 학교·회사 보안 정책에서 실행을 차단하는 경우에�
 보안 프로그램이 앱 시작 전에 차단한 경우에는 이 기록이 생기지 않을 수 있어요.
 
 공식 웹사이트: https://della-su.github.io/hachiware-collection/
-공식 배포: https://github.com/DELLA-SU/hachiware-collection/releases/tag/v1.4.6
+공식 배포: https://github.com/DELLA-SU/hachiware-collection/releases/tag/v1.4.7

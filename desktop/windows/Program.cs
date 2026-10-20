@@ -80,11 +80,15 @@ sealed class Pet:Form {
   var size=PhotoWindowSize(area);var window=new Form{Text="오늘의 치이 친구",StartPosition=FormStartPosition.Manual,Size=size,MinimumSize=new(Math.Min(360,size.Width),Math.Min(400,size.Height)),MaximumSize=new(area.Width-24,area.Height-24),BackColor=Color.FromArgb(255,249,237),Icon=Icon};
   window.Location=new(area.Left+(area.Width-window.Width)/2,area.Top+(area.Height-window.Height)/2);
   var picture=new PictureBox{Dock=DockStyle.Fill,Image=image,SizeMode=PictureBoxSizeMode.Zoom};if(photo.character=="usagi")picture.Click+=(_,_)=>Voice();
-  var buttons=new TableLayoutPanel{Dock=DockStyle.Bottom,Height=70,Padding=new(10),ColumnCount=2,RowCount=1};buttons.ColumnStyles.Add(new(SizeType.Percent,50));buttons.ColumnStyles.Add(new(SizeType.Percent,50));
-  var save=new Button{Text="보관함 저장하기",Dock=DockStyle.Fill,Margin=new(4),BackColor=Color.FromArgb(132,181,204),ForeColor=Color.White,FlatStyle=FlatStyle.Flat};save.FlatAppearance.BorderSize=0;
-  var website=new Button{Text="웹사이트 바로가기 ↗",Dock=DockStyle.Fill,Margin=new(4),BackColor=Color.FromArgb(217,235,232),ForeColor=Color.FromArgb(75,102,102),FlatStyle=FlatStyle.Flat};website.FlatAppearance.BorderSize=0;
+  var footer=new Panel{Dock=DockStyle.Bottom,Height=58};
+  var buttons=new TableLayoutPanel{ColumnCount=2,RowCount=1,Margin=Padding.Empty,Padding=Padding.Empty};buttons.ColumnStyles.Add(new(SizeType.Percent,50));buttons.ColumnStyles.Add(new(SizeType.Percent,50));
+  var save=new Button{Text="보관함 저장하기",Dock=DockStyle.Fill,Margin=new(0,0,4,0),Font=new Font("Segoe UI",9,FontStyle.Bold),BackColor=Color.FromArgb(132,181,204),ForeColor=Color.White,FlatStyle=FlatStyle.Flat};save.FlatAppearance.BorderSize=0;
+  var website=new Button{Text="웹사이트 바로가기 ↗",Dock=DockStyle.Fill,Margin=new(4,0,0,0),Font=save.Font,BackColor=Color.FromArgb(217,235,232),ForeColor=Color.FromArgb(75,102,102),FlatStyle=FlatStyle.Flat};website.FlatAppearance.BorderSize=0;
   var saveUrl=DesktopPhotoUrl(photo.id);save.Click+=(_,_)=>Open(saveUrl);website.Click+=(_,_)=>Open(Website+"?skip_intro=1");
-  buttons.Controls.Add(save,0,0);buttons.Controls.Add(website,1,0);window.Controls.Add(picture);window.Controls.Add(buttons);window.FormClosed+=(_,_)=>image.Dispose();window.Show();
+  buttons.Controls.Add(save,0,0);buttons.Controls.Add(website,1,0);footer.Controls.Add(buttons);
+  void LayoutActions(){var scale=footer.DeviceDpi/96f;var width=Math.Min((int)Math.Round(312*scale),Math.Max(1,footer.ClientSize.Width-(int)Math.Round(32*scale)));buttons.SetBounds((footer.ClientSize.Width-width)/2,Math.Max(0,footer.ClientSize.Height-(int)Math.Round(48*scale)),width,(int)Math.Round(34*scale));}
+  footer.Layout+=(_,_)=>LayoutActions();footer.DpiChangedAfterParent+=(_,_)=>LayoutActions();
+  window.Controls.Add(picture);window.Controls.Add(footer);window.FormClosed+=(_,_)=>image.Dispose();window.Show();
  }
  internal static Size PhotoWindowSize(Rectangle area)=>new(Math.Min(680,area.Width-48),Math.Min(730,area.Height-48));
  internal static string DesktopPhotoUrl(string id)=>Website+"?skip_intro=1#desktop_photo="+Uri.EscapeDataString(id)+"&request="+Guid.NewGuid().ToString();

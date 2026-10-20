@@ -5,7 +5,7 @@ Build a release using the desktop resource folder (character, icon, catalog,
 photos and WAV clips) from the previous release:
 
 ```sh
-bash scripts/build-macos-desktop.sh /path/to/Contents/Resources /path/to/new-build 1.4.5 145
+bash scripts/build-macos-desktop.sh /path/to/Contents/Resources /path/to/new-build 1.4.7 147
 ```
 
 The output folder must be new. The script compiles both architectures, adds the
@@ -57,7 +57,7 @@ These checks cover every mascot size, offscreen positions, disconnected displays
 negative display coordinates and invalid saved coordinates. They do not replace
 manual sleep, display reconnect and Space-switch testing on the target Mac.
 
-The macOS photo window has a dedicated “보관함 저장하기” button. It passes the exact displayed catalog ID and a stable request UUID to the default browser; only the website can confirm the IndexedDB write. “웹사이트 바로가기” opens the site without importing. The collection belongs to that browser/profile.
+The macOS photo window has a dedicated “보관함 저장하기” button. It passes the exact displayed catalog ID and a stable request UUID to the default browser; only the website can confirm the IndexedDB write. “웹사이트 바로가기” opens the site without importing. The collection belongs to that browser/profile. Both actions stay in a compact, centered horizontal row rather than stretching across the photo window.
 
 Daily draw history survives app restarts and resets at midnight in Asia/Seoul. Exhausted categories fall back to other unseen-today photos; full-day exhaustion shows a message. Older app versions did not record encounter dates, so the native daily ledger starts on upgrade.
 
