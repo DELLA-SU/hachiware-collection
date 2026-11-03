@@ -3,6 +3,7 @@ import {ArrowLeft,ImagePlus,Play,Pause,RotateCcw,Trash2,Volume2,VolumeX,MoonStar
 import {assetUrl} from './asset-url';
 import {trackEvent} from './analytics';
 import {t,useLanguage} from './locale';
+import CoupangBanner from './coupang-banner';
 import type {FaceOpening} from './pajama-tracking';
 import danceTracks from '../lib/pajama-dance-tracks.json';
 import './pajama-studio.css';
@@ -126,6 +127,7 @@ export default function PajamaStudio(){
         <fieldset disabled={!photo}><legend className="sr-only">{t('사진 크기와 위치 조절')}</legend><label>{t('사진 크기')}<output>{Math.round((photo?.zoom||1)*100)}%</output><input type="range" min="1" max="3" step=".01" value={photo?.zoom||1} aria-label={t('사진 크기')} onChange={e=>updatePhoto({zoom:Number(e.target.value)})}/></label><label>{t('가로 위치')}<input type="range" min="-100" max="100" value={photo?.x||0} aria-label={t('사진 가로 위치')} onChange={e=>updatePhoto({x:Number(e.target.value)})}/></label><label>{t('세로 위치')}<input type="range" min="-100" max="100" value={photo?.y||0} aria-label={t('사진 세로 위치')} onChange={e=>updatePhoto({y:Number(e.target.value)})}/></label><div className="pajama-small-actions"><button onClick={()=>updatePhoto({zoom:1,x:0,y:0})}><RotateCcw size={13}/>{t('위치 초기화')}</button><button onClick={removePhoto}><Trash2 size={13}/>{t('사진 빼기')}</button></div></fieldset>
       </aside>
     </section>
+    <CoupangBanner/>
     <footer className="pajama-footer"><p>{t('회색 얼굴 칸이 선명한 장면에서 가장 잘 맞아요. 얼굴이 가려지면 사진도 잠시 숨겨져요.')}</p><a href="https://www.anime-chiikawa.jp/chara.html" target="_blank" rel="noreferrer">{t('파자마 파티즈 · 공식 캐릭터 소개')} ↗</a></footer>
   </main>;
 }

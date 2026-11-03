@@ -1,0 +1,1 @@
+import{d as e,n as t,r as n}from"./theme-BeZC-4uM.js";import{n as r}from"./gacha-colors-preview-CBzov5TB.js";e();var i=t(),a=n();(0,i.createRoot)(document.getElementById(`root`)).render((0,a.jsx)(r,{}));

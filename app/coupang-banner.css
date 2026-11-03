@@ -1,0 +1,11 @@
+.coupang-partners{container-type:inline-size;max-width:780px;margin:24px auto 32px;padding:16px 18px;border:1px solid #ded6c6;border-radius:12px;background:#fffdf7;color:#655e50}
+.coupang-partners-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.coupang-partners-heading h2{margin:0;font-size:12px;font-weight:600;line-height:1.6}
+.coupang-partners-heading a{font-size:11px;line-height:1.6;text-decoration:underline;text-underline-offset:3px}
+.coupang-partners-disclosure{margin:7px 0 14px;font-size:12px;line-height:1.8;word-break:keep-all;overflow-wrap:anywhere}
+.coupang-partners-banner{display:flex;align-items:center;justify-content:center;min-width:0}
+.coupang-partners-banner a{display:block;max-width:100%;line-height:0}
+.coupang-partners-banner img{display:block;max-width:100%;height:auto;background:#fff;color:#655e50;font-size:12px;line-height:1.6}
+.coupang-partners-banner .coupang-partners-wide{display:none}
+@container(min-width:728px){.coupang-partners-banner .coupang-partners-wide{display:block}.coupang-partners-banner .coupang-partners-compact{display:none}}
+@media(max-width:650px){.coupang-partners{margin:20px auto 26px;padding:14px 12px}}

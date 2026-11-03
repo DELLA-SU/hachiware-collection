@@ -3344,5 +3344,30 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "If an app launch error appears, share its message. The new version includes the required photos and icons inside the executable.",
   "zh": "如出现应用启动错误窗口，请告知错误信息。新版已将所需照片和图标包含在可执行文件中。",
   "ja": "アプリの起動エラーが表示された場合は、そのメッセージをお知らせください。新しいバージョンは必要な写真とアイコンを実行ファイルに含んでいます。"
+ },
+ "광고 · 쿠팡 파트너스": {
+  "en": "Advertisement · Coupang Partners",
+  "zh": "广告 · Coupang Partners",
+  "ja": "広告 · Coupang Partners"
+ },
+ "개인정보 안내": {
+  "en": "Privacy information",
+  "zh": "隐私说明",
+  "ja": "プライバシーについて"
+ },
+ "이 배너는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.": {
+  "en": "This banner is part of Coupang Partners. We receive a commission on qualifying purchases made through it.",
+  "zh": "此横幅属于 Coupang Partners 合作推广，通过此链接产生符合条件的购买时，我们会获得佣金。",
+  "ja": "このバナーはCoupang Partnersのアフィリエイト広告です。リンク経由の対象商品の購入により、運営者に紹介料が支払われます。"
+ },
+ "쿠팡 완구·취미 광고, 새 창에서 열기": {
+  "en": "Coupang toys and hobbies advertisement, opens in a new tab",
+  "zh": "Coupang 玩具与兴趣用品广告，在新标签页打开",
+  "ja": "Coupangのおもちゃ・ホビー広告、新しいタブで開く"
+ },
+ "쿠팡 완구·취미 광고": {
+  "en": "Coupang toys and hobbies advertisement",
+  "zh": "Coupang 玩具与兴趣用品广告",
+  "ja": "Coupangのおもちゃ・ホビー広告"
  }
 };

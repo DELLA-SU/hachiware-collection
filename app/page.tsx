@@ -11,6 +11,7 @@ import MusicTV from './music-tv';
 import GachaHero,{craneDrawDuration} from './gacha-hero';
 import {cranePalettes} from './gacha-colors';
 import {readBannerPreference} from './banner-preferences';
+import CoupangBanner from './coupang-banner';
 import './letter-hero.css';
 import catalog from '../lib/catalog.json';
 import CollectionGuide from './collection-guide';
@@ -118,7 +119,7 @@ export default function Home(){
  {error&&<div className="error" role="alert"><span>{t(error)}</span><button onClick={()=>{setError('');if(!photos.length)load();}}>{t("확인")}</button></div>}
  <section id="collection-photos" className={'desk-photos '+(arrangement==='tidy'?'tidy':'scattered')} aria-label={viewTitle}>
  {loading?<div className="empty"><span className="loading-face"><BrandCharacter/></span><h3>{t("도감 펼치는 중…")}</h3></div>:!shown.length?<div className="empty"><Star size={32}/><h3>{query||filter?t("찾는 치이가 아직 없어요."):view==='favorites'?t("아직 별표 한 순간이 없어요."):t("첫 치이를 만나볼까요?")}</h3><p>{view==='favorites'?t("사진 옆의 별을 누르면 이 서랍에 모여요."):t("검색을 바꾸거나 ‘치이카와 뽑기’로 한 장을 담아보세요.")}</p></div>:shown.map((p,i)=><article className={'scrap-card scrap-'+(i%8)+' '+(newId===p.id?'just-added':'')} key={p.id}><span className="card-tape" aria-hidden="true"/><button className="card-remove" onClick={()=>removePhoto(p)} disabled={saving===p.id} aria-label={characterName(p.character)+' #'+number(p)+t(" 컬렉션에서 삭제")}><X size={14}/></button><button className="photo-open" onClick={()=>openPhoto(p)} aria-label={characterName(p.character)+' #'+number(p)+t(" 사진 크게 보기")}><img src={p.image_url} alt={t("수집한 먼작귀 사진")} loading={i<8?'eager':'lazy'}/>{newId===p.id&&<span className="new-badge">{t("방금 만났어요")}</span>}<span className="zoom-hint">{t("펼쳐 보기")}<ArrowUpRight size={13}/></span></button><div className="card-meta"><div><small>{day(p.collected_at).replaceAll('-','.')}</small><h3>{characterName(p.character)} #{number(p)}</h3></div><button className={'star '+(p.favorite?'is-favorite':'')} onClick={()=>favorite(p)} aria-label={p.favorite?t("즐겨찾기 해제"):t("즐겨찾기에 추가")} aria-pressed={!!p.favorite} disabled={saving===p.id}><Star size={20} fill={p.favorite?'currentColor':'none'}/></button></div><div className="card-bottom"><a href={p.source} target="_blank" rel="noreferrer">{t(p.source_kind)}<ArrowUpRight size={12}/></a><button onClick={()=>share(p)} aria-label={t("출처와 함께 공유")}><Share2 size={14}/></button></div></article>)}
- </section></main>
+ </section><CoupangBanner/></main>
  {removed&&<div className="toast undo-toast" role="status"><span>{t("사진을 도감에서 지웠어요.")}</span><button onClick={()=>removePhoto(removed,true)} disabled={!!saving}>{t("실행 취소")}</button><button className="undo-toast-close" aria-label={t("삭제 알림 닫기")} onClick={()=>setRemoved(null)}><X size={15}/></button></div>}
  {!removed&&notice&&<div className="toast" role="status"><Check size={18}/>{t(notice)}</div>}
  {windows.map((w,index)=>{const photo=photos.find(p=>p.id===w.id);return photo?<PhotoWindow key={w.key} photo={photo} onImageActivate={photo.character==='usagi'?()=>{void playUna();}:undefined} number={number(photo)} index={w.placement} z={w.z} saving={saving===photo.id} onRaise={()=>raiseWindow(w.key)} onClose={()=>closeWindow(w.key)} onFavorite={()=>favorite(photo)} onShare={()=>share(photo)} onStep={d=>stepWindow(w.key,d)} canStep={shown.length>1&&shown.some(p=>p.id===photo.id)}/>:null;})}
