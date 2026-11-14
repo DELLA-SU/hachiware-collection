@@ -3,9 +3,7 @@
 .coupang-partners-heading h2{margin:0;font-size:12px;font-weight:600;line-height:1.6}
 .coupang-partners-heading a{font-size:11px;line-height:1.6;text-decoration:underline;text-underline-offset:3px}
 .coupang-partners-disclosure{margin:7px 0 14px;font-size:12px;line-height:1.8;word-break:keep-all;overflow-wrap:anywhere}
-.coupang-partners-banner{display:flex;align-items:center;justify-content:center;min-width:0}
-.coupang-partners-banner a{display:block;max-width:100%;line-height:0}
-.coupang-partners-banner img{display:block;max-width:100%;height:auto;background:#fff;color:#655e50;font-size:12px;line-height:1.6}
-.coupang-partners-banner .coupang-partners-wide{display:none}
-@container(min-width:728px){.coupang-partners-banner .coupang-partners-wide{display:block}.coupang-partners-banner .coupang-partners-compact{display:none}}
+.coupang-partners-banner{display:flex;align-items:center;justify-content:center;min-width:0;min-height:140px}
+.coupang-partners-frame{position:relative;flex:none;overflow:hidden;line-height:0;background:#fff}
+.coupang-partners-frame iframe{position:absolute;top:0;left:0;display:block;border:0;transform-origin:top left}
 @media(max-width:650px){.coupang-partners{margin:20px auto 26px;padding:14px 12px}}
