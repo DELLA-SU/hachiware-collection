@@ -1,5 +1,6 @@
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
+import {contentSecurityPolicy} from './scripts/security-policy.mjs';
 const fonts='https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;600;700;800;900&family=Jua&family=Noto+Serif+KR:wght@700&family=DM+Serif+Display:ital@0;1&display=swap';
 export default defineConfig({
  base:'/hachiware-collection/',
@@ -7,6 +8,9 @@ export default defineConfig({
   {tag:'link',attrs:{rel:'preconnect',href:'https://fonts.googleapis.com'},injectTo:'head-prepend'},
   {tag:'link',attrs:{rel:'preconnect',href:'https://fonts.gstatic.com',crossorigin:''},injectTo:'head-prepend'},
   {tag:'link',attrs:{rel:'stylesheet',href:stylesheet},injectTo:'head'}
- ];}}],
+ ];}},{name:'static-content-security-policy',apply:'build',transformIndexHtml:{order:'post',handler(){return [
+  {tag:'meta',attrs:{'http-equiv':'Content-Security-Policy',content:contentSecurityPolicy},injectTo:'head-prepend'},
+  {tag:'meta',attrs:{name:'referrer',content:'strict-origin-when-cross-origin'},injectTo:'head-prepend'}
+ ];}}}],
  build:{outDir:'docs',emptyOutDir:true,rollupOptions:{input:{main:'index.html',gacha:'gacha-preview.html',colors:'gacha-colors-preview.html',strawberry:'strawberry-colors-preview.html',naming:'naming-preview.html',entrance:'entrance-preview.html',capsule:'capsule-preview.html',certificates:'certificates.html',pajama:'pajama.html',typography:'title-preview.html',typeCompare:'title-compare.html'}}}
 });
