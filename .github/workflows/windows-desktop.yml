@@ -19,6 +19,17 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
+      - name: Validate the actual currently published Windows download
+        shell: pwsh
+        run: |
+          Invoke-WebRequest 'https://github.com/DELLA-SU/hachiware-collection/releases/download/v1.4.7/HachiwareDesktop-Windows-x64.zip' -OutFile published-v1.4.7.zip
+          if ((Get-FileHash published-v1.4.7.zip -Algorithm SHA256).Hash.ToLower() -ne 'd124c7203c7e72aa4876fb4dbb2d89c132c71e43e213517f2f017376c7a9fdbc') { throw 'Published release hash mismatch' }
+          Expand-Archive published-v1.4.7.zip '공개 배포본 설치 확인'
+          $report = "$PWD/smoke-published-v1.4.7.json"
+          $app = Start-Process -FilePath "$PWD/공개 배포본 설치 확인/Hachiware.exe" -ArgumentList '--self-test', $report -WorkingDirectory $env:TEMP -PassThru
+          if (!$app.WaitForExit(60000)) { Stop-Process -Id $app.Id; throw 'Published app did not exit' }
+          Get-Content $report
+          if ($app.ExitCode -ne 0 -or !(Get-Content $report | ConvertFrom-Json).passed) { throw 'Published Windows app validation failed' }
       - name: Reproduce missing sidecar failure in the old download
         if: matrix.os == 'windows-2022'
         shell: pwsh
