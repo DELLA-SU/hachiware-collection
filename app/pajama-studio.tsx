@@ -116,7 +116,7 @@ export default function PajamaStudio(){
     <section className="pajama-studio" aria-label={t('파자마 파티즈 영상 만들기')}>
       <div className="pajama-stage-panel"><div className="pajama-stage-title"><h2>{t('우리의 파자마 파티')}</h2><span>{photos.filter(Boolean).length}/4</span></div>
         <div className="pajama-stage">
-          <video ref={video} src={danceVideo} playsInline preload="metadata" loop muted className="pajama-source-video" onError={()=>{setReady(false);setPlaying(false);setStarting(false);setMovieFailed(true);audio.current?.pause();setError('춤 영상을 불러오지 못했어요. 페이지를 새로 열어 주세요.');}}/>
+          <video aria-hidden="true" tabIndex={-1} ref={video} src={danceVideo} playsInline preload="metadata" loop muted className="pajama-source-video" onError={()=>{setReady(false);setPlaying(false);setStarting(false);setMovieFailed(true);audio.current?.pause();setError('춤 영상을 불러오지 못했어요. 페이지를 새로 열어 주세요.');}}/>
           <audio ref={audio} src={assetUrl('pajama/dance-song-v2.m4a')} preload="metadata" loop muted={muted}/>
           <canvas ref={canvas} onPointerDown={selectFace} aria-label={t('파자마 파티즈 춤 영상 미리보기')} style={{aspectRatio:ready&&video.current?`${video.current.videoWidth}/${video.current.videoHeight}`:'16/9'}}/>
           {!ready&&!movieFailed&&<p className="pajama-loading" role="status">{t(starting?'영상을 준비하고 있어요…':'‘춤추기’를 누르면 영상이 시작돼요.')}</p>}

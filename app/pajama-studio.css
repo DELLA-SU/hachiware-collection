@@ -10,3 +10,4 @@
 /* Keep small labels readable on the pale stationery background. */
 .pajama-header>a,.pajama-header>span,.pajama-header>p,.pajama-private-note,.pajama-controls fieldset label,.pajama-footer{color:#76695d}.pajama-members button{color:#625565}.pajama-controls h2>span{color:#52633e}
 @media(max-width:360px){.pajama-playback button{min-width:44px;min-height:44px}}
+.pajama-members button{color:#574a58}.pajama-upload{color:#47665f}.pajama-error{color:#87504b}.pajama-track-note{color:#6b5671}

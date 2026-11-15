@@ -4,3 +4,4 @@
 @media(max-width:650px){.desktop-invite{grid-template-columns:1fr;padding:27px 23px;gap:24px;margin:24px auto}.desktop-invite h2{font-size:31px}.desktop-invite-copy>p{font-size:12px}.desktop-invite-scene{height:280px}.desktop-invite-pet{width:165px;height:165px}.desktop-invite-cta{min-height:44px;font-size:12px}.desktop-invite-copy>small{font-size:10px}.desktop-invite-caption{font-size:15px}}
 
 .desktop-invite{color:#4f695e}.desktop-invite-copy>small,.desktop-invite-caption{color:#52695e}
+.desktop-invite-speech{color:#687259}
