@@ -25,7 +25,7 @@ import {Star,ArrowUpRight,BookOpen,Sparkles,Upload,Download,Share2,X,ChevronDown
 type Photo={character?:string;id:string;image_url:string;remote_url:string;source:string;source_kind:string;title:string;collected_at:string;met_at?:string;imported:number;favorite:number};
 const day=(d:string)=>new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(d));
 const label=(d:string)=>new Intl.DateTimeFormat(languageLocale(),{timeZone:'Asia/Seoul',year:'numeric',month:'long',day:'numeric',weekday:'short'}).format(new Date(d));
-function BrandCharacter(){return <span className="brand-face brand-photo"><svg viewBox="45 25 680 555" aria-hidden="true"><image href={assetUrl('/brand-hachiware.png')} width="836" height="612"/></svg></span>}
+function BrandCharacter(){return <span className="brand-face brand-photo"><svg viewBox="45 25 680 555" aria-hidden="true"><image href={assetUrl('/brand-hachiware.webp')} width="836" height="612"/></svg></span>}
 export default function Home(){
  const language=useLanguage();
  useEffect(()=>{document.title=t("치이카와 가챠");},[language]);

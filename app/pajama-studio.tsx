@@ -55,13 +55,13 @@ export default function PajamaStudio(){
   useEffect(()=>{
     const el=video.current,output=canvas.current;if(!el||!output)return;
     const ctx=output.getContext('2d');if(!ctx)return;
-    let raf=0,active=true,lastReport=-1;
+    let raf=0,videoFrame=0,active=true,lastReport=-1,lastPaint=0;
     const poster=new Image();poster.onload=()=>draw();poster.src=assetUrl('pajama/dance-poster-v2.jpg');
     function draw(){
-      if(!active)return;const live=el!.readyState>=2&&!!el!.videoWidth;
+      if(!active)return;const live=el!.readyState>=2&&!!el!.videoWidth&&(!el!.paused||el!.currentTime>0);
       if(!live&&(!poster.complete||!poster.naturalWidth))return;
       const source=live?el!:poster,width=live?el!.videoWidth:poster.naturalWidth,height=live?el!.videoHeight:poster.naturalHeight;
-      const w=Math.min(1280,width),h=Math.round(w*height/width);
+      const w=Math.max(1,Math.min(1280,width,Math.ceil((output!.clientWidth||640)*Math.min(window.devicePixelRatio||1,2)))),h=Math.round(w*height/width);
       if(output!.width!==w||output!.height!==h){output!.width=w;output!.height=h;}
       const matches=defaultFrames[Math.min(defaultFrames.length-1,Math.floor((live?el!.currentTime:0)*danceTracks.fps))];
       currentFaces.current=matches;
@@ -73,15 +73,18 @@ export default function PajamaStudio(){
       const report=Math.floor(el!.currentTime*4);if(el!.paused||report!==lastReport){lastReport=report;setTime(el!.currentTime);}
     }
     paint.current=draw;
-    function tick(){draw();if(active)raf=requestAnimationFrame(tick);}
-    function start(){cancelAnimationFrame(raf);tick();setPlaying(true);}
-    function stop(){cancelAnimationFrame(raf);audio.current?.pause();setPlaying(false);draw();}
+    function cancelFrame(){cancelAnimationFrame(raf);if(videoFrame)el!.cancelVideoFrameCallback?.(videoFrame);videoFrame=0;}
+    function tick(now:number){if(!active||el!.paused)return;if(el!.requestVideoFrameCallback){draw();videoFrame=el!.requestVideoFrameCallback(tick);}else{if(now-lastPaint>=1000/30){lastPaint=now;draw();}raf=requestAnimationFrame(tick);}}
+    function start(){cancelFrame();draw();if(el!.requestVideoFrameCallback)videoFrame=el!.requestVideoFrameCallback(tick);else raf=requestAnimationFrame(tick);setPlaying(true);}
+    function stop(){cancelFrame();audio.current?.pause();setPlaying(false);draw();}
     function loaded(){setReady(true);setDuration(Number.isFinite(el!.duration)?el!.duration:0);draw();}
     function seek(){draw();}
+    function hidden(){if(document.hidden){el!.pause();audio.current?.pause();}}
+    const resize=new ResizeObserver(draw);resize.observe(output);document.addEventListener('visibilitychange',hidden);
     const loadEvents=['loadedmetadata','loadeddata','canplay','playing'];
     loadEvents.forEach(event=>el.addEventListener(event,loaded));el.addEventListener('play',start);el.addEventListener('pause',stop);el.addEventListener('ended',stop);el.addEventListener('seeked',seek);
     if(el.readyState>=1)loaded();
-    return()=>{active=false;cancelAnimationFrame(raf);poster.onload=null;paint.current=()=>{};loadEvents.forEach(event=>el.removeEventListener(event,loaded));el.removeEventListener('play',start);el.removeEventListener('pause',stop);el.removeEventListener('ended',stop);el.removeEventListener('seeked',seek);};
+    return()=>{active=false;cancelFrame();resize.disconnect();document.removeEventListener('visibilitychange',hidden);poster.onload=null;paint.current=()=>{};loadEvents.forEach(event=>el.removeEventListener(event,loaded));el.removeEventListener('play',start);el.removeEventListener('pause',stop);el.removeEventListener('ended',stop);el.removeEventListener('seeked',seek);};
   },[]);
 
   async function togglePlay(){
