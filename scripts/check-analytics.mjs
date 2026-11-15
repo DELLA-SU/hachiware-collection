@@ -33,7 +33,7 @@ const loading=setup();loading.api.initAnalytics();loading.api.trackEvent('photo_
 loading.store.set('hachiware-statistics-disabled','true');loading.api.refreshAnalyticsPreference();loading.api.trackEvent('photo_draw');assert.equal(loading.sent.length,1);
 const blocked=setup({blocked:true});blocked.api.initAnalytics();blocked.api.setAnalyticsEnabled(false);assert.equal(blocked.api.analyticsEnabled(),false);blocked.ready();assert.equal(blocked.sent.length,0);
 for(const options of [{host:'127.0.0.1'},{path:'/other-private-site/'},{path:'/hachiware-collection/__proto__'},{dnt:'1'}]){const s=setup(options);s.api.initAnalytics();s.api.trackEvent('photo_draw');assert.equal(s.scripts.length,0);}
-for(const [page,names] of [['certificates.html',['certificate_select','certificate_photo_add','certificate_download']],['pajama.html',['pajama_dance_start','pajama_photo_add','desktop_invite_view','pajama_to_main']]]){
+for(const [page,names] of [['certificates.html',['certificate_select','certificate_photo_add','certificate_download']],['pajama.html',['pajama_dance_start','pajama_photo_add','desktop_invite_view','pajama_to_main','coupang_banner_view','coupang_search_click']]]){
  const path='/hachiware-collection/'+page,s=setup({path});s.api.initAnalytics();s.ready();assert.equal(s.sent.length,1);assert.equal(s.sent[0].url,path+'?utm_source=instagram&utm_campaign=launch');
  for(const name of names){s.api.trackEvent(name);const clean=s.api.sanitizeAnalyticsPayload('event',{...dirty,name});assert.equal(clean.name,name);assert(!Object.hasOwn(clean,'data'));assert(!Object.hasOwn(clean,'id'));assert.equal(clean.url,path+'?utm_source=instagram&utm_campaign=launch');}
  assert.deepEqual(s.sent.slice(1).map(p=>p.name),names);

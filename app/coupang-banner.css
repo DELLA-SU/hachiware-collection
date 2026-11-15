@@ -6,4 +6,6 @@
 .coupang-partners-banner{display:flex;align-items:center;justify-content:center;min-width:0;min-height:140px}
 .coupang-partners-frame{position:relative;flex:none;overflow:hidden;line-height:0;background:#fff}
 .coupang-partners-frame iframe{position:absolute;top:0;left:0;display:block;border:0;transform-origin:top left}
+.coupang-partners-search{display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px;width:fit-content;max-width:100%;margin:8px auto 0;padding:4px 12px;color:#526b68;font-size:13px;line-height:1.6;text-decoration:underline;text-underline-offset:4px;text-align:center;word-break:keep-all}
+.coupang-partners-search:focus-visible{outline:2px solid #526b68;outline-offset:3px;border-radius:4px}
 @media(max-width:650px){.coupang-partners{margin:20px auto 26px;padding:14px 12px}}

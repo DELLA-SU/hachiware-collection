@@ -3429,5 +3429,15 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "A little friend on my desktop",
   "zh": "桌面上的小伙伴",
   "ja": "デスクトップの小さな友達"
+ },
+ "이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.": {
+  "en": "This post is part of Coupang Partners. We receive a commission on qualifying purchases.",
+  "zh": "本帖参与 Coupang Partners，符合条件的购买将为我们带来一定佣金。",
+  "ja": "このページはCoupang Partnersの活動の一環で、対象の購入により一定の手数料を受け取ります。"
+ },
+ "쿠팡에서 치이카와 상품 보기": {
+  "en": "Browse Chiikawa on Coupang",
+  "zh": "在 Coupang 查看吉伊卡哇商品",
+  "ja": "Coupangでちいかわの商品を見る"
  }
 };
