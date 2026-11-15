@@ -30,7 +30,7 @@ export default function Home(){
  const language=useLanguage();
  useEffect(()=>{document.title=t("치이카와 가챠");},[language]);
  const [photos,setPhotos]=useState<Photo[]>([]),[loading,setLoading]=useState(true),[busy,setBusy]=useState(false),[view,setView]=useState('all'),[sort,setSort]=useState('new'),[filter,setFilter]=useState(''),[windows,setWindows]=useState<{key:string;id:string;z:number;placement:number}[]>([]),[notice,setNotice]=useState(''),[error,setError]=useState(''),[newId,setNewId]=useState(''),[about,setAbout]=useState(false),[saving,setSaving]=useState(''),[query,setQuery]=useState(''),[arrangement,setArrangement]=useState('desk'),[menuOpen,setMenuOpen]=useState(false),[removed,setRemoved]=useState<Photo|null>(null),[musicOpen,setMusicOpen]=useState(false);
- const [installOpen,setInstallOpen]=useState(false),[settingsOpen,setSettingsOpen]=useState(false);
+ const [installOpen,setInstallOpen]=useState(()=>new URLSearchParams(location.search).get('desktop')==='1'),[settingsOpen,setSettingsOpen]=useState(false);
  const [banner,setBanner]=useState(readBannerPreference);
  const bannerVariant=banner.variant,craneColor=banner.color;
  const [importOpen,setImportOpen]=useState(false),[importText,setImportText]=useState('');

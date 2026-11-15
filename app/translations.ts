@@ -3369,5 +3369,65 @@ export const translations:Record<string,{en:string;zh:string;ja:string}>={
   "en": "Coupang toys and hobbies advertisement",
   "zh": "Coupang 玩具与兴趣用品广告",
   "ja": "Coupangのおもちゃ・ホビー広告"
+ },
+ "파티가 끝나도,": {
+  "en": "Even after the party,",
+  "zh": "派对结束后，",
+  "ja": "パーティーが終わっても、"
+ },
+ "우리 계속 같이 있을래?": {
+  "en": "shall we stay together?",
+  "zh": "还要继续在一起吗？",
+  "ja": "ずっと一緒にいよう？"
+ },
+ "하치와레가 내 바탕화면에 놀러 와요.": {
+  "en": "Hachiware is coming to your desktop.",
+  "zh": "小八来你的桌面玩啦。",
+  "ja": "ハチワレがデスクトップに遊びに来るよ。"
+ },
+ "둥실둥실 움직이는 작은 친구를 만나보세요.": {
+  "en": "Meet a little friend who floats by your side.",
+  "zh": "来认识这位轻轻飘动的小伙伴吧。",
+  "ja": "ふわふわ動く小さな友達に会ってみてね。"
+ },
+ "내 바탕화면 친구 만나기": {
+  "en": "Meet my desktop friend",
+  "zh": "认识我的桌面伙伴",
+  "ja": "デスクトップの友達に会う"
+ },
+ "메인 도감에서 Mac · Windows 설치 방법을 확인해요.": {
+  "en": "Visit the main collection for Mac and Windows setup.",
+  "zh": "前往主图鉴查看 Mac 和 Windows 安装方法。",
+  "ja": "メイン図鑑で Mac・Windows のインストール方法をチェック。"
+ },
+ "하치와레 움직임 재생": {
+  "en": "Play Hachiware motion",
+  "zh": "播放小八动作",
+  "ja": "ハチワレの動きを再生"
+ },
+ "하치와레 움직임 멈추기": {
+  "en": "Pause Hachiware motion",
+  "zh": "暂停小八动作",
+  "ja": "ハチワレの動きを止める"
+ },
+ "나도 같이 갈래!": {
+  "en": "Take me with you!",
+  "zh": "也带上我吧！",
+  "ja": "ぼくも一緒に行く！"
+ },
+ "좋아하는 것들": {
+  "en": "Favorite things",
+  "zh": "喜欢的东西",
+  "ja": "好きなもの"
+ },
+ "하치와레를 잡고 움직여 보세요": {
+  "en": "Drag Hachiware to move him",
+  "zh": "拖动小八试试看",
+  "ja": "ハチワレをドラッグして動かしてね"
+ },
+ "내 바탕화면의 작은 친구": {
+  "en": "A little friend on my desktop",
+  "zh": "桌面上的小伙伴",
+  "ja": "デスクトップの小さな友達"
  }
 };
